@@ -4,13 +4,13 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.boot.actuate.health.Health;
 import org.springframework.boot.actuate.health.HealthIndicator;
 import org.springframework.stereotype.Component;
-import ru.alumni.hub.subtlenotify.repository.ActionsRepository;
+import ru.alumni.hub.subtlenotify.repository.ActionRepository;
 
 @Component
 @RequiredArgsConstructor
 public class DatabaseHealthIndicator implements HealthIndicator {
 
-    private final ActionsRepository actionsRepository;
+    private final ActionRepository actionsRepository;
 
     @Override
     public Health health() {

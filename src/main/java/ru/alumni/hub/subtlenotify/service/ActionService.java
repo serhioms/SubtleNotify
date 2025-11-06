@@ -4,8 +4,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.alumni.hub.subtlenotify.health.ActionsMetrics;
-import ru.alumni.hub.subtlenotify.model.Actions;
-import ru.alumni.hub.subtlenotify.repository.ActionsRepository;
+import ru.alumni.hub.subtlenotify.model.Action;
+import ru.alumni.hub.subtlenotify.repository.ActionRepository;
 import ru.alumni.hub.subtlenotify.types.ActionRequest;
 import ru.alumni.hub.subtlenotify.types.ActionResponse;
 
@@ -13,21 +13,21 @@ import java.util.List;
 
 @Service
 @RequiredArgsConstructor
-public class ActionsService {
+public class ActionService {
 
-    private final ActionsRepository actionsRepository;
+    private final ActionRepository actionsRepository;
     private final ActionsMetrics actionsMetrics;
 
     @Transactional
-    public Actions storeAction(ActionRequest request) {
+    public Action storeAction(ActionRequest request) {
         var timer = actionsMetrics.startTimer();
         try {
-            Actions action = new Actions();
+            Action action = new Action();
             action.setUserId(request.getUserId());
             action.setActionType(request.getActionType());
             action.setTimestamp(request.getTimestamp());
 
-            Actions saved = actionsRepository.save(action);
+            Action saved = actionsRepository.save(action);
             actionsMetrics.incrementActionsCreated();
             actionsMetrics.recordCreationTime(timer);
             return saved;
@@ -38,15 +38,15 @@ public class ActionsService {
     }
 
     @Transactional
-    public List<Actions> storeActions(List<ActionRequest> requests) {
-        List<Actions> actions = requests.stream()
+    public List<Action> storeActions(List<ActionRequest> requests) {
+        List<Action> actions = requests.stream()
                 .map(this::convertToEntity)
                 .toList();
 
         return actionsRepository.saveAll(actions);
     }
 
-    public List<Actions> getUserActions(String userId) {
+    public List<Action> getUserActions(String userId) {
         return actionsRepository.findByUserId(userId);
     }
 
@@ -54,8 +54,8 @@ public class ActionsService {
         return ActionResponse.fromEntityList(actionsRepository.findAll());
     }
 
-    private Actions convertToEntity(ActionRequest request) {
-        Actions action = new Actions();
+    private Action convertToEntity(ActionRequest request) {
+        Action action = new Action();
         action.setUserId(request.getUserId());
         action.setActionType(request.getActionType());
         action.setTimestamp(request.getTimestamp());

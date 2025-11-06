@@ -6,17 +6,20 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+
 import java.time.LocalDateTime;
+import java.util.UUID;
+
 
 @Entity
-@Table(name = "actions")
+@Table(name = "action")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class Actions {
+public class Action {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    @GeneratedValue
+    private UUID id;
 
     @NotNull(message = "userId is required")
     @Column(name = "user_id", nullable = false)

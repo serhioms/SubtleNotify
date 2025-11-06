@@ -5,9 +5,12 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import ru.alumni.hub.subtlenotify.service.ActionsService;
+import ru.alumni.hub.subtlenotify.model.Notification;
+import ru.alumni.hub.subtlenotify.service.ActionService;
+import ru.alumni.hub.subtlenotify.service.NotificationService;
 import ru.alumni.hub.subtlenotify.types.ActionRequest;
 import ru.alumni.hub.subtlenotify.types.ActionResponse;
+import ru.alumni.hub.subtlenotify.types.NotificationRequest;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -18,12 +21,13 @@ import java.util.Map;
 @RequiredArgsConstructor
 public class SubtleNotifyController {
 
-    private final ActionsService actionsService;
+    private final ActionService actionService;
+    private final NotificationService notificationService;
 
     @PostMapping("/action")
     public ResponseEntity<Map<String, Object>> createAction(@Valid @RequestBody ActionRequest actionRequest) {
         // Process the action
-        actionsService.storeAction(actionRequest);
+        actionService.storeAction(actionRequest);
 
         Map<String, Object> response = Map.of(
                 "status", "success",
@@ -39,7 +43,7 @@ public class SubtleNotifyController {
 
     @GetMapping("/actions")
     public ResponseEntity<List<ActionResponse>> getAllActions() {
-        List<ActionResponse>  actionResponses = actionsService.getAllActions();
+        List<ActionResponse>  actionResponses = actionService.getAllActions();
         return ResponseEntity.ok(actionResponses);
     }
 
@@ -70,4 +74,16 @@ public class SubtleNotifyController {
         );
         return ResponseEntity.ok(notifications);
     }
+
+    @PostMapping("/addNotification")
+    public void notification(@Valid @RequestBody NotificationRequest notificationRequest) {
+        notificationService.storeNotification(notificationRequest);
+    }
+
+    @GetMapping("/allNotifications")
+    public ResponseEntity<List<Notification>> notifications() {
+        return ResponseEntity.status(HttpStatus.CREATED).body(notificationService.getAllNotifications());
+    }
+
+
 }
