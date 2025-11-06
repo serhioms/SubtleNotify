@@ -1,4 +1,4 @@
-package ru.alumni.hub.subtlenotify.metrics;
+package ru.alumni.hub.subtlenotify.health;
 
 import io.micrometer.core.instrument.Counter;
 import io.micrometer.core.instrument.MeterRegistry;

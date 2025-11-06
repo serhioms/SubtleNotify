@@ -3,6 +3,7 @@ package ru.alumni.hub.subtlenotify.service;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import ru.alumni.hub.subtlenotify.health.ActionsMetrics;
 import ru.alumni.hub.subtlenotify.model.Actions;
 import ru.alumni.hub.subtlenotify.repository.ActionsRepository;
 import ru.alumni.hub.subtlenotify.types.ActionRequest;
@@ -15,7 +16,7 @@ import java.util.List;
 public class ActionsService {
 
     private final ActionsRepository actionsRepository;
-    private final ru.alumni.hub.subtlenotify.metrics.ActionsMetrics actionsMetrics;
+    private final ActionsMetrics actionsMetrics;
 
     @Transactional
     public Actions storeAction(ActionRequest request) {

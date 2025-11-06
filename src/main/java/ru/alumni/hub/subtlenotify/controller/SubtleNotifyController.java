@@ -16,11 +16,11 @@ import java.util.Map;
 @RestController
 @RequestMapping("/api/subtlenotify")
 @RequiredArgsConstructor
-public class PingTwistController {
+public class SubtleNotifyController {
 
     private final ActionsService actionsService;
 
-    @PostMapping("/actions")
+    @PostMapping("/action")
     public ResponseEntity<Map<String, Object>> createAction(@Valid @RequestBody ActionRequest actionRequest) {
         // Process the action
         actionsService.storeAction(actionRequest);
