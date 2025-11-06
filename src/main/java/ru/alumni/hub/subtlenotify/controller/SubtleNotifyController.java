@@ -5,12 +5,11 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import ru.alumni.hub.subtlenotify.model.Notification;
 import ru.alumni.hub.subtlenotify.service.ActionService;
-import ru.alumni.hub.subtlenotify.service.NotificationService;
+import ru.alumni.hub.subtlenotify.service.TriggerService;
 import ru.alumni.hub.subtlenotify.types.ActionRequest;
 import ru.alumni.hub.subtlenotify.types.ActionResponse;
-import ru.alumni.hub.subtlenotify.types.NotificationRequest;
+import ru.alumni.hub.subtlenotify.types.TriggerRequest;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -22,7 +21,7 @@ import java.util.Map;
 public class SubtleNotifyController {
 
     private final ActionService actionService;
-    private final NotificationService notificationService;
+    private final TriggerService triggerService;
 
     @PostMapping("/action")
     public ResponseEntity<Map<String, Object>> createAction(@Valid @RequestBody ActionRequest actionRequest) {
@@ -75,14 +74,14 @@ public class SubtleNotifyController {
         return ResponseEntity.ok(notifications);
     }
 
-    @PostMapping("/addNotification")
-    public void notification(@Valid @RequestBody NotificationRequest notificationRequest) {
-        notificationService.storeNotification(notificationRequest);
+    @PostMapping("/trigger")
+    public void trigger(@Valid @RequestBody TriggerRequest triggerRequest) {
+        triggerService.storeTrigger(triggerRequest);
     }
 
-    @GetMapping("/allNotifications")
-    public ResponseEntity<List<Notification>> notifications() {
-        return ResponseEntity.status(HttpStatus.CREATED).body(notificationService.getAllNotifications());
+    @GetMapping("/triggers")
+    public ResponseEntity<List<TriggerRequest>> triggers() {
+        return ResponseEntity.status(HttpStatus.CREATED).body(triggerService.getAllTriggers());
     }
 
 
