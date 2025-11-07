@@ -63,7 +63,7 @@ timestamp, weekOfTheYear, dayOfTheYear, dayOfWeek, hourOfDay, minuteOfHour
     "actualHr" : "5,6,7,8:50",                              default same curHr
     "actualMiss" : false  today FALSE but yesterday TRUE   default false
 
-if (expectInDay(howManyWeeks, history) or expectEveryDay(howManyWeeks, history) or expectWeekDay(howManyWeeks, history))
+if (expectStraightDays(howManyWeeks, history) or expectEveryDay(howManyWeeks, history) or expectWeekDays(howManyWeeks, history))
 and ( (expectFromHr < expectToHr and curtHr >= expectFromHr and curHr <= expectToHr) or ((expectFromHr > expectToHr and (curtHr <= expectFromHr or curHr >= expectToHr))))
 and ( curWeekDay in actualWeekDay)
 and ( curHr in actualHr)

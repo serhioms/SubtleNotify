@@ -14,24 +14,29 @@ import java.util.List;
 public class TriggerService {
 
     private final ActionsMetrics actionsMetrics;
-    private static final List<TriggerRequest> response = new ArrayList<TriggerRequest>(64);
+    private static final List<TriggerRequest> triggers = new ArrayList<TriggerRequest>(64);
 
     @Transactional
     public TriggerRequest storeTrigger(TriggerRequest request) {
         var timer = actionsMetrics.startTimer();
         try {
-            response.add(request);
-            actionsMetrics.incrementActionsCreated();
-            actionsMetrics.recordCreationTime(timer);
+            triggers.add(request);
             return request;
         } catch (Exception e) {
             actionsMetrics.incrementActionsFailed();
             throw e;
+        } finally {
+            actionsMetrics.incrementActionsCreated();
+            actionsMetrics.recordCreationTime(timer);
         }
     }
 
     public List<TriggerRequest> getAllTriggers() {
-        return response;
+        return triggers;
+    }
+
+    public TriggerRequest getTriggerByIdent(String triggerIdent) {
+        return triggers.stream().filter(t -> triggerIdent.equals(t.getTriggerIdent())).findFirst().orElse(null);
     }
 
 }

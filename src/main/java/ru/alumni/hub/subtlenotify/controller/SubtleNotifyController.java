@@ -5,13 +5,16 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import ru.alumni.hub.subtlenotify.model.Action;
 import ru.alumni.hub.subtlenotify.service.ActionService;
+import ru.alumni.hub.subtlenotify.service.SubtleNotifyService;
 import ru.alumni.hub.subtlenotify.service.TriggerService;
 import ru.alumni.hub.subtlenotify.types.ActionRequest;
 import ru.alumni.hub.subtlenotify.types.ActionResponse;
+import ru.alumni.hub.subtlenotify.types.NotificationResponse;
 import ru.alumni.hub.subtlenotify.types.TriggerRequest;
 
-import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -22,11 +25,17 @@ public class SubtleNotifyController {
 
     private final ActionService actionService;
     private final TriggerService triggerService;
+    private final SubtleNotifyService subtleNotifyService;
+
+    private static final List<NotificationResponse> notifications = new ArrayList<NotificationResponse>(64);
 
     @PostMapping("/action")
     public ResponseEntity<Map<String, Object>> createAction(@Valid @RequestBody ActionRequest actionRequest) {
         // Process the action
-        actionService.storeAction(actionRequest);
+        Action action = actionService.storeAction(actionRequest);
+
+        // Add notification if presented
+        subtleNotifyService.processAction(action).ifPresent(notifications::add);
 
         Map<String, Object> response = Map.of(
                 "status", "success",
@@ -47,30 +56,7 @@ public class SubtleNotifyController {
     }
 
     @GetMapping("/notifications")
-    public ResponseEntity<List<Map<String, Object>>> getNotifications() {
-        List<Map<String, Object>> notifications = List.of(
-                Map.of(
-                        "id", 1,
-                        "title", "Welcome to SubtleNotify",
-                        "message", "Your application is running successfully",
-                        "timestamp", LocalDateTime.now().minusHours(2).toString(),
-                        "read", false
-                ),
-                Map.of(
-                        "id", 2,
-                        "title", "System Update",
-                        "message", "New features are available",
-                        "timestamp", LocalDateTime.now().minusHours(1).toString(),
-                        "read", false
-                ),
-                Map.of(
-                        "id", 3,
-                        "title", "Action Completed",
-                        "message", "Your last action was executed successfully",
-                        "timestamp", LocalDateTime.now().minusMinutes(30).toString(),
-                        "read", true
-                )
-        );
+    public ResponseEntity<List<NotificationResponse>> getNotifications() {
         return ResponseEntity.ok(notifications);
     }
 

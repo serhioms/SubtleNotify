@@ -6,6 +6,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -52,6 +54,10 @@ public class TriggerRequest {
     }
 
     public Boolean getActualMiss() {
-        return actualMiss == null? false: actualMiss;
+        return actualMiss != null && actualMiss;
+    }
+
+    public List<String> getExpectWeekDaysList() {
+        return expectWeekDays == null || expectWeekDays.isBlank()? List.of(): List.of(expectWeekDays.split(","));
     }
 }

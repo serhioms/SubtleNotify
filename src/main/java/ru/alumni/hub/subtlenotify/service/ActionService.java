@@ -27,13 +27,13 @@ public class ActionService {
             action.setActionType(request.getActionType());
             action.setTimestamp(request.getTimestamp());
 
-            Action saved = actionsRepository.save(action);
-            actionsMetrics.incrementActionsCreated();
-            actionsMetrics.recordCreationTime(timer);
-            return saved;
+            return actionsRepository.save(action);
         } catch (Exception e) {
             actionsMetrics.incrementActionsFailed();
             throw e;
+        } finally {
+            actionsMetrics.incrementActionsCreated();
+            actionsMetrics.recordCreationTime(timer);
         }
     }
 
@@ -46,8 +46,8 @@ public class ActionService {
         return actionsRepository.saveAll(actions);
     }
 
-    public List<Action> getUserActions(String userId) {
-        return actionsRepository.findByUserId(userId);
+    public List<Action> getUserActions(String userId, String actionType) {
+        return actionsRepository.findByUserIdAndActionType(userId, actionType);
     }
 
     public List<ActionResponse> getAllActions() {
