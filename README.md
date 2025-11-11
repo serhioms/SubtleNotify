@@ -17,9 +17,9 @@
 
 - **GET /notifications** — получить все уведомления, сгенерированные системой
 
-- **GET /actions** показать все `action` с необязательным фильтром по `userId` и `actionType`
+- **GET [/actions](http://localhost:8080/api/subtlenotify/actions)** показать все `action` с необязательным фильтром по `userId` и `actionType`
 - **POST /trigger** записать триггер в БД
-- **GET /triggers** показать все `trigger` с необязательным фильтром по `actionType`
+- **GET [/triggers](http://localhost:8080/api/subtlenotify/triggers)** показать все `trigger` с необязательным фильтром по `actionType`
 - **GET /clean** почистить БД
 
 
