@@ -2,6 +2,7 @@ plugins {
     java
     id("org.springframework.boot") version "3.5.7"
     id("io.spring.dependency-management") version "1.1.7"
+    id("io.freefair.aspectj.post-compile-weaving") version "8.4"
 }
 
 group = "ru.alumni.hub"
@@ -26,15 +27,23 @@ repositories {
 
 dependencies {
     implementation("org.springframework.boot:spring-boot-starter-data-jpa")
-    implementation("org.springframework.boot:spring-boot-starter-data-rest")
+    implementation("org.springframework.boot:spring-boot-starter-web")
     implementation("org.springframework.boot:spring-boot-starter-validation")
-    implementation("jakarta.validation:jakarta.validation-api:3.0.2")
     implementation("org.springframework.boot:spring-boot-starter-actuator")
-    // Micrometer for metrics (Prometheus format)
-    implementation("io.micrometer:micrometer-registry-prometheus")
+    
+    // Springfox Swagger dependencies
+    implementation("io.springfox:springfox-boot-starter:3.0.0")
+    implementation("io.springfox:springfox-spring-web:3.0.0")
+    implementation("io.springfox:springfox-swagger2:3.0.0")
+    implementation("io.springfox:springfox-swagger-ui:3.0.0")
 
-    // Optional: Distributed tracing
-    implementation("io.micrometer:micrometer-tracing-bridge-brave")
+    // Logback JSON formatting
+    implementation("ch.qos.logback.contrib:logback-jackson:0.1.5")
+    implementation("ch.qos.logback.contrib:logback-json-classic:0.1.5")
+
+    // AspectJ for compile-time weaving
+    implementation("org.aspectj:aspectjrt:1.9.20")
+    aspect("org.springframework:spring-aspects")
 
     compileOnly("org.projectlombok:lombok")
     runtimeOnly("org.hsqldb:hsqldb")

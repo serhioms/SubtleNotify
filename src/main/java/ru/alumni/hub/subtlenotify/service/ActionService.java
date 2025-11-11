@@ -2,8 +2,11 @@ package ru.alumni.hub.subtlenotify.service;
 
 import io.micrometer.common.util.StringUtils;
 import lombok.RequiredArgsConstructor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import ru.alumni.hub.subtlenotify.exception.SubtleNotifyException;
 import ru.alumni.hub.subtlenotify.health.ActionsMetrics;
 import ru.alumni.hub.subtlenotify.model.Action;
 import ru.alumni.hub.subtlenotify.repository.ActionRepository;
@@ -12,15 +15,18 @@ import ru.alumni.hub.subtlenotify.types.ActionRequest;
 import java.time.temporal.WeekFields;
 import java.util.List;
 import java.util.Locale;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
 public class ActionService {
 
+    Logger LOGGER = LoggerFactory.getLogger(ActionService.class);
+
     private final ActionRepository actionsRepository;
     private final ActionsMetrics actionsMetrics;
 
-    public Action storeAction(ActionRequest request) {
+    public Optional<Action> storeAction(ActionRequest request) {
         var timer = actionsMetrics.startTimer();
         try {
             Action action = new Action();
@@ -30,14 +36,15 @@ public class ActionService {
             action.setDayOfYear(request.getTimestamp().getDayOfYear());
             action.setWeekOfYear(request.getTimestamp().get(WeekFields.of(Locale.getDefault()).weekOfYear()));
 
-            return actionsRepository.save(action);
+            return Optional.of(actionsRepository.save(action));
         } catch (Exception e) {
             actionsMetrics.incrementActionsFailed();
-            throw e;
+            LOGGER.error("Error while storing action", e);
         } finally {
             actionsMetrics.incrementActionsCreated();
             actionsMetrics.recordCreationTime(timer);
         }
+        return Optional.empty();
     }
 
     @Transactional
@@ -49,13 +56,13 @@ public class ActionService {
         return actionsRepository.saveAll(actions);
     }
 
-    public List<Action> getUserActions(String userId, String actionType, List<Integer> dayList, List<Integer> weekList) {
+    public List<Action> getUserActions(String userId, String actionType, List<Integer> dayList, List<Integer> weekList) throws SubtleNotifyException {
         if(! dayList.isEmpty() ) {
             return actionsRepository.findByUserIdAndActionTypeByDays(userId, actionType, dayList);
         } else if(! weekList.isEmpty() ) {
             return actionsRepository.findByUserIdAndActionTypeByWeeks(userId, actionType, weekList);
         } else {
-            throw new RuntimeException("Both filter of days and weeks should not be empty");
+            throw new SubtleNotifyException("Both filter of days and weeks should not be empty");
         }
     }
 

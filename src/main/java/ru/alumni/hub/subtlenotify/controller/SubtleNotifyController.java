@@ -16,6 +16,7 @@ import ru.alumni.hub.subtlenotify.types.TriggerRequest;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/subtlenotify")
@@ -30,9 +31,9 @@ public class SubtleNotifyController {
     @PostMapping("/action")
     public ResponseEntity<Map<String, Object>> createAction(@Valid @RequestBody ActionRequest actionRequest) {
 
-        Action action = actionService.storeAction(actionRequest);
+        Optional<Action> action = actionService.storeAction(actionRequest);
 
-        notificationService.generateNotification(action);
+        action.ifPresent(notificationService::generateNotification);
 
         Map<String, Object> response = Map.of(
                 "status", "success",

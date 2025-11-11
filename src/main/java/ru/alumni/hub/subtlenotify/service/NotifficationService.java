@@ -3,7 +3,10 @@ package ru.alumni.hub.subtlenotify.service;
 import io.micrometer.common.util.StringUtils;
 import jakarta.validation.constraints.NotNull;
 import lombok.RequiredArgsConstructor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
+import ru.alumni.hub.subtlenotify.exception.SubtleNotifyException;
 import ru.alumni.hub.subtlenotify.health.ActionsMetrics;
 import ru.alumni.hub.subtlenotify.model.Action;
 import ru.alumni.hub.subtlenotify.types.NotificationResponse;
@@ -20,6 +23,8 @@ import java.util.stream.Collectors;
 @Service
 @RequiredArgsConstructor
 public class NotifficationService {
+
+    Logger LOGGER = LoggerFactory.getLogger(NotifficationService.class);
 
     private static final List<NotificationResponse> notifications = new ArrayList<NotificationResponse>(64);
 
@@ -45,14 +50,14 @@ public class NotifficationService {
                 throw new RuntimeException("No triggers found for action: " + action);
             }
         } catch (Exception e) {
-            throw e;
+            LOGGER.error("Error while generating notification for action: " + action, e);
         } finally {
             actionsMetrics.incrementActionsCreated();
             actionsMetrics.recordCreationTime(timer);
         }
     }
 
-    public Optional<NotificationResponse> generateMissedNotification(Action action, TriggerRequest trigger) {
+    public Optional<NotificationResponse> generateMissedNotification(Action action, TriggerRequest trigger) throws SubtleNotifyException {
         if( trigger.getExpectEveryDays() != null) {
             // check if you missed action yesterday
             action.setTimestamp(action.minusDays(trigger.getExpectEveryDays()));
@@ -83,13 +88,17 @@ public class NotifficationService {
         return Optional.empty();
       }
 
-    private Optional<NotificationResponse> generateNormalNotification(Action action, TriggerRequest trigger) {
+    private Optional<NotificationResponse> generateNormalNotification(Action action, TriggerRequest trigger) throws SubtleNotifyException {
         int curWeekOfYear = action.weekOfYear();
         int curDayOfYear = action.getDayOfYear();
         int curHourOfDay = action.getHour();
 
         List<Integer> expectedDayList = getDaysInTriggerScope(curDayOfYear, trigger);
         List<Integer> expectedWeekList = getWeeksInTriggerScope(curWeekOfYear, trigger);
+
+        if( expectedDayList.isEmpty() && expectedWeekList.isEmpty()){
+            return Optional.empty(); // no statistics for today
+        }
 
         // select actions from DB for the last N days or weeks according to the trigger scope ordered by timestamp
         List<Action> actions = actionService.getUserActions(action.getUserId(), action.getActionType(), expectedDayList, expectedWeekList);
@@ -224,7 +233,6 @@ public class NotifficationService {
     }
 
     private void storeNotification(@NotNull NotificationResponse notificationResponse) {
-        System.out.println("Notification stored: " + notificationResponse);
         notifications.stream()
                 .filter(n -> n.getTimestamp().getDayOfYear() == notificationResponse.getTimestamp().getDayOfYear())
                 .filter(n -> n.getActionType().equals(notificationResponse.getActionType()))
