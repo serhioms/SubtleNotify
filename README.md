@@ -106,7 +106,7 @@
 - `expectWeekDays` - в какие дни ожидаются `action` на неделе из ряда "sun,mon,tue,wed,thu,fri,sat" и сколько недель подряд в `expectHowOften`
 - `expectEveryDays` - сколько  дней подряд (1) или через день (2) или каждый третий день (3) и т.д. ожидаются `action` и сколько дней подряд в `expectHowOften`
 - `expectFromHr` и `expectToHr` - ожидаемые часы `action` (по дефолту от 0 до 24 часов)
-- `missYesterday` - true/false флаг для вычисления случая когда предыдущая нотификация была пропущена (см примеры №6 "пьёт чай")
+- `missYesterday` - true/false флаг для вычисления случая когда предыдущая нотификация была пропущена (см примеры [№6 "пьёт чай"](https://github.com/serhioms/SubtleNotify?tab=readme-ov-file#:~:text=%D1%82%D1%80%D0%B5%D1%82%D0%B8%D0%B9%20%D1%86%D0%B8%D0%BA%D0%BB%20%D1%83%D0%B2%D0%B5%D0%B4%D0%BE%D0%BC%D0%B8%D1%82%D1%8C-,%D0%BF%D1%8C%D1%91%D1%82%20%D1%87%D0%B0%D0%B9,-%2D%20%D0%BA%D0%B0%D0%B6%D0%B4%D1%8B%D0%B9%20%D0%B2%D0%B5%D1%87%D0%B5%D1%80%20%D0%B8%D0%BB%D0%B8))
 > **PS:** Обязательно задавать одно из первых двух правил `expectWeekDays` или `expectEveryDays`, но не оба сразу
 
 
