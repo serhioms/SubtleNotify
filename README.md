@@ -18,11 +18,11 @@
 
 ## To view and test
 
-Here is [API](http://localhost:8080/swagger-ui/index.html)
+Here is [REST API](http://localhost:8080/swagger-ui/index.html)
 
 Here is [Postman Collection](src/test/postman/postman_collection.json)
 
-Here are [available Actuators](info/actuators.html)
+Here are available [Actuators](http://localhost:8080/actuators.html)
 
 
 
