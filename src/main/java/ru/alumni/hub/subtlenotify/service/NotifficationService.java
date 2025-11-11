@@ -58,9 +58,10 @@ public class NotifficationService {
                         if (selectedActions.isEmpty()) {
                             return;
                         } else if (trigger.getExpectWeekDays() != null) { // check actions for a week days pattern aka sun, mon ...
-                            if (!(trigger.getExpectWeekDays().equals(selectedActions.stream().map(Action::getDayOfWeek).distinct().collect(Collectors.joining(",")))
-                                    && selectedActions.size() == trigger.getExpectHowOften())) {
-                                return;
+                            if ( !trigger.getExpectWeekDays().equals(selectedActions.stream().map(Action::getDayOfWeek).distinct().collect(Collectors.joining(","))) ) {
+                                if ( trigger.getExpectHowOften() != selectedActions.stream().map(Action::getWeekOfYear).distinct().collect(Collectors.toSet()).size() ) {
+                                    return;
+                                }
                             }
                         } else if (trigger.getExpectEveryDays() != null) {  // check actions for every N days pattern aka every 1 day, every 2 days etc
                             int expectDays = trigger.getExpectEveryDays() * trigger.getExpectHowOften();
