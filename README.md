@@ -5,8 +5,8 @@
 ## Tech stack:
 • Java 17
 • Spring Boot 3.5.7
-• Gradle
 • HSQL
+• Gradle
 
 ## To compile
 
@@ -14,9 +14,9 @@
 
 ## To run
 
-• rgradle bootRun
+• gradle bootRun
 
-## To view and test
+## View and test
 
 Here is [REST API](http://localhost:8080/swagger-ui/index.html)
 
@@ -58,7 +58,7 @@ Here are available [Actuators](http://localhost:8080/actuators.html)
         "expectToHr" : 14,
         "actualWeekDays" : "sat,tue",
         "actualHours" : "5,6,7,8",
-        "missYesterday" : true/false
+        "missPreviousTime" : true/false
     }
   ```
   
@@ -98,7 +98,9 @@ Here are available [Actuators](http://localhost:8080/actuators.html)
 
 ## Архитектура
 
-Стандартный стэк Springboot сервисов - [SubtleNotifyController](src/main/java/ru/alumni/hub/subtlenotify/controller/SubtleNotifyController.java) ->  [Service](src/main/java/ru/alumni/hub/subtlenotify/service) ->  [Repository](src/main/java/ru/alumni/hub/subtlenotify/repository)
+** DB Schem [SubtleNotify](http://localhost:8080/SubtleNotifyDB.png
+
+**  Стандартный стэк Springboot сервисов - [SubtleNotifyController](src/main/java/ru/alumni/hub/subtlenotify/controller/SubtleNotifyController.java) ->  [Service](src/main/java/ru/alumni/hub/subtlenotify/service) ->  [Repository](src/main/java/ru/alumni/hub/subtlenotify/repository)
 
 Вместо того чтобы исполнять процедуру нотификации синхронно с REST вызовом `/action` , будем запускать её асинхронно.
 
