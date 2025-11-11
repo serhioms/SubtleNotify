@@ -29,13 +29,13 @@ public class NotifficationService {
     private final ActionService actionService;
     private final TriggerService triggerService;
 
-    public void generateNormalNotification(Action action) {
+    public void generateNotification(Action action) {
         var timer = actionsMetrics.startTimer();
         try {
             var triggers = triggerService.getTriggersByIdent(action.getActionType());
             if( !triggers.isEmpty() ) {
                 for (TriggerRequest trigger : triggers) {
-                    if( trigger.getMissYesterday() ) {
+                    if( trigger.isMissPreviousTime() ) {
                         generateMissedNotification(action, trigger).ifPresentOrElse( this::storeNotification, ()->{});
                     } else {
                         generateNormalNotification(action, trigger).ifPresentOrElse( this::storeNotification, ()->{});
@@ -53,16 +53,31 @@ public class NotifficationService {
     }
 
     public Optional<NotificationResponse> generateMissedNotification(Action action, TriggerRequest trigger) {
-        // check if you missed action yesterday
-        action.setTimestamp(action.getTimestamp().minusDays(1));
-        if(generateNormalNotification(action, trigger).isEmpty()) {
-            // check if you had notification the day before yesterday
-            action.setTimestamp(action.getTimestamp().minusDays(1));
-            Optional<NotificationResponse> notification = generateNormalNotification(action, trigger);
-            if (notification.isPresent()) {
-                // yeah, you missed it yesterday, and today you can't have notification then will generate it for tomorrow!
-                notification.get().setTimestamp(notification.get().getTimestamp().plusDays(2));
-                return notification;
+        if( trigger.getExpectEveryDays() != null) {
+            // check if you missed action yesterday
+            action.setTimestamp(action.minusDays(trigger.getExpectEveryDays()));
+            if (generateNormalNotification(action, trigger).isEmpty()) {
+                // check if you had notification the day before yesterday
+                action.setTimestamp(action.minusDays(trigger.getExpectEveryDays()));
+                Optional<NotificationResponse> notification = generateNormalNotification(action, trigger);
+                if (notification.isPresent()) {
+                    // yeah, you missed it yesterday, and today you can't have notification then will generate it for tomorrow!
+                    notification.get().setTimestamp(notification.get().getTimestamp().plusDays(2L*trigger.getExpectEveryDays()));
+                    return notification;
+                }
+            }
+        } else if( trigger.getExpectWeekDays() != null) {
+            // check if you missed action the previous week
+            action.setTimestamp(action.minusWeek());
+            if (generateNormalNotification(action, trigger).isEmpty()) {
+                // check if you had notification the week ago
+                action.setTimestamp(action.minusWeek());
+                Optional<NotificationResponse> notification = generateNormalNotification(action, trigger);
+                if (notification.isPresent()) {
+                    // yeah, you missed it two weeks ago, and today you can't have notification then will generate it for next week!
+                    notification.get().setTimestamp(notification.get().getTimestamp().plusWeeks(2L));
+                    return notification;
+                }
             }
         }
         return Optional.empty();

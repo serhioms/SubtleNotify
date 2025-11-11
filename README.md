@@ -177,7 +177,22 @@ next_time - on actualWeekDay or next expectWeekDay at actualHr or at expectFromH
     "expectHowOften" : 7,
     "expectFromHr" : 17,
     "expectToHr" : 19,
-    "missYesterday" : true
+    "missPreviousTime" : true
+}
+
+
+```json
+{
+    "triggerIdent": "drink_tee_sun_evening",
+    "triggerDescr" : "Если пользователь пьёт чай вечером по воскресениям, но один раз пропустил",
+    "notifIdent" : "drink_tee_today",
+    "notifDescr" : "Ваш вечерний чай сегодня в меню? 🍵",
+    "notifMoment" : "next_time",
+    "expectWeekDays" : "sun",
+    "expectHowOften" : 2,
+    "expectFromHr" : 17,
+    "expectToHr" : 19,
+    "missPreviousTime" : true
 }
 
 ```json

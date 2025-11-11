@@ -32,7 +32,7 @@ public class SubtleNotifyController {
 
         Action action = actionService.storeAction(actionRequest);
 
-        notificationService.generateNormalNotification(action);
+        notificationService.generateNotification(action);
 
         Map<String, Object> response = Map.of(
                 "status", "success",

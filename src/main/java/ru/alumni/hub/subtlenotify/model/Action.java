@@ -60,4 +60,12 @@ public class Action {
     public int getHour(){
         return timestamp.getHour();
     }
+
+    public LocalDateTime minusWeek() {
+        return timestamp.minusWeeks(1);
+    }
+
+    public LocalDateTime minusDays(int days) {
+        return timestamp.minusDays(days);
+    }
 }

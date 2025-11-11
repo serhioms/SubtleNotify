@@ -20,5 +20,4 @@ public class NotificationResponse {
 
     @NotNull(message = "actionType is required")
     private String actionType;
-
 }

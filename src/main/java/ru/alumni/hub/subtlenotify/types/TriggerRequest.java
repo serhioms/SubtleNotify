@@ -34,7 +34,7 @@ public class TriggerRequest {
     private String actualWeekDays;
     private String actualHours;
 
-    private Boolean missYesterday;
+    private Boolean missPreviousTime;
 
     // Frequently used functions and defaults
 
@@ -50,8 +50,8 @@ public class TriggerRequest {
         return expectToHr == null? 24: expectToHr;
     }
 
-    public Boolean getMissYesterday() {
-        return missYesterday != null && missYesterday;
+    public Boolean isMissPreviousTime() {
+        return missPreviousTime != null && missPreviousTime;
     }
 
     public List<String> getExpectWeekDaysList() {
