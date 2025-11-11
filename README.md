@@ -25,7 +25,7 @@
 
 **actionType** - имя триггера с соответствующими правилами и уведомлениями.
 
-### При каждом action-запросе исполнять процедуру:
+### При каждом КУЫЕ-action исполнять процедуру нотификации:
 
 - Записать action в БД
 - Сформировать статистику в виде ряда `timestamp` по конкретному `userId` и `actionType` в необходимых границах
@@ -50,7 +50,9 @@
 
 ## Архитектура
 
-Вместо того чтобы исполнять процедуру синхронно с REST вызовом `/action` , будем запускать её асинхронно.
+Стандартный стэк Springboot сервисов - [SubtleNotifyController.java](src/main/java/ru/alumni/hub/subtlenotify/controller/SubtleNotifyController.java) -> *Service -> Repository*
+
+Вместо того чтобы исполнять процедуру нотификации синхронно с REST вызовом `/action` , будем запускать её асинхронно.
 
 ### Плюсы/минусы:
 
@@ -76,10 +78,10 @@
 }
 ```
 
-- `expectWeekDays` - в какие дни ожидаются `action` на неделе из ряда "sun,mon,tue,wed,thu,fri,sat" и сколько недель подряд `expectHowOften`
-- `expectEveryDays` - сколько  дней подряд (1) или через день (2) или каждый третий день (3) и т.д. ожидаются `action` и сколько дней подряд `expectHowOften`
+- `expectWeekDays` - в какие дни ожидаются `action` на неделе из ряда "sun,mon,tue,wed,thu,fri,sat" и сколько недель подряд в `expectHowOften`
+- `expectEveryDays` - сколько  дней подряд (1) или через день (2) или каждый третий день (3) и т.д. ожидаются `action` и сколько дней подряд в `expectHowOften`
 - `expectFromHr` и `expectToHr` - ожидаемые часы `action` (по дефолту от 0 до 24 часов)
-> **PS:** Обязательно задать одно из первых двух правил `expectWeekDays` или `expectEveryDays`, но не оба сразу
+> **PS:** Обязательно задавать одно из первых двух правил `expectWeekDays` или `expectEveryDays`, но не оба сразу
 
 
 ### Структура уведомления:
