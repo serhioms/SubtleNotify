@@ -18,13 +18,11 @@
 
 ## To view and test
 
-FHere are actuators [End Point](http://localhost:8080/subtlenotify/healthcheck)
+Here is [API](http://localhost:8080/swagger-ui/index.html)
 
-Here is [Swagger Info](http://localhost:8080/subtlenotify/swagger-ui/index.html)
+Here is [Postman Collection](src/test/postman/postman_collection.json)
 
-Here is [Postman Tests Cases](src/test/postman/postman_collection.json)
-
-
+Here are [available Actuators](info/actuators.html)
 
 
 

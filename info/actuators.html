@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Spring Boot Actuator Endpoints</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: #f5f5f5;
+        }
+        h1 {
+            color: #6db33f;
+            border-bottom: 3px solid #6db33f;
+            padding-bottom: 10px;
+        }
+        h2 {
+            color: #34302d;
+            margin-top: 30px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background-color: white;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            margin-bottom: 30px;
+        }
+        th {
+            background-color: #6db33f;
+            color: white;
+            padding: 12px;
+            text-align: left;
+            font-weight: bold;
+        }
+        td {
+            padding: 10px 12px;
+            border-bottom: 1px solid #ddd;
+        }
+        tr:hover {
+            background-color: #f9f9f9;
+        }
+        code {
+            background-color: #f4f4f4;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-family: 'Courier New', monospace;
+            color: #d63384;
+        }
+        .config-section {
+            background-color: white;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+        }
+        .config-section pre {
+            background-color: #f8f9fa;
+            padding: 15px;
+            border-left: 4px solid #6db33f;
+            overflow-x: auto;
+            font-family: 'Courier New', monospace;
+        }
+        .note {
+            background-color: #fff3cd;
+            border-left: 4px solid #ffc107;
+            padding: 12px;
+            margin: 20px 0;
+        }
+        .access-urls {
+            background-color: #d1ecf1;
+            border-left: 4px solid #0dcaf0;
+            padding: 15px;
+            margin: 20px 0;
+        }
+        .access-urls ul {
+            list-style: none;
+            padding-left: 0;
+        }
+        .access-urls li {
+            margin: 8px 0;
+        }
+        a {
+            color: #0d6efd;
+            text-decoration: none;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+<h1>🍃 Spring Boot Actuator Endpoints</h1>
+
+<h2>Available Endpoints</h2>
+<table>
+    <thead>
+    <tr>
+        <th>Endpoint</th>
+        <th>Path</th>
+        <th>Description</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td><strong>actuator</strong></td>
+        <td><code>/actuator</code></td>
+        <td>Root endpoint that lists all available actuator endpoints</td>
+    </tr>
+    <tr>
+        <td><strong>health</strong></td>
+        <td><code>/actuator/health</code></td>
+        <td>Shows application health information</td>
+    </tr>
+    <tr>
+        <td><strong>info</strong></td>
+        <td><code>/actuator/info</code></td>
+        <td>Displays arbitrary application info</td>
+    </tr>
+    <tr>
+        <td><strong>metrics</strong></td>
+        <td><code>/actuator/metrics</code></td>
+        <td>Shows metrics information (JVM, CPU, memory, etc.)</td>
+    </tr>
+    <tr>
+        <td><strong>metrics/{metric}</strong></td>
+        <td><code>/actuator/metrics/{requiredMetricName}</code></td>
+        <td>Shows specific metric details</td>
+    </tr>
+    <tr>
+        <td><strong>env</strong></td>
+        <td><code>/actuator/env</code></td>
+        <td>Exposes properties from Spring's ConfigurableEnvironment</td>
+    </tr>
+    <tr>
+        <td><strong>beans</strong></td>
+        <td><code>/actuator/beans</code></td>
+        <td>Displays all Spring beans in the application</td>
+    </tr>
+    <tr>
+        <td><strong>configprops</strong></td>
+        <td><code>/actuator/configprops</code></td>
+        <td>Shows all @ConfigurationProperties</td>
+    </tr>
+    <tr>
+        <td><strong>loggers</strong></td>
+        <td><code>/actuator/loggers</code></td>
+        <td>Shows and modifies logger configurations</td>
+    </tr>
+    <tr>
+        <td><strong>loggers/{name}</strong></td>
+        <td><code>/actuator/loggers/{name}</code></td>
+        <td>Shows/modifies specific logger configuration</td>
+    </tr>
+    <tr>
+        <td><strong>httptrace</strong></td>
+        <td><code>/actuator/httptrace</code></td>
+        <td>Displays HTTP trace information (last 100 requests)</td>
+    </tr>
+    <tr>
+        <td><strong>mappings</strong></td>
+        <td><code>/actuator/mappings</code></td>
+        <td>Shows all @RequestMapping paths</td>
+    </tr>
+    <tr>
+        <td><strong>scheduledtasks</strong></td>
+        <td><code>/actuator/scheduledtasks</code></td>
+        <td>Displays scheduled tasks</td>
+    </tr>
+    <tr>
+        <td><strong>threaddump</strong></td>
+        <td><code>/actuator/threaddump</code></td>
+        <td>Performs a thread dump</td>
+    </tr>
+    <tr>
+        <td><strong>heapdump</strong></td>
+        <td><code>/actuator/heapdump</code></td>
+        <td>Returns a heap dump file (binary download)</td>
+    </tr>
+    <tr>
+        <td><strong>prometheus</strong></td>
+        <td><code>/actuator/prometheus</code></td>
+        <td>Exposes metrics in Prometheus format</td>
+    </tr>
+    <tr>
+        <td><strong>caches</strong></td>
+        <td><code>/actuator/caches</code></td>
+        <td>Shows available caches</td>
+    </tr>
+    <tr>
+        <td><strong>conditions</strong></td>
+        <td><code>/actuator/conditions</code></td>
+        <td>Shows auto-configuration conditions</td>
+    </tr>
+    <tr>
+        <td><strong>flyway</strong></td>
+        <td><code>/actuator/flyway</code></td>
+        <td>Shows Flyway database migrations (if applicable)</td>
+    </tr>
+    <tr>
+        <td><strong>liquibase</strong></td>
+        <td><code>/actuator/liquibase</code></td>
+        <td>Shows Liquibase database migrations (if applicable)</td>
+    </tr>
+    <tr>
+        <td><strong>sessions</strong></td>
+        <td><code>/actuator/sessions</code></td>
+        <td>Shows Spring Session information (if applicable)</td>
+    </tr>
+    <tr>
+        <td><strong>shutdown</strong></td>
+        <td><code>/actuator/shutdown</code></td>
+        <td>Gracefully shuts down the application (⚠️ disabled by default)</td>
+    </tr>
+    </tbody>
+</table>
+
+<div class="note">
+    <strong>⚠️ Note:</strong> By default, only <code>/actuator/health</code> and <code>/actuator/info</code> are exposed over HTTP for security reasons.
+</div>
+
+<h2>Configuration</h2>
+<div class="config-section">
+    <h3>Enable All Actuator Endpoints</h3>
+    <p>Add this to your <code>application.properties</code>:</p>
+    <pre># Expose all actuator endpoints
+management.endpoints.web.exposure.include=*
+
+# Or expose specific endpoints
+# management.endpoints.web.exposure.include=health,info,metrics,env,beans
+
+# Exclude specific endpoints
+# management.endpoints.web.exposure.exclude=shutdown
+
+# Show detailed health information
+management.endpoint.health.show-details=always
+
+# Change actuator base path (optional)
+# management.endpoints.web.base-path=/management
+
+# Enable specific endpoints
+management.endpoint.health.enabled=true
+management.endpoint.info.enabled=true
+management.endpoint.metrics.enabled=true</pre>
+</div>
+
+<h2>Access URLs</h2>
+<div class="access-urls">
+    <p><strong>With default configuration (assuming port 8080):</strong></p>
+    <ul>
+        <li><strong>Base:</strong> <a href="http://localhost:8080/actuator" target="_blank">http://localhost:8080/actuator</a></li>
+        <li><strong>Health:</strong> <a href="http://localhost:8080/actuator/health" target="_blank">http://localhost:8080/actuator/health</a></li>
+        <li><strong>Info:</strong> <a href="http://localhost:8080/actuator/info" target="_blank">http://localhost:8080/actuator/info</a></li>
+        <li><strong>Metrics:</strong> <a href="http://localhost:8080/actuator/metrics" target="_blank">http://localhost:8080/actuator/metrics</a></li>
+        <li><strong>Beans:</strong> <a href="http://localhost:8080/actuator/beans" target="_blank">http://localhost:8080/actuator/beans</a></li>
+        <li><strong>Mappings:</strong> <a href="http://localhost:8080/actuator/mappings" target="_blank">http://localhost:8080/actuator/mappings</a></li>
+    </ul>
+    <p><em>Note: Replace <code>localhost:8080</code> with your actual host and port if different.</em></p>
+</div>
+
+</body>
+</html>

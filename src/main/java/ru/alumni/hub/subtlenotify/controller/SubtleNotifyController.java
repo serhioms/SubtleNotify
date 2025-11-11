@@ -19,7 +19,7 @@ import java.util.Map;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/api/subtlenotify")
 @RequiredArgsConstructor
 public class SubtleNotifyController {
 
