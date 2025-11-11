@@ -83,9 +83,15 @@
         a {
             color: #0d6efd;
             text-decoration: none;
+            font-weight: 500;
         }
         a:hover {
             text-decoration: underline;
+            color: #0a58ca;
+        }
+        .link-icon {
+            margin-left: 5px;
+            font-size: 0.9em;
         }
     </style>
 </head>
@@ -97,126 +103,116 @@
     <thead>
     <tr>
         <th>Endpoint</th>
-        <th>Path</th>
+        <th>URL</th>
         <th>Description</th>
     </tr>
     </thead>
     <tbody>
     <tr>
         <td><strong>actuator</strong></td>
-        <td><code>/actuator</code></td>
+        <td><a href="http://localhost:8080/actuator" target="_blank">http://localhost:8080/actuator</a> <span class="link-icon">🔗</span></td>
         <td>Root endpoint that lists all available actuator endpoints</td>
     </tr>
     <tr>
         <td><strong>health</strong></td>
-        <td><code>/actuator/health</code></td>
+        <td><a href="http://localhost:8080/actuator/health" target="_blank">http://localhost:8080/actuator/health</a> <span class="link-icon">🔗</span></td>
         <td>Shows application health information</td>
     </tr>
     <tr>
         <td><strong>info</strong></td>
-        <td><code>/actuator/info</code></td>
+        <td><a href="http://localhost:8080/actuator/info" target="_blank">http://localhost:8080/actuator/info</a> <span class="link-icon">🔗</span></td>
         <td>Displays arbitrary application info</td>
     </tr>
     <tr>
         <td><strong>metrics</strong></td>
-        <td><code>/actuator/metrics</code></td>
+        <td><a href="http://localhost:8080/actuator/metrics" target="_blank">http://localhost:8080/actuator/metrics</a> <span class="link-icon">🔗</span></td>
         <td>Shows metrics information (JVM, CPU, memory, etc.)</td>
     </tr>
     <tr>
-        <td><strong>metrics/{metric}</strong></td>
-        <td><code>/actuator/metrics/{requiredMetricName}</code></td>
-        <td>Shows specific metric details</td>
-    </tr>
-    <tr>
         <td><strong>env</strong></td>
-        <td><code>/actuator/env</code></td>
+        <td><a href="http://localhost:8080/actuator/env" target="_blank">http://localhost:8080/actuator/env</a> <span class="link-icon">🔗</span></td>
         <td>Exposes properties from Spring's ConfigurableEnvironment</td>
     </tr>
     <tr>
         <td><strong>beans</strong></td>
-        <td><code>/actuator/beans</code></td>
+        <td><a href="http://localhost:8080/actuator/beans" target="_blank">http://localhost:8080/actuator/beans</a> <span class="link-icon">🔗</span></td>
         <td>Displays all Spring beans in the application</td>
     </tr>
     <tr>
         <td><strong>configprops</strong></td>
-        <td><code>/actuator/configprops</code></td>
+        <td><a href="http://localhost:8080/actuator/configprops" target="_blank">http://localhost:8080/actuator/configprops</a> <span class="link-icon">🔗</span></td>
         <td>Shows all @ConfigurationProperties</td>
     </tr>
     <tr>
         <td><strong>loggers</strong></td>
-        <td><code>/actuator/loggers</code></td>
+        <td><a href="http://localhost:8080/actuator/loggers" target="_blank">http://localhost:8080/actuator/loggers</a> <span class="link-icon">🔗</span></td>
         <td>Shows and modifies logger configurations</td>
     </tr>
     <tr>
-        <td><strong>loggers/{name}</strong></td>
-        <td><code>/actuator/loggers/{name}</code></td>
-        <td>Shows/modifies specific logger configuration</td>
-    </tr>
-    <tr>
         <td><strong>httptrace</strong></td>
-        <td><code>/actuator/httptrace</code></td>
+        <td><a href="http://localhost:8080/actuator/httptrace" target="_blank">http://localhost:8080/actuator/httptrace</a> <span class="link-icon">🔗</span></td>
         <td>Displays HTTP trace information (last 100 requests)</td>
     </tr>
     <tr>
         <td><strong>mappings</strong></td>
-        <td><code>/actuator/mappings</code></td>
+        <td><a href="http://localhost:8080/actuator/mappings" target="_blank">http://localhost:8080/actuator/mappings</a> <span class="link-icon">🔗</span></td>
         <td>Shows all @RequestMapping paths</td>
     </tr>
     <tr>
         <td><strong>scheduledtasks</strong></td>
-        <td><code>/actuator/scheduledtasks</code></td>
+        <td><a href="http://localhost:8080/actuator/scheduledtasks" target="_blank">http://localhost:8080/actuator/scheduledtasks</a> <span class="link-icon">🔗</span></td>
         <td>Displays scheduled tasks</td>
     </tr>
     <tr>
         <td><strong>threaddump</strong></td>
-        <td><code>/actuator/threaddump</code></td>
+        <td><a href="http://localhost:8080/actuator/threaddump" target="_blank">http://localhost:8080/actuator/threaddump</a> <span class="link-icon">🔗</span></td>
         <td>Performs a thread dump</td>
     </tr>
     <tr>
         <td><strong>heapdump</strong></td>
-        <td><code>/actuator/heapdump</code></td>
+        <td><a href="http://localhost:8080/actuator/heapdump" target="_blank">http://localhost:8080/actuator/heapdump</a> <span class="link-icon">🔗</span></td>
         <td>Returns a heap dump file (binary download)</td>
     </tr>
     <tr>
         <td><strong>prometheus</strong></td>
-        <td><code>/actuator/prometheus</code></td>
+        <td><a href="http://localhost:8080/actuator/prometheus" target="_blank">http://localhost:8080/actuator/prometheus</a> <span class="link-icon">🔗</span></td>
         <td>Exposes metrics in Prometheus format</td>
     </tr>
     <tr>
         <td><strong>caches</strong></td>
-        <td><code>/actuator/caches</code></td>
+        <td><a href="http://localhost:8080/actuator/caches" target="_blank">http://localhost:8080/actuator/caches</a> <span class="link-icon">🔗</span></td>
         <td>Shows available caches</td>
     </tr>
     <tr>
         <td><strong>conditions</strong></td>
-        <td><code>/actuator/conditions</code></td>
+        <td><a href="http://localhost:8080/actuator/conditions" target="_blank">http://localhost:8080/actuator/conditions</a> <span class="link-icon">🔗</span></td>
         <td>Shows auto-configuration conditions</td>
     </tr>
     <tr>
         <td><strong>flyway</strong></td>
-        <td><code>/actuator/flyway</code></td>
+        <td><a href="http://localhost:8080/actuator/flyway" target="_blank">http://localhost:8080/actuator/flyway</a> <span class="link-icon">🔗</span></td>
         <td>Shows Flyway database migrations (if applicable)</td>
     </tr>
     <tr>
         <td><strong>liquibase</strong></td>
-        <td><code>/actuator/liquibase</code></td>
+        <td><a href="http://localhost:8080/actuator/liquibase" target="_blank">http://localhost:8080/actuator/liquibase</a> <span class="link-icon">🔗</span></td>
         <td>Shows Liquibase database migrations (if applicable)</td>
     </tr>
     <tr>
         <td><strong>sessions</strong></td>
-        <td><code>/actuator/sessions</code></td>
+        <td><a href="http://localhost:8080/actuator/sessions" target="_blank">http://localhost:8080/actuator/sessions</a> <span class="link-icon">🔗</span></td>
         <td>Shows Spring Session information (if applicable)</td>
     </tr>
     <tr>
         <td><strong>shutdown</strong></td>
-        <td><code>/actuator/shutdown</code></td>
-        <td>Gracefully shuts down the application (⚠️ disabled by default)</td>
+        <td><code>http://localhost:8080/actuator/shutdown</code></td>
+        <td>⚠️ Gracefully shuts down the application (disabled by default, requires POST)</td>
     </tr>
     </tbody>
 </table>
 
 <div class="note">
-    <strong>⚠️ Note:</strong> By default, only <code>/actuator/health</code> and <code>/actuator/info</code> are exposed over HTTP for security reasons.
+    <strong>⚠️ Note:</strong> By default, only <code>/actuator/health</code> and <code>/actuator/info</code> are exposed over HTTP for security reasons. To enable all endpoints, configure your <code>application.properties</code> as shown below.
 </div>
 
 <h2>Configuration</h2>
@@ -235,27 +231,23 @@ management.endpoints.web.exposure.include=*
 # Show detailed health information
 management.endpoint.health.show-details=always
 
-# Change actuator base path (optional)
-# management.endpoints.web.base-path=/management
-
 # Enable specific endpoints
 management.endpoint.health.enabled=true
 management.endpoint.info.enabled=true
 management.endpoint.metrics.enabled=true</pre>
 </div>
 
-<h2>Access URLs</h2>
+<h2>Quick Access</h2>
 <div class="access-urls">
-    <p><strong>With default configuration (assuming port 8080):</strong></p>
+    <p><strong>Most Common Endpoints:</strong></p>
     <ul>
-        <li><strong>Base:</strong> <a href="http://localhost:8080/actuator" target="_blank">http://localhost:8080/actuator</a></li>
-        <li><strong>Health:</strong> <a href="http://localhost:8080/actuator/health" target="_blank">http://localhost:8080/actuator/health</a></li>
-        <li><strong>Info:</strong> <a href="http://localhost:8080/actuator/info" target="_blank">http://localhost:8080/actuator/info</a></li>
-        <li><strong>Metrics:</strong> <a href="http://localhost:8080/actuator/metrics" target="_blank">http://localhost:8080/actuator/metrics</a></li>
-        <li><strong>Beans:</strong> <a href="http://localhost:8080/actuator/beans" target="_blank">http://localhost:8080/actuator/beans</a></li>
-        <li><strong>Mappings:</strong> <a href="http://localhost:8080/actuator/mappings" target="_blank">http://localhost:8080/actuator/mappings</a></li>
+        <li>📋 <strong>All Endpoints:</strong> <a href="http://localhost:8080/actuator" target="_blank">http://localhost:8080/actuator</a></li>
+        <li>❤️ <strong>Health Check:</strong> <a href="http://localhost:8080/actuator/health" target="_blank">http://localhost:8080/actuator/health</a></li>
+        <li>ℹ️ <strong>Application Info:</strong> <a href="http://localhost:8080/actuator/info" target="_blank">http://localhost:8080/actuator/info</a></li>
+        <li>📊 <strong>Metrics:</strong> <a href="http://localhost:8080/actuator/metrics" target="_blank">http://localhost:8080/actuator/metrics</a></li>
+        <li>🗺️ <strong>API Mappings:</strong> <a href="http://localhost:8080/actuator/mappings" target="_blank">http://localhost:8080/actuator/mappings</a></li>
+        <li>🌱 <strong>Spring Beans:</strong> <a href="http://localhost:8080/actuator/beans" target="_blank">http://localhost:8080/actuator/beans</a></li>
     </ul>
-    <p><em>Note: Replace <code>localhost:8080</code> with your actual host and port if different.</em></p>
 </div>
 
 </body>
