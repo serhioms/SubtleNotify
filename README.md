@@ -2,6 +2,32 @@
 
 Уведомления не случайны, т.е. предсказуемы, но не очевидным образом. Поэтому проект называется **SubtleNotify** - тонкое уведомление.
 
+## Tech stack:
+• Java 17
+• Spring Boot 3.5.7
+• Gradle
+• HSQL
+
+## To compile
+
+• gradle
+
+## To run
+
+• rgradle bootRun
+
+## To view and test
+
+FHere are actuators [End Point](http://localhost:8080/subtlenotify/healthcheck)
+
+Here is [Swagger Info](http://localhost:8080/subtlenotify/swagger-ui/index.html)
+
+Here is [Postman Tests Cases](src/test/postman/postman_collection.json)
+
+
+
+
+
 ## Сервисы
 
 ### REST API с методами:

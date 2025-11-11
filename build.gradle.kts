@@ -30,12 +30,9 @@ dependencies {
     implementation("org.springframework.boot:spring-boot-starter-web")
     implementation("org.springframework.boot:spring-boot-starter-validation")
     implementation("org.springframework.boot:spring-boot-starter-actuator")
-    
-    // Springfox Swagger dependencies
-    implementation("io.springfox:springfox-boot-starter:3.0.0")
-    implementation("io.springfox:springfox-spring-web:3.0.0")
-    implementation("io.springfox:springfox-swagger2:3.0.0")
-    implementation("io.springfox:springfox-swagger-ui:3.0.0")
+
+    // RSpringDoc OpenAPI (compatible with Spring Boot 3.x)
+    implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:2.2.0")
 
     // Logback JSON formatting
     implementation("ch.qos.logback.contrib:logback-jackson:0.1.5")
