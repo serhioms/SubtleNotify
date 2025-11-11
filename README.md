@@ -17,7 +17,7 @@
 
 - **GET /notifications** — получить все уведомления, сгенерированные системой
 
-- **POST/GET сервисы для добавления триггеров
+- **POST/GET сервисы для добавления триггеров, чистки БД
 
 > **PS:** Чуть изменил контракт... Единственное число принято в нэйминге где это возможно. Допускаются смысловые исключения, поэтому `action` вместо `actions`.
 
@@ -27,16 +27,17 @@
 
 ### При каждом action-запросе исполнять процедуру:
 
-- Формировать статистики по конкретному `userId` и `actionType` по ряду `timestamp` 
-- Применять правила соответствующие триггеру строго
-- Если какое-либо правило срабатывает, то сохраняем "непредсказуемое" уведомление в БД
+- Записать action в БД
+- Сформировать ряд `timestamp` по конкретному `userId` и `actionType` в необходимых границах
+- Найти триггер соответствующий `actionType` и применить правила к ряду `timestamp`
+- Если какое-либо правило срабатывает, то сохраняем "непредсказуемое" уведомление в БД избегая дублей
 
-> **PS:** Ограничимся понедельными уведомлениями. Помесячные и годовые уведомления ожидаются в следующих версиях программы.
+> **PS:** Ограничимся понедельными уведомлениями. Помесячные и годовые уведомления ожидаются в следующих версиях программы.<br/>
 > **PS:** Не предусматривается никаких ограничений для "надоедливых сообщений"
 
 ## Архитектура
 
-Вместо того чтобы исполнять процедуру синхронно с REST вызовом, нужно запускать её асинхронные.
+Вместо того чтобы исполнять процедуру синхронно с REST вызовом, будем запускать её асинхронно.
 
 ### Плюсы/минусы:
 
@@ -46,34 +47,11 @@
 
 ### Ключевые классы:
 
-  ```json
-{
-    "triggerIdent": "order_lunch_delivery",
-    "triggerDescr" : "Если человек заказывает доставку в обед через один день",
-    "notifIdent" : "think_about_dinner",
-    "notifDescr" : "Похоже, пора думать про вкусный обед 🍝",
-    "notifMoment" : "immediately , next_time",
-    "expectWeekDays" : "sun,mon,tue,wed,thu,fri,sat",        default null
-    "expectEveryDays" : 1,        через каждые N дней        default null
-    "expectHowOften" : 2,                                   default 0
-    "expectWeeks" : 2,                                      default 0
-    "expectFromHr" : 11,                                    default 0
-    "expectToHr" : 14,                                      default 24
-    "actualWeekDays" : "sat,tue",                            default null
-    "actualHours" : "5,6,7,8:50",                              default null
-    "missYesterday" : true                                  default false
-}
 
-if (expectStraightDays(howManyWeeks, history) or expectEveryDay(howManyWeeks, history) or expectWeekDays(howManyWeeks, history))
-and ( (expectFromHr < expectToHr and curtHr >= expectFromHr and curHr <= expectToHr) or ((expectFromHr > expectToHr and (curtHr <= expectFromHr or curHr >= expectToHr))))
-and ( curWeekDay in actualWeekDay)
-and ( curHr in actualHr)
-then true
 
-when:
-immediately - on action arrives plus couple minutes
-or
-next_time - on actualWeekDay or next expectWeekDay at actualHr or at expectFromHr minus some minutes
+
+
+### Тэст-кейсы:
 
   ```json
 {
@@ -87,7 +65,8 @@ next_time - on actualWeekDay or next expectWeekDay at actualHr or at expectFromH
     "expectFromHr" : 21,
     "expectToHr" : 2
 }
-        
+```
+
   ```json
 {
     "triggerIdent": "order_lunch_delivery",
@@ -100,7 +79,8 @@ next_time - on actualWeekDay or next expectWeekDay at actualHr or at expectFromH
     "expectFromHr" : 11,
     "expectToHr" : "14"
 }
-    
+ ```
+
   ```json
 {
     "triggerIdent": "openapp_morning",
@@ -114,6 +94,7 @@ next_time - on actualWeekDay or next expectWeekDay at actualHr or at expectFromH
     "expectToHr" : 11,
     "actuaHours" : "5,6,7,8"
 }
+```
 
 ```json
 {
@@ -127,6 +108,7 @@ next_time - on actualWeekDay or next expectWeekDay at actualHr or at expectFromH
     "expectFromHr" : 9,
     "expectToHr" : 10
 }
+```
 
 ```json
 {
@@ -139,6 +121,7 @@ next_time - on actualWeekDay or next expectWeekDay at actualHr or at expectFromH
     "actualWeekDays" : "tue",
     "actuaHours" : "8"
 }
+```
 
 ```json
 {
@@ -152,7 +135,8 @@ next_time - on actualWeekDay or next expectWeekDay at actualHr or at expectFromH
     "actualWeekDays" : "sat",
     "actuaHours" : "18"
 }
-            
+ ```
+
 ```json
 {
     "triggerIdent": "order_lunch_delivery",
@@ -165,6 +149,7 @@ next_time - on actualWeekDay or next expectWeekDay at actualHr or at expectFromH
     "expectFromHr" : 11,
     "expectToHr" : 14
 }
+```
 
 ```json
 {
@@ -179,7 +164,7 @@ next_time - on actualWeekDay or next expectWeekDay at actualHr or at expectFromH
     "expectToHr" : 19,
     "missPreviousTime" : true
 }
-
+```
 
 ```json
 {
@@ -194,6 +179,7 @@ next_time - on actualWeekDay or next expectWeekDay at actualHr or at expectFromH
     "expectToHr" : 19,
     "missPreviousTime" : true
 }
+```
 
 ```json
 {
@@ -207,6 +193,7 @@ next_time - on actualWeekDay or next expectWeekDay at actualHr or at expectFromH
     "expectFromHr" : 10,
     "expectToHr" : 12
 }
+```
 
 ```json
 {
@@ -221,6 +208,7 @@ next_time - on actualWeekDay or next expectWeekDay at actualHr or at expectFromH
     "expectToHr" : 17,
     "actualHours" : "10"
 }
+```
 
 ```json
 {
@@ -234,7 +222,8 @@ next_time - on actualWeekDay or next expectWeekDay at actualHr or at expectFromH
     "expectFromHr" : 9,
     "expectToHr" : 5
 }
-        
+ ```
+
 ## Эвристика непредсказуемости
 
 Обыкновенное условное правило "если-то" с соответствующим уведомлением. Например, если статистика удовлетворяет некоторому условию, то применить уведомление. Если уведомлений несколько, выбрать одно случайным образом.
