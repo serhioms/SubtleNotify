@@ -95,7 +95,7 @@
 
  ```json
 {
-    ***,
+    ***
     “notifMoment” : “immediately | next_time”,
     "actualWeekDays" : "sat,tue",
     "actualHours" : "5,6,7,8", 
