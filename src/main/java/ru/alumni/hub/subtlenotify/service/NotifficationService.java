@@ -4,7 +4,6 @@ import io.micrometer.common.util.StringUtils;
 import jakarta.validation.constraints.NotNull;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 import ru.alumni.hub.subtlenotify.health.ActionsMetrics;
 import ru.alumni.hub.subtlenotify.model.Action;
 import ru.alumni.hub.subtlenotify.types.NotificationResponse;
@@ -14,6 +13,7 @@ import java.time.DayOfWeek;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -29,73 +29,91 @@ public class NotifficationService {
     private final ActionService actionService;
     private final TriggerService triggerService;
 
-    @Transactional
-    public void generateNotification(Action action) {
+    public void generateNormalNotification(Action action) {
         var timer = actionsMetrics.startTimer();
         try {
             var triggers = triggerService.getTriggersByIdent(action.getActionType());
-                if( !triggers.isEmpty() ) {
-                    for (TriggerRequest trigger : triggers) {
-                        int curWeekOfYear = action.weekOfYear();
-                        int curDayOfYear = action.getDayOfYear();
-                        int curHourOfDay = action.getHour();
-
-                        List<Integer> expectedDayList = getDaysInTriggerScope(curDayOfYear, trigger);
-                        List<Integer> expectedWeekList = getWeeksInTriggerScope(curWeekOfYear, trigger);
-
-                        // select actions from DB for the last N days or weeks according to the trigger scope ordered by timestamp
-                        List<Action> actions = actionService.getUserActions(action.getUserId(), action.getActionType(), expectedDayList, expectedWeekList);
-
-                        // filter actions by expected date and time and once for the day
-                        List<Integer> onceForDay = new ArrayList<>(64);
-                        List<Action> selectedActions = actions.stream()
-                                .filter(a -> checkRightTime(a.getHour(), trigger.getExpectFromHr(), trigger.getExpectToHr()) ||  checkRightTime(a.getHour(), trigger.getActualHoursList()))
-                                .filter(a -> checkRightDays(a.getDayOfWeek(), trigger.getExpectWeekDaysList()) || checkRightDays(a.getDayOfWeek(), trigger.getActualWeekDaysList()))
-                                .filter(a -> isOnceForDay(onceForDay, a.getTimestamp().getDayOfYear()))
-                                .toList();
-
-                        // filter actions by pattern
-                        if (selectedActions.isEmpty()) {
-                            return;
-                        } else if (trigger.getExpectWeekDays() != null) { // check actions for a week days pattern aka sun, mon ...
-                            if ( !trigger.getExpectWeekDays().equals(selectedActions.stream().map(Action::getDayOfWeek).distinct().collect(Collectors.joining(","))) ) {
-                                if ( trigger.getExpectHowOften() != selectedActions.stream().map(Action::getWeekOfYear).distinct().collect(Collectors.toSet()).size() ) {
-                                    return;
-                                }
-                            }
-                        } else if (trigger.getExpectEveryDays() != null) {  // check actions for every N days pattern aka every 1 day, every 2 days etc
-                            int expectDays = trigger.getExpectEveryDays() * trigger.getExpectHowOften();
-                            Set<Integer> selectDays = selectedActions.stream().map(Action::getDayOfYear).collect(Collectors.toSet());
-                            for (int day = curDayOfYear, step = trigger.getExpectEveryDays(), min = curDayOfYear - expectDays; day > min; day -= step) {
-                                if (!selectDays.contains(day)) {
-                                    return;
-                                }
-                            }
-                            // check if you missed action yesterday
-                            if( trigger.getMissYesterday() ){
-
-                            }
-                        }
-
-                        // filter by actual hours
-                        if (!StringUtils.isBlank(trigger.getActualHours()) && trigger.getActualWeekDaysList().contains(action.getDayOfWeek())) {
-                            if (trigger.getActualHoursList().stream().map(Integer::valueOf).noneMatch(h -> h == curHourOfDay)) {
-                                return;
-                            }
-                        }
-
-                        // store notification
-                        storeNotification(new NotificationResponse(notificationDateTime(action, trigger), trigger.getNotifDescr(), action.getActionType()));
+            if( !triggers.isEmpty() ) {
+                for (TriggerRequest trigger : triggers) {
+                    if( trigger.getMissYesterday() ) {
+                        generateMissedNotification(action, trigger).ifPresentOrElse( this::storeNotification, ()->{});
+                    } else {
+                        generateNormalNotification(action, trigger).ifPresentOrElse( this::storeNotification, ()->{});
                     }
-                } else {
-                    System.out.println("No triggers found for action: " + action);
                 }
+            } else {
+                throw new RuntimeException("No triggers found for action: " + action);
+            }
         } catch (Exception e) {
             throw e;
         } finally {
             actionsMetrics.incrementActionsCreated();
             actionsMetrics.recordCreationTime(timer);
         }
+    }
+
+    public Optional<NotificationResponse> generateMissedNotification(Action action, TriggerRequest trigger) {
+        // check if you missed action yesterday
+        action.setTimestamp(action.getTimestamp().minusDays(1));
+        if(generateNormalNotification(action, trigger).isEmpty()) {
+            // check if you had notification the day before yesterday
+            action.setTimestamp(action.getTimestamp().minusDays(1));
+            Optional<NotificationResponse> notification = generateNormalNotification(action, trigger);
+            if (notification.isPresent()) {
+                // yeah, you missed it yesterday, and today you can't have notification then will generate it for tomorrow!
+                notification.get().setTimestamp(notification.get().getTimestamp().plusDays(2));
+                return notification;
+            }
+        }
+        return Optional.empty();
+      }
+
+    private Optional<NotificationResponse> generateNormalNotification(Action action, TriggerRequest trigger) {
+        int curWeekOfYear = action.weekOfYear();
+        int curDayOfYear = action.getDayOfYear();
+        int curHourOfDay = action.getHour();
+
+        List<Integer> expectedDayList = getDaysInTriggerScope(curDayOfYear, trigger);
+        List<Integer> expectedWeekList = getWeeksInTriggerScope(curWeekOfYear, trigger);
+
+        // select actions from DB for the last N days or weeks according to the trigger scope ordered by timestamp
+        List<Action> actions = actionService.getUserActions(action.getUserId(), action.getActionType(), expectedDayList, expectedWeekList);
+
+        // filter actions by expected date and time and once for the day
+        List<Integer> onceForDay = new ArrayList<>(64);
+        List<Action> selectedActions = actions.stream()
+                .filter(a -> checkRightTime(a.getHour(), trigger.getExpectFromHr(), trigger.getExpectToHr()) ||  checkRightTime(a.getHour(), trigger.getActualHoursList()))
+                .filter(a -> checkRightDays(a.getDayOfWeek(), trigger.getExpectWeekDaysList()) || checkRightDays(a.getDayOfWeek(), trigger.getActualWeekDaysList()))
+                .filter(a -> isOnceForDay(onceForDay, a.getTimestamp().getDayOfYear()))
+                .toList();
+
+        // filter actions by pattern
+        if (selectedActions.isEmpty()) {
+            return Optional.empty();
+        } else if (trigger.getExpectWeekDays() != null) { // check actions for a week days pattern aka sun, mon ...
+            if ( !( trigger.getExpectWeekDays().equals(selectedActions.stream().map(Action::getDayOfWeek).distinct().collect(Collectors.joining(",")))
+                && trigger.getExpectHowOften() == selectedActions.stream().map(Action::getWeekOfYear).distinct().collect(Collectors.toSet()).size()) ) {
+                return Optional.empty();
+            }
+        } else if (trigger.getExpectEveryDays() != null) {  // check actions for every N days pattern aka every 1 day, every 2 days etc
+            int expectDays = trigger.getExpectEveryDays() * trigger.getExpectHowOften();
+            Set<Integer> selectDays = selectedActions.stream().map(Action::getDayOfYear).collect(Collectors.toSet());
+            for (int day = curDayOfYear, step = trigger.getExpectEveryDays(), min = curDayOfYear - expectDays; day > min; day -= step) {
+                if (!selectDays.contains(day)) {
+                    return Optional.empty();
+                }
+            }
+        }
+
+        // filter by actual hours
+        if (!StringUtils.isBlank(trigger.getActualHours()) && trigger.getActualWeekDaysList().contains(action.getDayOfWeek())) {
+            if (trigger.getActualHoursList().stream().map(Integer::valueOf).noneMatch(h -> h == curHourOfDay)) {
+                return Optional.empty();
+            }
+        }
+
+        // return notification
+        return Optional.of(new NotificationResponse(notificationDateTime(action, trigger), trigger.getNotifDescr(), action.getActionType()));
     }
 
     private boolean isOnceForDay(List<Integer> onceForDay, Integer dayOfYear) {

@@ -205,8 +205,21 @@ next_time - on actualWeekDay or next expectWeekDay at actualHr or at expectFromH
     "expectFromHr" : 13,
     "expectToHr" : 17,
     "actualHours" : "10"
-}        
+}
 
+```json
+{
+    "triggerIdent" : "likes_only_one",
+    "triggerDescr" : "Если пользователь каждую среду ставит лайки одному автору",
+    "notifIdent" : "inspiration_mood",
+    "notifDescr" : "Сегодня день крутых открытий. Готов к вдохновению? ✨",
+    "notifMoment" : "next_time",
+    "expectWeekDays" : "wed",
+    "expectHowOften" : 2,
+    "expectFromHr" : 9,
+    "expectToHr" : 5
+}
+        
 ## Эвристика непредсказуемости
 
 Обыкновенное условное правило "если-то" с соответствующим уведомлением. Например, если статистика удовлетворяет некоторому условию, то применить уведомление. Если уведомлений несколько, выбрать одно случайным образом.
