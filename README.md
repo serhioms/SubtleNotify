@@ -25,7 +25,7 @@
 
 **actionType** - имя триггера с соответствующими правилами и уведомлениями.
 
-### При каждом КУЫЕ-action исполнять процедуру нотификации:
+### При каждом REST-action исполнять процедуру нотификации:
 
 - Записать action в БД
 - Сформировать статистику в виде ряда `timestamp` по конкретному `userId` и `actionType` в необходимых границах
@@ -50,7 +50,7 @@
 
 ## Архитектура
 
-Стандартный стэк Springboot сервисов - [SubtleNotifyController.java](src/main/java/ru/alumni/hub/subtlenotify/controller/SubtleNotifyController.java) -> *Service -> Repository*
+Стандартный стэк Springboot сервисов - [SubtleNotifyController](src/main/java/ru/alumni/hub/subtlenotify/controller/SubtleNotifyController.java) ->  [Service](src/main/java/ru/alumni/hub/subtlenotify/service) ->  [Repository](src/main/java/ru/alumni/hub/subtlenotify/repository)*
 
 Вместо того чтобы исполнять процедуру нотификации синхронно с REST вызовом `/action` , будем запускать её асинхронно.
 
