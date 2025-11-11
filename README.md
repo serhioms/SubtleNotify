@@ -21,21 +21,21 @@
 
 - **POST /trigger** записать триггер в БД
   ```json
-{
-    "triggerIdent": "order_lunch_delivery",
-    "triggerDescr" : "Если человек заказывает доставку в обед через один день",
-    "notifIdent" : "think_about_dinner",
-    "notifDescr" : "Похоже, пора думать про вкусный обед 🍝",
-    "notifMoment" : "immediately | next_time",
-    "expectWeekDays" : "sun,mon,tue,wed,thu,fri,sat",
-    "expectEveryDays" : 1,
-    "expectHowOften" : 2,
-    "expectFromHr" : 11,
-    "expectToHr" : 14,
-    "actualWeekDays" : "sat,tue",
-    "actualHours" : "5,6,7,8",
-    "missYesterday" : true
-}
+    {
+        "triggerIdent": "order_lunch_delivery",
+        "triggerDescr" : "Если человек заказывает доставку в обед через один день",
+        "notifIdent" : "think_about_dinner",
+        "notifDescr" : "Похоже, пора думать про вкусный обед 🍝",
+        "notifMoment" : "immediately | next_time",
+        "expectWeekDays" : "sun,mon,tue,wed,thu,fri,sat",
+        "expectEveryDays" : 1,
+        "expectHowOften" : 2,
+        "expectFromHr" : 11,
+        "expectToHr" : 14,
+        "actualWeekDays" : "sat,tue",
+        "actualHours" : "5,6,7,8",
+        "missYesterday" : true
+    }
   ```
   
 - **GET [/triggers](http://localhost:8080/api/subtlenotify/triggers)** показать все `trigger` с необязательным фильтром по `actionType`
