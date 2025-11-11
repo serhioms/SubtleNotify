@@ -34,7 +34,7 @@
         "expectToHr" : 14,
         "actualWeekDays" : "sat,tue",
         "actualHours" : "5,6,7,8",
-        "missYesterday" : true
+        "missYesterday" : true/false
     }
   ```
   
@@ -98,6 +98,7 @@
      "expectHowOften" : 2,
      "expectFromHr" : 11,
      "expectToHr" : 14,
+     "missYesterday" : true/false,
       ***
 }
 ```
@@ -105,6 +106,7 @@
 - `expectWeekDays` - в какие дни ожидаются `action` на неделе из ряда "sun,mon,tue,wed,thu,fri,sat" и сколько недель подряд в `expectHowOften`
 - `expectEveryDays` - сколько  дней подряд (1) или через день (2) или каждый третий день (3) и т.д. ожидаются `action` и сколько дней подряд в `expectHowOften`
 - `expectFromHr` и `expectToHr` - ожидаемые часы `action` (по дефолту от 0 до 24 часов)
+- `missYesterday` - true/false флаг для вычисления случая когда предыдущая нотификация была пропущена (см примеры)
 > **PS:** Обязательно задавать одно из первых двух правил `expectWeekDays` или `expectEveryDays`, но не оба сразу
 
 
