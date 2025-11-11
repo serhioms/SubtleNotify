@@ -38,15 +38,15 @@ public class TriggerRequest {
 
     // Frequently used functions and defaults
 
-    public int getExpectHowOften() {
+    public Integer getExpectHowOften() {
         return expectHowOften == null? 0: expectHowOften;
     }
 
-    public int getExpectFromHr() {
+    public Integer getExpectFromHr() {
         return expectFromHr == null? 0: expectFromHr;
     }
 
-    public int getExpectToHr() {
+    public Integer getExpectToHr() {
         return expectToHr == null? 24: expectToHr;
     }
 
@@ -86,7 +86,7 @@ public class TriggerRequest {
         return !StringUtils.isBlank(actualHours);
     }
 
-    public int getActualHour() {
+    public Integer getActualHour() {
         return StringUtils.isBlank(actualHours)? null: Integer.parseInt(actualHours.split(",")[0]);
     }
 

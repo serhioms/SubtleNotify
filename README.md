@@ -20,7 +20,7 @@
 - **GET [/actions](http://localhost:8080/api/subtlenotify/actions)** показать все `action` с необязательным фильтром по `userId` и `actionType`
 - **POST /trigger** записать триггер в БД
 - **GET [/triggers](http://localhost:8080/api/subtlenotify/triggers)** показать все `trigger` с необязательным фильтром по `actionType`
-- **GET /clean** почистить БД
+- **GET [/clean](http://localhost:8080/api/subtlenotify/clean)** почистить БД
 
 
 > **PS:** Чуть изменил контракт... Единственное число принято в нэйминге где это возможно. Допускаются смысловые исключения, поэтому `action` вместо `actions`.
