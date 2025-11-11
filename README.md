@@ -18,9 +18,29 @@
 - **GET /notifications** — получить все уведомления, сгенерированные системой
 
 - **GET [/actions](http://localhost:8080/api/subtlenotify/actions)** показать все `action` с необязательным фильтром по `userId` и `actionType`
+
 - **POST /trigger** записать триггер в БД
+  ```json
+{
+    "triggerIdent": "order_lunch_delivery",
+    "triggerDescr" : "Если человек заказывает доставку в обед через один день",
+    "notifIdent" : "think_about_dinner",
+    "notifDescr" : "Похоже, пора думать про вкусный обед 🍝",
+    "notifMoment" : "immediately | next_time",
+    "expectWeekDays" : "sun,mon,tue,wed,thu,fri,sat",
+    "expectEveryDays" : 1,
+    "expectHowOften" : 2,
+    "expectFromHr" : 11,
+    "expectToHr" : 14,
+    "actualWeekDays" : "sat,tue",
+    "actualHours" : "5,6,7,8",
+    "missYesterday" : true
+}
+  ```
+  
 - **GET [/triggers](http://localhost:8080/api/subtlenotify/triggers)** показать все `trigger` с необязательным фильтром по `actionType`
-- **GET [/clean](http://localhost:8080/api/subtlenotify/clean)** почистить БД
+
+- **DELETE [/clean](http://localhost:8080/api/subtlenotify/clean)** почистить БД
 
 
 > **PS:** Чуть изменил контракт... Единственное число принято в нэйминге где это возможно. Допускаются смысловые исключения, поэтому `action` вместо `actions`.
