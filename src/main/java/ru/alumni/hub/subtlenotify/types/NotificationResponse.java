@@ -1,5 +1,6 @@
 package ru.alumni.hub.subtlenotify.types;
 
+import jakarta.persistence.Column;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -16,5 +17,8 @@ public class NotificationResponse {
 
     @NotNull(message = "notification is required")
     private String notification;
+
+    @NotNull(message = "actionType is required")
+    private String actionType;
 
 }

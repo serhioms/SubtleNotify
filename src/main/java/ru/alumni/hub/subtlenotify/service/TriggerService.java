@@ -1,5 +1,6 @@
 package ru.alumni.hub.subtlenotify.service;
 
+import io.micrometer.common.util.StringUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -8,6 +9,8 @@ import ru.alumni.hub.subtlenotify.types.TriggerRequest;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -20,6 +23,12 @@ public class TriggerService {
     public TriggerRequest storeTrigger(TriggerRequest request) {
         var timer = actionsMetrics.startTimer();
         try {
+            if( !StringUtils.isBlank(request.getExpectWeekDays()) ){
+                request.setExpectWeekDays(request.getExpectWeekDays().toUpperCase()); // LocalDateTime.getDayOfWeek returns uppercase
+            }
+            if( !StringUtils.isBlank(request.getActualWeekDays()) ){
+                request.setActualWeekDays(request.getActualWeekDays().toUpperCase()); // LocalDateTime.getDayOfWeek returns uppercase
+            }
             triggers.add(request);
             return request;
         } catch (Exception e) {
@@ -35,8 +44,12 @@ public class TriggerService {
         return triggers;
     }
 
-    public TriggerRequest getTriggerByIdent(String triggerIdent) {
-        return triggers.stream().filter(t -> triggerIdent.equals(t.getTriggerIdent())).findFirst().orElse(null);
+    public List<TriggerRequest> getTriggersByIdent(String triggerIdent) {
+        return triggers.stream().filter(t -> triggerIdent.equals(t.getTriggerIdent())).collect(Collectors.toList());
     }
 
+    @Transactional
+    public void deleteAllTriggers() {
+        triggers.clear();
+    }
 }

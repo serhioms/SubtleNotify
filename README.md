@@ -46,22 +46,23 @@
 
 ### Ключевые классы:
 
-timestamp, weekOfTheYear, dayOfTheYear, dayOfWeek, hourOfDay, minuteOfHour
-
+  ```json
+{
     "triggerIdent": "order_lunch_delivery",
     "triggerDescr" : "Если человек заказывает доставку в обед через один день",
     "notifIdent" : "think_about_dinner",
     "notifDescr" : "Похоже, пора думать про вкусный обед 🍝",
     "notifMoment" : "immediately , next_time",
-    "expectWeeks" : 2,                                      default 2
-    "expectWeekDays" : "sun,mon,tue,wed,thu,fri,sat",        default skip
-    "expectStraightDays" : 3,     N дней подряд              default skip
-    "expectEveryDays" : 1,        через каждые N дней        default 0 aka каждый день
-    "expectFromHr" : 11,                                    default 1
+    "expectWeekDays" : "sun,mon,tue,wed,thu,fri,sat",        default null
+    "expectEveryDays" : 1,        через каждые N дней        default null
+    "expectHowOften" : 2,                                   default 0
+    "expectWeeks" : 2,                                      default 0
+    "expectFromHr" : 11,                                    default 0
     "expectToHr" : 14,                                      default 24
-    "actualWeekDays" : "sat,tue"                             default expectWeekDays
-    "actualHr" : "5,6,7,8:50",                              default same curHr
-    "actualMiss" : false  today FALSE but yesterday TRUE   default false
+    "actualWeekDays" : "sat,tue",                            default null
+    "actualHours" : "5,6,7,8:50",                              default null
+    "missYesterday" : true                                  default false
+}
 
 if (expectStraightDays(howManyWeeks, history) or expectEveryDay(howManyWeeks, history) or expectWeekDays(howManyWeeks, history))
 and ( (expectFromHr < expectToHr and curtHr >= expectFromHr and curHr <= expectToHr) or ((expectFromHr > expectToHr and (curtHr <= expectFromHr or curHr >= expectToHr))))
@@ -70,11 +71,141 @@ and ( curHr in actualHr)
 then true
 
 when:
-immediately - on action arrive
+immediately - on action arrives plus couple minutes
 or
-next_time - on actualWeekDay or next expectWeekDay at actualHr or at expectFromHr
+next_time - on actualWeekDay or next expectWeekDay at actualHr or at expectFromHr minus some minutes
 
+  ```json
+{
+    "triggerIdent" : "write_comments_night",
+    "triggerDescr" : "если пользователь пишет комментарии ночью три дня подряд",
+    "notifIdent" : "you_are_owl",
+    "notifDescr" : "Кажется, вы сова 🦉",
+    "notifMoment" : "immediately",
+    "expectEveryDays" : 1,
+    "expectHowOften" : 3,
+    "expectFromHr" : 21,
+    "expectToHr" : 2
+}
+        
+  ```json
+{
+    "triggerIdent": "order_lunch_delivery",
+    "triggerDescr" : "Если человек заказывает доставку в обед через один день",
+    "notifIdent" : "think_about_dinner",
+    "notifDescr" : "Похоже, пора думать про вкусный обед 🍝",
+    "notifMoment" : "next_time",
+    "expectEveryDays" : 2,
+    "expectHowOften" : 3,
+    "expectFromHr" : 11,
+    "expectToHr" : "14"
+}
+    
+  ```json
+{
+    "triggerIdent": "openapp_morning",
+    "triggerDescr" : "Если пользователь открывает приложение каждый день утром",
+    "notifIdent" : "early_start_greetings",
+    "notifDescr" : "Сегодня вы начали раньше обычного — хороший старт 📈",
+    "notifMoment" : "immediately",
+    "expectWeekDays" : "mon,tue,wed,thu,fri",
+    "expectHowOften" : 1,
+    "expectFromHr" : 9,
+    "expectToHr" : 11,
+    "actuaHours" : "5,6,7,8"
+}
 
+```json
+{
+    "triggerIdent": "buy_coffe",
+    "triggerDescr" : "если пользователь покупает кофе утром по понедельникам, средам и пятницам",
+    "notifIdent" : "lets_drink_coffe",
+    "notifDescr" : "А не пора бы выпить чашечку кофе?!",
+    "notifMoment" : "next_time",
+    "expectWeekDays" : "mon,wed,fri",
+    "expectHowOften" : 1,
+    "expectFromHr" : 9,
+    "expectToHr" : 10
+}
+
+```json
+{
+    "triggerIdent": "buy_coffee",
+    "triggerDescr" : "если пользователь покупает кофе утром по понедельникам, средам и пятницам",
+    "notifIdent" : "present_discont_today",
+    "notifDescr" : "Сегодня дарим Вам скидку!",
+    "notifMoment" : "next_time",
+    "expectWeekDays" : "mon,wed,fri",
+    "actualWeekDays" : "tue",
+    "actuaHours" : "8"
+}
+
+```json
+{
+    "triggerIdent": "read_sanday",
+    "triggerDescr" : "Если пользователь читает длинные статьи только по воскресеньям",
+    "notifIdent" : "read_deep_tomorrow",
+    "notifDescr" : "Завтра идеальный день для глубокого чтения 📚✨",
+    "notifMoment" : "next_time",
+    "expectWeekDays" : "sun",
+    "expectHowOften" : 3,
+    "actualWeekDays" : "sat",
+    "actuaHours" : "18"
+}
+            
+```json
+{
+    "triggerIdent": "order_lunch_delivery",
+    "triggerDescr" : "Если человек заказывает доставку в обед через один день",
+    "notifIdent" : "think_about_dinner",
+    "notifDescr" : "Похоже, пора думать про вкусный обед 🍝",
+    "notifMoment" : "next_time",
+    "expectEveryDays" : 2,
+    "expectHowOften" : 3,
+    "expectFromHr" : 11,
+    "expectToHr" : 14
+}
+
+```json
+{
+    "triggerIdent": "drink_tee_each_evening",
+    "triggerDescr" : "Если пользователь пьёт чай каждый вечер, но один день пропустил",
+    "notifIdent" : "drink_tee_today",
+    "notifDescr" : "Ваш вечерний чай сегодня в меню? 🍵",
+    "notifMoment" : "next_time",
+    "expectEveryDays" : 1,
+    "expectHowOften" : 7,
+    "expectFromHr" : 17,
+    "expectToHr" : 19,
+    "missYesterday" : true
+}
+
+```json
+{
+    "triggerIdent": "lets_do_steps",
+    "triggerDescr" : "Если пользователь делает утренние шаги только после 10 утра",
+    "notifIdent" : "lets_worm_up",
+    "notifDescr" : "Твой ритм — твоя суперсила. Пора размяться? 🚶‍♂️✨",
+    "notifMoment" : "next_time",
+    "expectEveryDays" : 1,
+    "expectHowOften" : 7,
+    "expectFromHr" : 10,
+    "expectToHr" : 12
+}
+
+```json
+{
+    "triggerIdent" : "checks_tasks_afternoon",
+    "triggerDescr" : "Если пользователь проверяет задачи только после обеда",
+    "notifIdent" : "best_ideas_after_lunch",
+    "notifDescr" : "Похоже, ваши лучшие идеи — после обеда 🌞",
+    "notifMoment" : "next_time",
+    "expectWeekDays" : "mon,tue,wed,thu,fri",
+    "expectHowOften" : 1,
+    "expectFromHr" : 13,
+    "expectToHr" : 17,
+    "actualHours" : "10"
+}        
 
 ## Эвристика непредсказуемости
 

@@ -8,6 +8,8 @@ import lombok.NoArgsConstructor;
 
 
 import java.time.LocalDateTime;
+import java.time.temporal.WeekFields;
+import java.util.Locale;
 import java.util.UUID;
 
 
@@ -32,4 +34,30 @@ public class Action {
     @NotNull(message = "timestamp is required")
     @Column(nullable = false)
     private LocalDateTime timestamp;
+
+    @NotNull(message = "dayOfYear is required")
+    @Column(nullable = false)
+    private Integer dayOfYear;
+
+    @NotNull(message = "weekOfYear is required")
+    @Column(nullable = false)
+    private Integer weekOfYear;
+
+    // Frequently used functions
+
+    public String getDayOfWeek(){
+        return timestamp.getDayOfWeek().name().substring(0,3);
+    }
+
+    public int weekOfYear(){
+        return timestamp.get(WeekFields.of(Locale.getDefault()).weekOfYear());
+    }
+
+    public int getDayOfYear(){
+        return timestamp.getDayOfYear();
+    }
+
+    public int getHour(){
+        return timestamp.getHour();
+    }
 }
