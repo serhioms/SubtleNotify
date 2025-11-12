@@ -21,20 +21,6 @@ public class ActionTypeService {
     private final ActionsMetrics actionsMetrics;
 
     /**
-     * Get action type by actionType string
-     * @param actionType the action type identifier
-     * @return Optional containing the ActionType if found
-     */
-    public Optional<ActionType> getActionType(String actionType) {
-        try {
-            return actionTypeRepository.findByActionType(actionType);
-        } catch (Exception e) {
-            LOGGER.error("Error while retrieving action type: " + actionType, e);
-        }
-        return Optional.empty();
-    }
-
-    /**
      * Store action type if not exists, or return existing action type
      * @param actionTypeStr the action type identifier to store
      * @return Optional containing the ActionType object (existing or newly created)
@@ -43,24 +29,28 @@ public class ActionTypeService {
     public Optional<ActionType> storeActionType(String actionTypeStr) {
         var timer = actionsMetrics.startTimer();
         try {
-            ActionType actionType = actionTypeRepository.findByActionType(actionTypeStr)
+            Optional<ActionType> actionType = Optional.of(actionTypeRepository.findByActionType(actionTypeStr)
                     .orElseGet(() -> {
                         ActionType newActionType = new ActionType();
                         newActionType.setActionType(actionTypeStr);
                         ActionType savedActionType = actionTypeRepository.save(newActionType);
                         LOGGER.info("Created new action type: {}", actionTypeStr);
                         return savedActionType;
-                    });
-
-            return Optional.of(actionType);
-        } catch (Exception e) {
-            actionsMetrics.incrementActionsFailed();
-            LOGGER.error("Error while storing action type: " + actionTypeStr, e);
+                    }));
+            actionType.ifPresentOrElse(a->{}, actionsMetrics::incrementActionsFailed);
+            return actionType;
         } finally {
             actionsMetrics.incrementActionsCreated();
             actionsMetrics.recordCreationTime(timer);
         }
-        return Optional.empty();
     }
 
+    /**
+     * Get action type by actionType string
+     * @param actionType the action type identifier
+     * @return Optional containing the ActionType if found
+     */
+    public Optional<ActionType> getActionType(String actionType) {
+        return actionTypeRepository.findByActionType(actionType);
+    }
 }

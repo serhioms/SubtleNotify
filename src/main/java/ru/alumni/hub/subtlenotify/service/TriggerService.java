@@ -37,23 +37,22 @@ public class TriggerService {
      * @return Optional containing the saved Trigger
      */
     @Transactional
-    public Optional<Trigger> storeTrigger(TriggerRequest request) {
+    public void storeTrigger(TriggerRequest request) {
         var timer = actionsMetrics.startTimer();
         try {
-            Optional<NotifyMessage> messageOpt = notifyMessageService.getNotifyMessage(request.getNotifIdent());
-            Optional<ActionType> actionTypeOpt = actionTypeService.getActionType(request.getTriggerIdent());
-
-            if (messageOpt.isEmpty()) {
-                messageOpt = notifyMessageService.storeNotifyMessage(request.getNotifIdent(), request.getNotifDescr());
+            Optional<NotifyMessage> notificationMessage = notifyMessageService.getNotifyMessage(request.getNotifIdent());
+            if (notificationMessage.isEmpty()) {
+                notificationMessage = notifyMessageService.storeNotifyMessage(request.getNotifIdent(), request.getNotifDescr());
             }
 
-            if (actionTypeOpt.isEmpty()) {
-                actionTypeOpt = actionTypeService.storeActionType(request.getTriggerIdent());
+            Optional<ActionType> actionType = actionTypeService.getActionType(request.getTriggerIdent());
+            if (actionType.isEmpty()) {
+                actionType = actionTypeService.storeActionType(request.getTriggerIdent());
             }
 
             Trigger trigger = new Trigger();
-            trigger.setNotifyMessage(messageOpt.get());
-            trigger.setActionType(actionTypeOpt.get());
+            notificationMessage.ifPresentOrElse(trigger::setNotifyMessage, ()->{});
+            actionType.ifPresentOrElse(trigger::setActionType, ()->{});
             trigger.setDescr(request.getTriggerDescr());
             trigger.setExpectWeekDays(request.getExpectWeekDays());
             trigger.setExpectEveryDays(request.getExpectEveryDays());
@@ -65,15 +64,11 @@ public class TriggerService {
             trigger.setActualHours(request.getActualHours());
             trigger.setActualWeekDays(request.getActualWeekDays());
 
-            return Optional.of(triggerRepository.save(trigger));
-        } catch (Exception e) {
-            actionsMetrics.incrementActionsFailed();
-            LOGGER.error("Error while storing trigger: "+request, e);
+            Optional.of(triggerRepository.save(trigger)).ifPresentOrElse(a->{}, actionsMetrics::incrementActionsFailed);
         } finally {
             actionsMetrics.incrementActionsCreated();
             actionsMetrics.recordCreationTime(timer);
         }
-        return Optional.empty();
     }
 
 
@@ -82,12 +77,7 @@ public class TriggerService {
      * @return List of all Trigger objects
      */
     public List<Trigger> getAllTriggers() {
-        try {
-            return triggerRepository.findAll();
-        } catch (Exception e) {
-            LOGGER.error("Error while retrieving all triggers", e);
-        }
-        return List.of();
+        return triggerRepository.findAll();
     }
 
     /**
@@ -96,31 +86,7 @@ public class TriggerService {
      * @return List of triggers for the action type
      */
     public List<Trigger> getTriggersByActionType(String actionType) {
-        try {
-            return actionTypeService.getActionType(actionType)
-                    .map(triggerRepository::findByActionType)
-                    .orElseGet(List::of);
-        } catch (Exception e) {
-            LOGGER.error("Error while retrieving triggers for action type: " + actionType, e);
-        }
-        return List.of();
+        return triggerRepository.findByActionType(actionType);
     }
-
-    /**
-     * Get triggers by notify message
-     * @param messageIdent the message identifier
-     * @return List of triggers for the notify message
-     */
-    public List<Trigger> getTriggersByNotifyMessage(String messageIdent) {
-        try {
-            return notifyMessageService.getNotifyMessage(messageIdent)
-                    .map(triggerRepository::findByNotifyMessage)
-                    .orElseGet(List::of);
-        } catch (Exception e) {
-            LOGGER.error("Error while retrieving triggers for notify message: " + messageIdent, e);
-        }
-        return List.of();
-    }
-
 
 }

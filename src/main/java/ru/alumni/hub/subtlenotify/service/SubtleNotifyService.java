@@ -39,9 +39,9 @@ public class SubtleNotifyService {
             if( !triggers.isEmpty() ) {
                 for (Trigger trigger : triggers) {
                     if(UtilTrigger.isMissPreviousTime(trigger) ) {
-                        generateMissedNotification(action, trigger).ifPresentOrElse( notificationService::storeNotification, ()->{});
+                        generateMissedNotification(action, trigger).ifPresentOrElse( notificationService::storeNotificationWithoutDuplication, ()->{});
                     } else {
-                        generateNormalNotification(action, trigger).ifPresentOrElse( notificationService::storeNotification, ()->{});
+                        generateNormalNotification(action, trigger).ifPresentOrElse( notificationService::storeNotificationWithoutDuplication, ()->{});
                     }
                 }
             } else {

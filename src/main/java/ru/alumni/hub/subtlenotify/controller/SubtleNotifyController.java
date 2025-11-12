@@ -26,8 +26,6 @@ public class SubtleNotifyController {
     private final TriggerService triggerService;
     private final SubtleNotifyService subtleNotifyService;
     private final NotificationService notificationService;
-    private final TriggerServiceOld triggerServiceOld;
-
 
     @PostMapping("/action")
     public ResponseEntity<Map<String, Object>> createAction(@Valid @RequestBody ActionRequest actionRequest) {
