@@ -1,0 +1,2338 @@
+{
+	"info": {
+		"_postman_id": "ae11cb08-d8b3-4fd8-a86a-3d4a024bfcac",
+		"name": "AlumniHub",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "1180442"
+	},
+	"item": [
+		{
+			"name": "LoadAction write_comments_night",
+			"item": [
+				{
+					"name": "1",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"userId\": \"mss\",\n  \"actionType\": \"write_comments_night\",\n  \"timestamp\": \"2025-11-04T21:30:00\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL8080}}/api/subtlenotify/action",
+							"host": [
+								"{{URL8080}}"
+							],
+							"path": [
+								"api",
+								"subtlenotify",
+								"action"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "2",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"userId\": \"mss\",\n  \"actionType\": \"write_comments_night\",\n  \"timestamp\": \"2025-11-05T21:30:00\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL8080}}/api/subtlenotify/action",
+							"host": [
+								"{{URL8080}}"
+							],
+							"path": [
+								"api",
+								"subtlenotify",
+								"action"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "3",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"userId\": \"mss\",\n  \"actionType\": \"write_comments_night\",\n  \"timestamp\": \"2025-11-06T21:30:00\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL8080}}/api/subtlenotify/action",
+							"host": [
+								"{{URL8080}}"
+							],
+							"path": [
+								"api",
+								"subtlenotify",
+								"action"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "4",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"userId\": \"mss\",\n  \"actionType\": \"write_comments_night\",\n  \"timestamp\": \"2025-11-08T21:30:00\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL8080}}/api/subtlenotify/action",
+							"host": [
+								"{{URL8080}}"
+							],
+							"path": [
+								"api",
+								"subtlenotify",
+								"action"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "5",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"userId\": \"mss\",\n  \"actionType\": \"write_comments_night\",\n  \"timestamp\": \"2025-11-09T21:30:00\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL8080}}/api/subtlenotify/action",
+							"host": [
+								"{{URL8080}}"
+							],
+							"path": [
+								"api",
+								"subtlenotify",
+								"action"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "6",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"userId\": \"mss\",\n  \"actionType\": \"write_comments_night\",\n  \"timestamp\": \"2025-11-10T21:30:00\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL8080}}/api/subtlenotify/action",
+							"host": [
+								"{{URL8080}}"
+							],
+							"path": [
+								"api",
+								"subtlenotify",
+								"action"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "7",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"userId\": \"mss\",\n  \"actionType\": \"write_comments_night\",\n  \"timestamp\": \"2025-11-10T21:30:00\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL8080}}/api/subtlenotify/action",
+							"host": [
+								"{{URL8080}}"
+							],
+							"path": [
+								"api",
+								"subtlenotify",
+								"action"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "LoadAction order_lunch_delivery",
+			"item": [
+				{
+					"name": "1",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"userId\": \"mss\",\n  \"actionType\": \"order_lunch_delivery\",\n  \"timestamp\": \"2025-11-01T11:30:00\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL8080}}/api/subtlenotify/action",
+							"host": [
+								"{{URL8080}}"
+							],
+							"path": [
+								"api",
+								"subtlenotify",
+								"action"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "2",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"userId\": \"mss\",\n  \"actionType\": \"order_lunch_delivery\",\n  \"timestamp\": \"2025-11-03T11:30:00\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL8080}}/api/subtlenotify/action",
+							"host": [
+								"{{URL8080}}"
+							],
+							"path": [
+								"api",
+								"subtlenotify",
+								"action"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "3",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"userId\": \"mss\",\n  \"actionType\": \"order_lunch_delivery\",\n  \"timestamp\": \"2025-11-05T12:30:00\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL8080}}/api/subtlenotify/action",
+							"host": [
+								"{{URL8080}}"
+							],
+							"path": [
+								"api",
+								"subtlenotify",
+								"action"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "4",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"userId\": \"mss\",\n  \"actionType\": \"order_lunch_delivery\",\n  \"timestamp\": \"2025-11-05T12:30:00\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL8080}}/api/subtlenotify/action",
+							"host": [
+								"{{URL8080}}"
+							],
+							"path": [
+								"api",
+								"subtlenotify",
+								"action"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Load openapp_morning",
+			"item": [
+				{
+					"name": "1",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"userId\": \"mss\",\n  \"actionType\": \"openapp_morning\",\n  \"timestamp\": \"2025-11-03T09:10:00\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL8080}}/api/subtlenotify/action",
+							"host": [
+								"{{URL8080}}"
+							],
+							"path": [
+								"api",
+								"subtlenotify",
+								"action"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "2",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"userId\": \"mss\",\n  \"actionType\": \"openapp_morning\",\n  \"timestamp\": \"2025-11-04T09:10:00\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL8080}}/api/subtlenotify/action",
+							"host": [
+								"{{URL8080}}"
+							],
+							"path": [
+								"api",
+								"subtlenotify",
+								"action"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "3",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"userId\": \"mss\",\n  \"actionType\": \"openapp_morning\",\n  \"timestamp\": \"2025-11-05T09:10:00\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL8080}}/api/subtlenotify/action",
+							"host": [
+								"{{URL8080}}"
+							],
+							"path": [
+								"api",
+								"subtlenotify",
+								"action"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "4",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"userId\": \"mss\",\n  \"actionType\": \"openapp_morning\",\n  \"timestamp\": \"2025-11-06T09:10:00\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL8080}}/api/subtlenotify/action",
+							"host": [
+								"{{URL8080}}"
+							],
+							"path": [
+								"api",
+								"subtlenotify",
+								"action"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "5",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"userId\": \"mss\",\n  \"actionType\": \"openapp_morning\",\n  \"timestamp\": \"2025-11-07T09:10:00\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL8080}}/api/subtlenotify/action",
+							"host": [
+								"{{URL8080}}"
+							],
+							"path": [
+								"api",
+								"subtlenotify",
+								"action"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "6",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"userId\": \"mss\",\n  \"actionType\": \"openapp_morning\",\n  \"timestamp\": \"2025-11-10T07:00:11\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL8080}}/api/subtlenotify/action",
+							"host": [
+								"{{URL8080}}"
+							],
+							"path": [
+								"api",
+								"subtlenotify",
+								"action"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "7",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"userId\": \"mss\",\n  \"actionType\": \"openapp_morning\",\n  \"timestamp\": \"2025-11-10T07:00:11\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL8080}}/api/subtlenotify/action",
+							"host": [
+								"{{URL8080}}"
+							],
+							"path": [
+								"api",
+								"subtlenotify",
+								"action"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Load buy_coffe",
+			"item": [
+				{
+					"name": "1",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"userId\": \"mss\",\n  \"actionType\": \"buy_coffee\",\n  \"timestamp\": \"2025-11-03T09:10:00\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL8080}}/api/subtlenotify/action",
+							"host": [
+								"{{URL8080}}"
+							],
+							"path": [
+								"api",
+								"subtlenotify",
+								"action"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "2",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"userId\": \"mss\",\n  \"actionType\": \"buy_coffee\",\n  \"timestamp\": \"2025-11-05T09:10:00\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL8080}}/api/subtlenotify/action",
+							"host": [
+								"{{URL8080}}"
+							],
+							"path": [
+								"api",
+								"subtlenotify",
+								"action"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "3",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"userId\": \"mss\",\n  \"actionType\": \"buy_coffee\",\n  \"timestamp\": \"2025-11-07T09:10:00\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL8080}}/api/subtlenotify/action",
+							"host": [
+								"{{URL8080}}"
+							],
+							"path": [
+								"api",
+								"subtlenotify",
+								"action"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "4",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"userId\": \"mss\",\n  \"actionType\": \"buy_coffee\",\n  \"timestamp\": \"2025-11-07T10:10:00\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL8080}}/api/subtlenotify/action",
+							"host": [
+								"{{URL8080}}"
+							],
+							"path": [
+								"api",
+								"subtlenotify",
+								"action"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Load read_sanday",
+			"item": [
+				{
+					"name": "1",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"userId\": \"mss\",\n  \"actionType\": \"read_sanday\",\n  \"timestamp\": \"2025-11-02T09:10:00\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL8080}}/api/subtlenotify/action",
+							"host": [
+								"{{URL8080}}"
+							],
+							"path": [
+								"api",
+								"subtlenotify",
+								"action"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "2",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"userId\": \"mss\",\n  \"actionType\": \"read_sanday\",\n  \"timestamp\": \"2025-11-09T09:10:00\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL8080}}/api/subtlenotify/action",
+							"host": [
+								"{{URL8080}}"
+							],
+							"path": [
+								"api",
+								"subtlenotify",
+								"action"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "3",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"userId\": \"mss\",\n  \"actionType\": \"read_sanday\",\n  \"timestamp\": \"2025-11-16T09:10:00\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL8080}}/api/subtlenotify/action",
+							"host": [
+								"{{URL8080}}"
+							],
+							"path": [
+								"api",
+								"subtlenotify",
+								"action"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "3 Copy",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"userId\": \"mss\",\n  \"actionType\": \"read_sanday\",\n  \"timestamp\": \"2025-11-16T09:10:00\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL8080}}/api/subtlenotify/action",
+							"host": [
+								"{{URL8080}}"
+							],
+							"path": [
+								"api",
+								"subtlenotify",
+								"action"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "New Request",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				},
+				{
+					"name": "New Request",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Load order_lunch_delivery",
+			"item": [
+				{
+					"name": "1",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"userId\": \"mss\",\n  \"actionType\": \"order_lunch_delivery\",\n  \"timestamp\": \"2025-11-02T12:10:00\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL8080}}/api/subtlenotify/action",
+							"host": [
+								"{{URL8080}}"
+							],
+							"path": [
+								"api",
+								"subtlenotify",
+								"action"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "2",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"userId\": \"mss\",\n  \"actionType\": \"order_lunch_delivery\",\n  \"timestamp\": \"2025-11-04T12:10:00\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL8080}}/api/subtlenotify/action",
+							"host": [
+								"{{URL8080}}"
+							],
+							"path": [
+								"api",
+								"subtlenotify",
+								"action"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "3",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"userId\": \"mss\",\n  \"actionType\": \"order_lunch_delivery\",\n  \"timestamp\": \"2025-11-06T12:10:00\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL8080}}/api/subtlenotify/action",
+							"host": [
+								"{{URL8080}}"
+							],
+							"path": [
+								"api",
+								"subtlenotify",
+								"action"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "3 Copy",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"userId\": \"mss\",\n  \"actionType\": \"order_lunch_delivery\",\n  \"timestamp\": \"2025-11-06T12:10:00\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL8080}}/api/subtlenotify/action",
+							"host": [
+								"{{URL8080}}"
+							],
+							"path": [
+								"api",
+								"subtlenotify",
+								"action"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Load drink_tee_each_evening",
+			"item": [
+				{
+					"name": "1",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"userId\": \"mss\",\n  \"actionType\": \"drink_tee_each_evening\",\n  \"timestamp\": \"2025-11-01T18:10:00\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL8080}}/api/subtlenotify/action",
+							"host": [
+								"{{URL8080}}"
+							],
+							"path": [
+								"api",
+								"subtlenotify",
+								"action"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "2",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"userId\": \"mss\",\n  \"actionType\": \"drink_tee_each_evening\",\n  \"timestamp\": \"2025-11-02T18:10:00\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL8080}}/api/subtlenotify/action",
+							"host": [
+								"{{URL8080}}"
+							],
+							"path": [
+								"api",
+								"subtlenotify",
+								"action"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "3",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"userId\": \"mss\",\n  \"actionType\": \"drink_tee_each_evening\",\n  \"timestamp\": \"2025-11-03T18:10:00\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL8080}}/api/subtlenotify/action",
+							"host": [
+								"{{URL8080}}"
+							],
+							"path": [
+								"api",
+								"subtlenotify",
+								"action"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "4",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"userId\": \"mss\",\n  \"actionType\": \"drink_tee_each_evening\",\n  \"timestamp\": \"2025-11-04T18:10:00\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL8080}}/api/subtlenotify/action",
+							"host": [
+								"{{URL8080}}"
+							],
+							"path": [
+								"api",
+								"subtlenotify",
+								"action"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "5",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"userId\": \"mss\",\n  \"actionType\": \"drink_tee_each_evening\",\n  \"timestamp\": \"2025-11-05T18:10:00\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL8080}}/api/subtlenotify/action",
+							"host": [
+								"{{URL8080}}"
+							],
+							"path": [
+								"api",
+								"subtlenotify",
+								"action"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "6",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"userId\": \"mss\",\n  \"actionType\": \"drink_tee_each_evening\",\n  \"timestamp\": \"2025-11-06T18:10:00\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL8080}}/api/subtlenotify/action",
+							"host": [
+								"{{URL8080}}"
+							],
+							"path": [
+								"api",
+								"subtlenotify",
+								"action"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "7",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"userId\": \"mss\",\n  \"actionType\": \"drink_tee_each_evening\",\n  \"timestamp\": \"2025-11-07T18:10:00\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL8080}}/api/subtlenotify/action",
+							"host": [
+								"{{URL8080}}"
+							],
+							"path": [
+								"api",
+								"subtlenotify",
+								"action"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "9",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"userId\": \"mss\",\n  \"actionType\": \"drink_tee_each_evening\",\n  \"timestamp\": \"2025-11-09T18:10:00\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL8080}}/api/subtlenotify/action",
+							"host": [
+								"{{URL8080}}"
+							],
+							"path": [
+								"api",
+								"subtlenotify",
+								"action"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Load drink_tee_sun_evening",
+			"item": [
+				{
+					"name": "2",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"userId\": \"mss\",\n  \"actionType\": \"drink_tee_sun_evening\",\n  \"timestamp\": \"2025-11-02T18:10:00\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL8080}}/api/subtlenotify/action",
+							"host": [
+								"{{URL8080}}"
+							],
+							"path": [
+								"api",
+								"subtlenotify",
+								"action"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "9",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"userId\": \"mss\",\n  \"actionType\": \"drink_tee_sun_evening\",\n  \"timestamp\": \"2025-11-09T18:10:00\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL8080}}/api/subtlenotify/action",
+							"host": [
+								"{{URL8080}}"
+							],
+							"path": [
+								"api",
+								"subtlenotify",
+								"action"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "23",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"userId\": \"mss\",\n  \"actionType\": \"drink_tee_sun_evening\",\n  \"timestamp\": \"2025-11-23T18:10:00\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL8080}}/api/subtlenotify/action",
+							"host": [
+								"{{URL8080}}"
+							],
+							"path": [
+								"api",
+								"subtlenotify",
+								"action"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "23 Copy",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"userId\": \"mss\",\n  \"actionType\": \"drink_tee_sun_evening\",\n  \"timestamp\": \"2025-11-23T18:10:00\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL8080}}/api/subtlenotify/action",
+							"host": [
+								"{{URL8080}}"
+							],
+							"path": [
+								"api",
+								"subtlenotify",
+								"action"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Load lets_do_steps",
+			"item": [
+				{
+					"name": "1",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"userId\": \"mss\",\n  \"actionType\": \"lets_do_steps\",\n  \"timestamp\": \"2025-11-01T11:10:00\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL8080}}/api/subtlenotify/action",
+							"host": [
+								"{{URL8080}}"
+							],
+							"path": [
+								"api",
+								"subtlenotify",
+								"action"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "2",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"userId\": \"mss\",\n  \"actionType\": \"lets_do_steps\",\n  \"timestamp\": \"2025-11-02T11:10:00\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL8080}}/api/subtlenotify/action",
+							"host": [
+								"{{URL8080}}"
+							],
+							"path": [
+								"api",
+								"subtlenotify",
+								"action"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "3",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"userId\": \"mss\",\n  \"actionType\": \"lets_do_steps\",\n  \"timestamp\": \"2025-11-03T10:10:00\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL8080}}/api/subtlenotify/action",
+							"host": [
+								"{{URL8080}}"
+							],
+							"path": [
+								"api",
+								"subtlenotify",
+								"action"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "4",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"userId\": \"mss\",\n  \"actionType\": \"lets_do_steps\",\n  \"timestamp\": \"2025-11-04T11:10:00\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL8080}}/api/subtlenotify/action",
+							"host": [
+								"{{URL8080}}"
+							],
+							"path": [
+								"api",
+								"subtlenotify",
+								"action"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "5",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"userId\": \"mss\",\n  \"actionType\": \"lets_do_steps\",\n  \"timestamp\": \"2025-11-05T10:10:00\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL8080}}/api/subtlenotify/action",
+							"host": [
+								"{{URL8080}}"
+							],
+							"path": [
+								"api",
+								"subtlenotify",
+								"action"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "6",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"userId\": \"mss\",\n  \"actionType\": \"lets_do_steps\",\n  \"timestamp\": \"2025-11-06T11:10:00\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL8080}}/api/subtlenotify/action",
+							"host": [
+								"{{URL8080}}"
+							],
+							"path": [
+								"api",
+								"subtlenotify",
+								"action"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "7",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"userId\": \"mss\",\n  \"actionType\": \"lets_do_steps\",\n  \"timestamp\": \"2025-11-07T10:10:00\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL8080}}/api/subtlenotify/action",
+							"host": [
+								"{{URL8080}}"
+							],
+							"path": [
+								"api",
+								"subtlenotify",
+								"action"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "7 Copy",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"userId\": \"mss\",\n  \"actionType\": \"lets_do_steps\",\n  \"timestamp\": \"2025-11-07T10:10:00\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL8080}}/api/subtlenotify/action",
+							"host": [
+								"{{URL8080}}"
+							],
+							"path": [
+								"api",
+								"subtlenotify",
+								"action"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Load checks_tasks_afternoon",
+			"item": [
+				{
+					"name": "3",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"userId\": \"mss\",\n  \"actionType\": \"checks_tasks_afternoon\",\n  \"timestamp\": \"2025-11-03T13:10:00\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL8080}}/api/subtlenotify/action",
+							"host": [
+								"{{URL8080}}"
+							],
+							"path": [
+								"api",
+								"subtlenotify",
+								"action"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "4",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"userId\": \"mss\",\n  \"actionType\": \"checks_tasks_afternoon\",\n  \"timestamp\": \"2025-11-04T14:10:00\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL8080}}/api/subtlenotify/action",
+							"host": [
+								"{{URL8080}}"
+							],
+							"path": [
+								"api",
+								"subtlenotify",
+								"action"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "5",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"userId\": \"mss\",\n  \"actionType\": \"checks_tasks_afternoon\",\n  \"timestamp\": \"2025-11-05T15:10:00\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL8080}}/api/subtlenotify/action",
+							"host": [
+								"{{URL8080}}"
+							],
+							"path": [
+								"api",
+								"subtlenotify",
+								"action"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "6",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"userId\": \"mss\",\n  \"actionType\": \"checks_tasks_afternoon\",\n  \"timestamp\": \"2025-11-06T16:10:00\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL8080}}/api/subtlenotify/action",
+							"host": [
+								"{{URL8080}}"
+							],
+							"path": [
+								"api",
+								"subtlenotify",
+								"action"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "7",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"userId\": \"mss\",\n  \"actionType\": \"checks_tasks_afternoon\",\n  \"timestamp\": \"2025-11-07T13:10:00\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL8080}}/api/subtlenotify/action",
+							"host": [
+								"{{URL8080}}"
+							],
+							"path": [
+								"api",
+								"subtlenotify",
+								"action"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "7 Copy",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"userId\": \"mss\",\n  \"actionType\": \"checks_tasks_afternoon\",\n  \"timestamp\": \"2025-11-07T14:10:00\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL8080}}/api/subtlenotify/action",
+							"host": [
+								"{{URL8080}}"
+							],
+							"path": [
+								"api",
+								"subtlenotify",
+								"action"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Load likes_only_one",
+			"item": [
+				{
+					"name": "5",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"userId\": \"mss\",\n  \"actionType\": \"likes_only_one\",\n  \"timestamp\": \"2025-11-05T10:10:00\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL8080}}/api/subtlenotify/action",
+							"host": [
+								"{{URL8080}}"
+							],
+							"path": [
+								"api",
+								"subtlenotify",
+								"action"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "12",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"userId\": \"mss\",\n  \"actionType\": \"likes_only_one\",\n  \"timestamp\": \"2025-11-12T12:10:00\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL8080}}/api/subtlenotify/action",
+							"host": [
+								"{{URL8080}}"
+							],
+							"path": [
+								"api",
+								"subtlenotify",
+								"action"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "12 Copy",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"userId\": \"mss\",\n  \"actionType\": \"likes_only_one\",\n  \"timestamp\": \"2025-11-12T12:10:00\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL8080}}/api/subtlenotify/action",
+							"host": [
+								"{{URL8080}}"
+							],
+							"path": [
+								"api",
+								"subtlenotify",
+								"action"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "LoadTriggers",
+			"item": [
+				{
+					"name": "write_comments_night - you_are_owl",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"triggerIdent\" : \"write_comments_night\",\n    \"triggerDescr\" : \"если пользователь пишет комментарии ночью три дня подряд\",\n    \"notifIdent\" : \"you_are_owl\",\n    \"notifDescr\" : \"Кажется, вы сова 🦉\",\n    \"notifMoment\" : \"immediately\",\n    \"expectEveryDays\" : 1,\n    \"expectHowOften\" : 3,\n    \"expectFromHr\" : 21,\n    \"expectToHr\" : 2\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL8080}}/api/subtlenotify/trigger",
+							"host": [
+								"{{URL8080}}"
+							],
+							"path": [
+								"api",
+								"subtlenotify",
+								"trigger"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "buy_coffee - lets_drink_coffe",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"triggerIdent\": \"buy_coffee\",\n    \"triggerDescr\" : \"если пользователь покупает кофе утром по понедельникам, средам и пятницам\",\n    \"notifIdent\" : \"lets_drink_coffe\",   \n    \"notifDescr\" : \"А не пора бы выпить чашечку кофе?!\",\n    \"notifMoment\" : \"next_time\",\n    \"expectWeekDays\" : \"mon,wed,fri\",\n    \"expectHowOften\" : 1,\n    \"expectFromHr\" : 9,\n    \"expectToHr\" : 10\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL8080}}/api/subtlenotify/trigger",
+							"host": [
+								"{{URL8080}}"
+							],
+							"path": [
+								"api",
+								"subtlenotify",
+								"trigger"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "buy_coffee - present_discont_today",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"triggerIdent\": \"buy_coffee\",\n    \"triggerDescr\" : \"если пользователь покупает кофе по понедельникам, средам и пятницам\",\n    \"notifIdent\" : \"present_discont_today\",\n    \"notifDescr\" : \"Сегодня дарим Вам скидку!\",\n    \"notifMoment\" : \"next_time\",\n    \"expectWeekDays\" : \"mon,wed,fri\",\n    \"actualWeekDays\" : \"tue\",\n    \"actuaHr\" : 8\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL8080}}/api/subtlenotify/trigger",
+							"host": [
+								"{{URL8080}}"
+							],
+							"path": [
+								"api",
+								"subtlenotify",
+								"trigger"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "openapp_morning - early_start_greetings",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"triggerIdent\": \"openapp_morning\",\n    \"triggerDescr\" : \"Если пользователь открывает приложение каждый день утром\",\n    \"notifIdent\" : \"early_start_greetings\",\n    \"notifDescr\" : \"Сегодня вы начали раньше обычного — хороший старт 📈\",\n    \"notifMoment\" : \"immediately\",\n    \"expectWeekDays\" : \"mon,tue,wed,thu,fri\",\n    \"expectHowOften\" : 1,\n    \"expectFromHr\" : 9,\n    \"expectToHr\" : 11,\n    \"actualHr\" : \"5,6,7,8\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL8080}}/api/subtlenotify/trigger",
+							"host": [
+								"{{URL8080}}"
+							],
+							"path": [
+								"api",
+								"subtlenotify",
+								"trigger"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "read_sanday - read_deep_tomorrow",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"triggerIdent\": \"read_sanday\",\n    \"triggerDescr\" : \"Если пользователь читает длинные статьи только по воскресеньям\",\n    \"notifIdent\" : \"read_deep_tomorrow\",\n    \"notifDescr\" : \"Завтра идеальный день для глубокого чтения 📚✨\",\n    \"notifMoment\" : \"next_time\",\n    \"expectWeekDays\" : \"sun\",\n    \"expectHowOften\" : 3,\n    \"actualWeekDays\" : \"sat\",  \n    \"actualHours\" : \"18\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL8080}}/api/subtlenotify/trigger",
+							"host": [
+								"{{URL8080}}"
+							],
+							"path": [
+								"api",
+								"subtlenotify",
+								"trigger"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "order_lunch_delivery - think_about_dinner",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"triggerIdent\": \"order_lunch_delivery\",\n    \"triggerDescr\" : \"Если человек заказывает доставку в обед через один день\",\n    \"notifIdent\" : \"think_about_dinner\",\n    \"notifDescr\" : \"Похоже, пора думать про вкусный обед 🍝\",\n    \"notifMoment\" : \"next_time\",\n    \"expectEveryDays\" : 2,\n    \"expectHowOften\" : 3,\n    \"expectFromHr\" : 11,\n    \"expectToHr\" : 14\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL8080}}/api/subtlenotify/trigger",
+							"host": [
+								"{{URL8080}}"
+							],
+							"path": [
+								"api",
+								"subtlenotify",
+								"trigger"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "drink_tee_each_evening - drink_tee_today",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"triggerIdent\": \"drink_tee_each_evening\",\n    \"triggerDescr\" : \"Если пользователь пьёт чай каждый вечер, но один день пропустил\",\n    \"notifIdent\" : \"drink_tee_today\",\n    \"notifDescr\" : \"Ваш вечерний чай сегодня в меню? 🍵\",\n    \"notifMoment\" : \"next_time\",\n    \"expectEveryDays\" : 1,\n    \"expectHowOften\" : 7,\n    \"expectFromHr\" : 17,\n    \"expectToHr\" : 19,\n    \"missPreviousTime\" : true\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL8080}}/api/subtlenotify/trigger",
+							"host": [
+								"{{URL8080}}"
+							],
+							"path": [
+								"api",
+								"subtlenotify",
+								"trigger"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "drink_tee_sun_evening- drink_tee_today",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"triggerIdent\": \"drink_tee_sun_evening\",\n    \"triggerDescr\" : \"Если пользователь пьёт чай вечером по воскресениям, но один раз пропустил\",\n    \"notifIdent\" : \"drink_tee_today\",\n    \"notifDescr\" : \"Ваш вечерний чай сегодня в меню? 🍵\",\n    \"notifMoment\" : \"next_time\",\n    \"expectWeekDays\" : \"sun\",\n    \"expectHowOften\" : 2,\n    \"expectFromHr\" : 17,\n    \"expectToHr\" : 19,\n    \"missPreviousTime\" : true\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL8080}}/api/subtlenotify/trigger",
+							"host": [
+								"{{URL8080}}"
+							],
+							"path": [
+								"api",
+								"subtlenotify",
+								"trigger"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "lets_do_steps - lets_worm_up",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"triggerIdent\": \"lets_do_steps\",\n    \"triggerDescr\" : \"Если пользователь делает утренние шаги только после 10 утра\",\n    \"notifIdent\" : \"lets_worm_up\",\n    \"notifDescr\" : \"Твой ритм — твоя суперсила. Пора размяться? 🚶‍♂️✨\",\n    \"notifMoment\" : \"next_time\",\n    \"expectEveryDays\" : 1,\n    \"expectHowOften\" : 7,\n    \"expectFromHr\" : 10,\n    \"expectToHr\" : 12\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL8080}}/api/subtlenotify/trigger",
+							"host": [
+								"{{URL8080}}"
+							],
+							"path": [
+								"api",
+								"subtlenotify",
+								"trigger"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "checks_tasks - best_ideas_after_lunch",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"triggerIdent\" : \"checks_tasks_afternoon\",\n    \"triggerDescr\" : \"Если пользователь проверяет задачи только после обеда\",\n    \"notifIdent\" : \"best_ideas_after_lunch\",\n    \"notifDescr\" : \"Похоже, ваши лучшие идеи — после обеда 🌞\",\n    \"notifMoment\" : \"next_time\",\n    \"expectWeekDays\" : \"mon,tue,wed,thu,fri\", \n    \"expectHowOften\" : 1,\n    \"expectFromHr\" : 13,\n    \"expectToHr\" : 17,\n    \"actualHours\" : \"10\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL8080}}/api/subtlenotify/trigger",
+							"host": [
+								"{{URL8080}}"
+							],
+							"path": [
+								"api",
+								"subtlenotify",
+								"trigger"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "likes_only_one - inspiration_mood",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"triggerIdent\" : \"likes_only_one\",\n    \"triggerDescr\" : \"Если пользователь каждую среду ставит лайки одному автору\",\n    \"notifIdent\" : \"inspiration_mood\",\n    \"notifDescr\" : \"Сегодня день крутых открытий. Готов к вдохновению? ✨\",\n    \"notifMoment\" : \"next_time\",\n    \"expectWeekDays\" : \"wed\", \n    \"expectHowOften\" : 2,\n    \"expectFromHr\" : 9,\n    \"expectToHr\" : 5\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL8080}}/api/subtlenotify/trigger",
+							"host": [
+								"{{URL8080}}"
+							],
+							"path": [
+								"api",
+								"subtlenotify",
+								"trigger"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Actuator",
+			"item": [
+				{
+					"name": "health",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{URL8080}}/actuator/health",
+							"host": [
+								"{{URL8080}}"
+							],
+							"path": [
+								"actuator",
+								"health"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "info",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{URL8080}}/actuator/info",
+							"host": [
+								"{{URL8080}}"
+							],
+							"path": [
+								"actuator",
+								"info"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "metrics",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{URL8080}}/actuator/metrics",
+							"host": [
+								"{{URL8080}}"
+							],
+							"path": [
+								"actuator",
+								"metrics"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "prometheus",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{URL8080}}/actuator/prometheus",
+							"host": [
+								"{{URL8080}}"
+							],
+							"path": [
+								"actuator",
+								"prometheus"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "env",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{URL8080}}/actuator/env",
+							"host": [
+								"{{URL8080}}"
+							],
+							"path": [
+								"actuator",
+								"env"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "loggers",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{URL8080}}/actuator/loggers",
+							"host": [
+								"{{URL8080}}"
+							],
+							"path": [
+								"actuator",
+								"loggers"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "threaddump",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{URL8080}}/actuator/threaddump",
+							"host": [
+								"{{URL8080}}"
+							],
+							"path": [
+								"actuator",
+								"threaddump"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "heapdump",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{URL8080}}/actuator/heapdump",
+							"host": [
+								"{{URL8080}}"
+							],
+							"path": [
+								"actuator",
+								"heapdump"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "mappings",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{URL8080}}/actuator/mappings",
+							"host": [
+								"{{URL8080}}"
+							],
+							"path": [
+								"actuator",
+								"mappings"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "beans",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{URL8080}}/actuator/beans",
+							"host": [
+								"{{URL8080}}"
+							],
+							"path": [
+								"actuator",
+								"beans"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "httpexchanges",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{URL8080}}/actuator/httpexchanges",
+							"host": [
+								"{{URL8080}}"
+							],
+							"path": [
+								"actuator",
+								"httpexchanges"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "notifications",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{URL8080}}/api/subtlenotify/notifications",
+					"host": [
+						"{{URL8080}}"
+					],
+					"path": [
+						"api",
+						"subtlenotify",
+						"notifications"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "triggers",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{URL8080}}/api/subtlenotify/triggers?actionType=likes_only_one",
+					"host": [
+						"{{URL8080}}"
+					],
+					"path": [
+						"api",
+						"subtlenotify",
+						"triggers"
+					],
+					"query": [
+						{
+							"key": "actionType",
+							"value": "likes_only_one"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "actions",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{URL8080}}/api/subtlenotify/actions",
+					"host": [
+						"{{URL8080}}"
+					],
+					"path": [
+						"api",
+						"subtlenotify",
+						"actions"
+					],
+					"query": [
+						{
+							"key": "actionType",
+							"value": "openapp_morning",
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "clean",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{URL8080}}/api/subtlenotify/clean",
+					"host": [
+						"{{URL8080}}"
+					],
+					"path": [
+						"api",
+						"subtlenotify",
+						"clean"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

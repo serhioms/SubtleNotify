@@ -109,7 +109,7 @@
 
 [REST API](http://localhost:8080/swagger-ui/index.html)
 
-[Postman Collection](src/test/postman/postman_collection.json)
+[Postman Collection](http://localhost:8080/AlumniHub.postman_collection.json)
 
 [Actuators](http://localhost:8080/actuators.html)
 
