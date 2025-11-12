@@ -11,13 +11,12 @@ import ru.alumni.hub.subtlenotify.health.ActionsMetrics;
 import ru.alumni.hub.subtlenotify.model.Action;
 import ru.alumni.hub.subtlenotify.types.NotificationResponse;
 import ru.alumni.hub.subtlenotify.types.TriggerRequest;
+import ru.alumni.hub.subtlenotify.util.UtilAction;
+import ru.alumni.hub.subtlenotify.util.UtilTriggerRequest;
 
 import java.time.DayOfWeek;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -40,7 +39,7 @@ public class NotifficationService {
             var triggers = triggerService.getTriggersByIdent(action.getActionType());
             if( !triggers.isEmpty() ) {
                 for (TriggerRequest trigger : triggers) {
-                    if( trigger.isMissPreviousTime() ) {
+                    if(UtilTriggerRequest.isMissPreviousTime(trigger) ) {
                         generateMissedNotification(action, trigger).ifPresentOrElse( this::storeNotification, ()->{});
                     } else {
                         generateNormalNotification(action, trigger).ifPresentOrElse( this::storeNotification, ()->{});
@@ -60,10 +59,10 @@ public class NotifficationService {
     public Optional<NotificationResponse> generateMissedNotification(Action action, TriggerRequest trigger) throws SubtleNotifyException {
         if( trigger.getExpectEveryDays() != null) {
             // check if you missed action yesterday
-            action.setTimestamp(action.minusDays(trigger.getExpectEveryDays()));
+            action.setTimestamp(UtilAction.minusDays(action, trigger.getExpectEveryDays()));
             if (generateNormalNotification(action, trigger).isEmpty()) {
                 // check if you had notification the day before yesterday
-                action.setTimestamp(action.minusDays(trigger.getExpectEveryDays()));
+                action.setTimestamp(UtilAction.minusDays(action, trigger.getExpectEveryDays()));
                 Optional<NotificationResponse> notification = generateNormalNotification(action, trigger);
                 if (notification.isPresent()) {
                     // yeah, you missed it yesterday, and today you can't have notification then will generate it for tomorrow!
@@ -73,10 +72,10 @@ public class NotifficationService {
             }
         } else if( trigger.getExpectWeekDays() != null) {
             // check if you missed action the previous week
-            action.setTimestamp(action.minusWeek());
+            action.setTimestamp(UtilAction.minusWeek(action));
             if (generateNormalNotification(action, trigger).isEmpty()) {
                 // check if you had notification the week ago
-                action.setTimestamp(action.minusWeek());
+                action.setTimestamp(UtilAction.minusWeek(action));
                 Optional<NotificationResponse> notification = generateNormalNotification(action, trigger);
                 if (notification.isPresent()) {
                     // yeah, you missed it two weeks ago, and today you can't have notification then will generate it for next week!
@@ -89,9 +88,9 @@ public class NotifficationService {
       }
 
     private Optional<NotificationResponse> generateNormalNotification(Action action, TriggerRequest trigger) throws SubtleNotifyException {
-        int curWeekOfYear = action.weekOfYear();
+        int curWeekOfYear = UtilAction.weekOfYear(action);
         int curDayOfYear = action.getDayOfYear();
-        int curHourOfDay = action.getHour();
+        int curHourOfDay = UtilAction.getHour(action);
 
         List<Integer> expectedDayList = getDaysInTriggerScope(curDayOfYear, trigger);
         List<Integer> expectedWeekList = getWeeksInTriggerScope(curWeekOfYear, trigger);
@@ -106,8 +105,8 @@ public class NotifficationService {
         // filter actions by expected date and time and once for the day
         List<Integer> onceForDay = new ArrayList<>(64);
         List<Action> selectedActions = actions.stream()
-                .filter(a -> checkRightTime(a.getHour(), trigger.getExpectFromHr(), trigger.getExpectToHr()) ||  checkRightTime(a.getHour(), trigger.getActualHoursList()))
-                .filter(a -> checkRightDays(a.getDayOfWeek(), trigger.getExpectWeekDaysList()) || checkRightDays(a.getDayOfWeek(), trigger.getActualWeekDaysList()))
+                .filter(a -> checkRightTime(UtilAction.getHour(a), trigger.getExpectFromHr(), trigger.getExpectToHr()) ||  checkRightTime(UtilAction.getHour(a), UtilTriggerRequest.getActualHoursList(trigger)))
+                .filter(a -> checkRightDays(UtilAction.getDayOfWeek(a), UtilTriggerRequest.getExpectWeekDaysList(trigger)) || checkRightDays(UtilAction.getDayOfWeek(a), UtilTriggerRequest.getActualWeekDaysList(trigger)))
                 .filter(a -> isOnceForDay(onceForDay, a.getTimestamp().getDayOfYear()))
                 .toList();
 
@@ -115,7 +114,7 @@ public class NotifficationService {
         if (selectedActions.isEmpty()) {
             return Optional.empty();
         } else if (trigger.getExpectWeekDays() != null) { // check actions for a week days pattern aka sun, mon ...
-            if ( !( trigger.getExpectWeekDays().equals(selectedActions.stream().map(Action::getDayOfWeek).distinct().collect(Collectors.joining(",")))
+            if ( !( trigger.getExpectWeekDays().equals(selectedActions.stream().map(UtilAction::getDayOfWeek).distinct().collect(Collectors.joining(",")))
                 && trigger.getExpectHowOften() == selectedActions.stream().map(Action::getWeekOfYear).distinct().collect(Collectors.toSet()).size()) ) {
                 return Optional.empty();
             }
@@ -130,8 +129,8 @@ public class NotifficationService {
         }
 
         // filter by actual hours
-        if (!StringUtils.isBlank(trigger.getActualHours()) && trigger.getActualWeekDaysList().contains(action.getDayOfWeek())) {
-            if (trigger.getActualHoursList().stream().map(Integer::valueOf).noneMatch(h -> h == curHourOfDay)) {
+        if (!StringUtils.isBlank(trigger.getActualHours()) && UtilTriggerRequest.getActualWeekDaysList(trigger).contains(UtilAction.getDayOfWeek(action))) {
+            if (UtilTriggerRequest.getActualHoursList(trigger).stream().map(Integer::valueOf).noneMatch(h -> h == curHourOfDay)) {
                 return Optional.empty();
             }
         }
@@ -183,12 +182,12 @@ public class NotifficationService {
         if( trigger.getExpectEveryDays() != null ) {
             return action.getTimestamp()
                     .plusDays(trigger.getExpectEveryDays())
-                    .withHour(trigger.isActualHours() ? trigger.getActualHour() : trigger.getExpectFromHr())
+                    .withHour(UtilTriggerRequest.isActualHours(trigger) ? UtilTriggerRequest.getActualHour(trigger) : trigger.getExpectFromHr())
                     .withMinute(0)
                     .withSecond(0)
                     .minusMinutes(NOTIFICATION_MINUTES_OFFSET);
         } else if(trigger.getExpectWeekDays() != null ) {
-            return (switch( trigger.isActualWeekDays()? trigger.getActualWeekDay(): trigger.getExpectWeekDay()){
+            return (switch(Objects.requireNonNull(UtilTriggerRequest.isActualWeekDays(trigger) ? UtilTriggerRequest.getActualWeekDay(trigger) : UtilTriggerRequest.getExpectWeekDay(trigger))){
                 case "MON" ->  action.getTimestamp().plusWeeks(1).with(DayOfWeek.MONDAY);
                 case "TUE" ->  action.getTimestamp().plusWeeks(1).with(DayOfWeek.TUESDAY);
                 case "WED" ->  action.getTimestamp().plusWeeks(1).with(DayOfWeek.WEDNESDAY);
@@ -196,9 +195,9 @@ public class NotifficationService {
                 case "FRI" ->  action.getTimestamp().plusWeeks(1).with(DayOfWeek.FRIDAY);
                 case "SAT" ->  action.getTimestamp().plusWeeks(1).with(DayOfWeek.SATURDAY);
                 case "SUN" ->  action.getTimestamp().plusWeeks(1).with(DayOfWeek.SUNDAY);
-                default -> throw new IllegalStateException("Unexpected day of week: '" + (trigger.getActualWeekDays() != null?  action.getDayOfWeek(): trigger.getExpectWeekDay()));
+                default -> throw new IllegalStateException("Unexpected day of week: '" + (trigger.getActualWeekDays() != null?  UtilAction.getDayOfWeek(action): UtilTriggerRequest.getExpectWeekDay(trigger)));
             })
-                    .withHour( trigger.isActualHours()? trigger.getActualHour() : action.getHour())
+                    .withHour( UtilTriggerRequest.isActualHours(trigger)? UtilTriggerRequest.getActualHour(trigger) : UtilAction.getHour(action))
                     .withMinute(0)
                     .withSecond(0);
         } else {
