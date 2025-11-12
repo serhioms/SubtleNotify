@@ -3,8 +3,7 @@ package ru.alumni.hub.subtlenotify.service;
 import io.micrometer.common.util.StringUtils;
 import jakarta.validation.constraints.NotNull;
 import lombok.RequiredArgsConstructor;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import ru.alumni.hub.subtlenotify.exception.SubtleNotifyException;
 import ru.alumni.hub.subtlenotify.health.ActionsMetrics;
@@ -30,6 +29,7 @@ public class SubtleNotifyService {
     private final TriggerService triggerService;
     private final NotificationService notificationService;
 
+    @Async
     public void generateNotification(Action action) {
         var timer = actionsMetrics.startTimer();
         try {

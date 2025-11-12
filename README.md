@@ -6,7 +6,9 @@
 • Java 17
 • Spring Boot 3.5.7
 • JPA (HSQL)
-• LogBack, Actuators, Swagger
+• LogBack
+• Actuators
+• Swagger
 • Gradle
 
 ## To compile

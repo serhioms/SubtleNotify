@@ -32,9 +32,11 @@ public class SubtleNotifyController {
 
         Optional<Action> action = actionService.storeAction(actionRequest);
 
+        // Fire and forget - returns immediately
         action.ifPresent(subtleNotifyService::generateNotification);
 
-        Map<String, Object> response = Map.of(
+        // Response sent before async method completes
+        return ResponseEntity.status(HttpStatus.CREATED).body(Map.of(
                 "status", "success",
                 "message", "Action created successfully",
                 "data", Map.of(
@@ -42,8 +44,7 @@ public class SubtleNotifyController {
                         "actionType", actionRequest.getActionType(),
                         "timestamp", actionRequest.getTimestamp().toString()
                 )
-        );
-        return ResponseEntity.status(HttpStatus.CREATED).body(response);
+        ));
     }
 
     @GetMapping("/actions")
