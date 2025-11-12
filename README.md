@@ -107,6 +107,8 @@
 
 Стандартная слоистная - [SubtleNotifyController](src/main/java/ru/alumni/hub/subtlenotify/controller/SubtleNotifyController.java) ->  [Services](src/main/java/ru/alumni/hub/subtlenotify/service) ->  [Repositories](src/main/java/ru/alumni/hub/subtlenotify/repository) ->  [Model](src/main/java/ru/alumni/hub/subtlenotify/model)
 
+Главный класс в котором генерятся непредсказуемых уведомлений - [SubtleNotifyApplication](src/main/java/ru/alumni/hub/subtlenotify/SubtleNotifyApplication.java)
+
 [REST API](http://localhost:8080/swagger-ui/index.html)
 
 [Postman Collection](http://localhost:8080/AlumniHub.postman_collection.json) / [LOCAL environment](http://localhost:8080/LOCAL.postman_environment.json)
