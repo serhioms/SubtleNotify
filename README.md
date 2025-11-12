@@ -19,7 +19,7 @@
 
 ### Логика поведения
 
-При и в каждом [REST/action](http://localhost:8080/swagger-ui/index.html#/:~:text=/api/subtlenotify/action) вызове `actiontype` задаёт подходящие триггеры и связанные с ними уведомления. Порядок операций следующий:
+При и в каждом [REST/action](http://localhost:8080/swagger-ui/index.html#/:~:text=/api/subtlenotify/action) вызове `actionType` задаёт подходящие триггеры и связанные с ними уведомления. Порядок операций следующий:
 
 - Записать `action` в БД
 - Сформировать статистику в виде серии `timestamp` по конкретному `userId` и `actionType` за известный промежуток времени
