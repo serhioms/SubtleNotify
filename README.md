@@ -16,58 +16,25 @@
 
 • gradle bootRun
 
-## View and test
 
-Here is [REST API](http://localhost:8080/swagger-ui/index.html)
+## Архитектура
 
-Here is [Postman Collection](src/test/postman/postman_collection.json)
+** [REST API](http://localhost:8080/swagger-ui/index.html)
 
-Here are available [Actuators](http://localhost:8080/actuators.html)
+** [Postman Collection](src/test/postman/postman_collection.json)
 
+** [Actuators](http://localhost:8080/actuators.html)
 
+** [DB Schema](http://localhost:8080/SubtleNotifyDB.png)
 
-## Сервисы
+**  Стандартный стэк Springboot сервисов - [SubtleNotifyController](src/main/java/ru/alumni/hub/subtlenotify/controller/SubtleNotifyController.java) ->  [Services](src/main/java/ru/alumni/hub/subtlenotify/service) ->  [Repositories](src/main/java/ru/alumni/hub/subtlenotify/repository)
 
-### REST API с методами:
+Вместо того чтобы исполнять процедуру нотификации синхронно с REST вызовом `/action` , будем запускать её асинхронно.
 
-- **POST /action** — добавить действие пользователя
-  ```json
-  {
-    "userId": "string",
-    "actionType": "string",
-    "timestamp": "string"
-  }
-  ```
+### Плюсы/минусы:
 
-- **GET /notifications** — получить все уведомления, сгенерированные системой
-
-- **GET [/actions](http://localhost:8080/api/subtlenotify/actions)** показать все `action` с необязательным фильтром по `userId` и `actionType`
-
-- **POST /trigger** записать триггер в БД
-  ```json
-    {
-        "triggerIdent": "order_lunch_delivery",
-        "triggerDescr" : "Если человек заказывает доставку в обед через один день",
-        "notifIdent" : "think_about_dinner",
-        "notifDescr" : "Похоже, пора думать про вкусный обед 🍝",
-        "notifMoment" : "immediately | next_time",
-        "expectWeekDays" : "sun,mon,tue,wed,thu,fri,sat",
-        "expectEveryDays" : 1,
-        "expectHowOften" : 2,
-        "expectFromHr" : 11,
-        "expectToHr" : 14,
-        "actualWeekDays" : "sat,tue",
-        "actualHours" : "5,6,7,8",
-        "missPreviousTime" : true/false
-    }
-  ```
-  
-- **GET [/triggers](http://localhost:8080/api/subtlenotify/triggers)** показать все `trigger` с необязательным фильтром по `actionType`
-
-- **DELETE [/clean](http://localhost:8080/api/subtlenotify/clean)** почистить БД
-
-
-> **PS:** Чуть изменил контракт... Единственное число принято в нэйминге где это возможно. Допускаются смысловые исключения, поэтому `action` вместо `actions`.
+- ✅ Уменьшаем время работы микросервиса в рамках контракта
+- ✅ Контролируем нагрузку на сервер ограниченным пулом рабочих потоков
 
 ### Логика поведения
 
@@ -96,18 +63,6 @@ Here are available [Actuators](http://localhost:8080/actuators.html)
 9. **ставит лайки** - по средам → уведомить с утра в следующую среду
 
 
-## Архитектура
-
-** DB Schem [SubtleNotify](http://localhost:8080/SubtleNotifyDB.png
-
-**  Стандартный стэк Springboot сервисов - [SubtleNotifyController](src/main/java/ru/alumni/hub/subtlenotify/controller/SubtleNotifyController.java) ->  [Service](src/main/java/ru/alumni/hub/subtlenotify/service) ->  [Repository](src/main/java/ru/alumni/hub/subtlenotify/repository)
-
-Вместо того чтобы исполнять процедуру нотификации синхронно с REST вызовом `/action` , будем запускать её асинхронно.
-
-### Плюсы/минусы:
-
-- ✅ Уменьшаем время работы микросервиса в рамках контракта
-- ✅ Контролируем нагрузку на сервер ограниченным пулом рабочих потоков
 
 ## Эвристика непредсказуемости
 
