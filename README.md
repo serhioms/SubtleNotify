@@ -1,6 +1,6 @@
 # SubtleNotify
 
-«Сервис непредсказуемых уведомлений». Cервис отправляет пользователям уведомления не по расписанию, а на основе закономерностей их активности. Пр скольку уведомления не случайны но предсказуемы не очевидным образом проект назван **SubtleNotify** - тонкое уведомление.
+«Сервис непредсказуемых уведомлений». Cервис отправляет пользователям уведомления не по расписанию, а на основе закономерностей их активности. По скольку уведомления не случайны но предсказуемы хотя и не ожиданным образом проект назван **SubtleNotify** - тонкое уведомление.
 
 ## Tech stack:
 • Java 17
@@ -19,15 +19,15 @@
 
 ### Логика поведения
 
-При и в каждом [REST/action](http://localhost:8080/swagger-ui/index.html#/:~:text=/api/subtlenotify/action) вызове `actiontype` задаёт подходящие триггеры и связвнные с ними уведомления.
+При и в каждом [REST/action](http://localhost:8080/swagger-ui/index.html#/:~:text=/api/subtlenotify/action) вызове `actiontype` задаёт подходящие триггеры и связанные с ними уведомления. Порядок операций следующий:
 
 - Записать `action` в БД
-- Сформировать статистику в виде серии `timestamp` по конкретному `userId` и `actionType` в необходимом периоде времени
-- Найти триггер соответствующий `actionType` и применить правила к серии `timestamp`
-- Если какое-либо правило срабатывает, то сохраняем "непредсказуемое" уведомление в БД избегая дублей
+- Сформировать статистику в виде серии `timestamp` по конкретному `userId` и `actionType` за известный промежуток времени
+- Найти триггера соответствующие`actionType` и применить правила к серии `timestamp`
+- Если какое-либо правило срабатывает, то сохраняем "непредсказуемое" уведомление в БД
 
-> **PS:** Ограничимся понедельными уведомлениями. Помесячные и годовые уведомления ожидаются в следующих версиях.<br/>
-> **PS:** Не предусматривается никаких ограничений для "надоедливых сообщений"
+> **PS:** Ограничимся понедельными уведомлениями. Помесячные и годовые уведомления ожидаются в следующих версиях :)<br/>
+> **PS:** Не предусматривается никаких ограничений для "надоедливых сообщений" кроме устранения дублей
 
 ## Примеры триггеров и уведомлений
 
@@ -71,10 +71,10 @@
 }
 ```
 
-- `expectWeekDays` - в какие дни ожидаются `action` на неделе из ряда "sun,mon,tue,wed,thu,fri,sat" и сколько недель подряд в `expectHowOften`
+- `expectWeekDays` - в какие дни ожидаются `action` на неделе из ряда "sun, mon, tue, wed, thu, fri, sat" и сколько недель подряд в `expectHowOften`
 - `expectEveryDays` - сколько  дней подряд (1) или через день (2) или каждый третий день (3) и т.д. ожидаются `action` и сколько дней подряд в `expectHowOften`
 - `expectFromHr` и `expectToHr` - ожидаемые часы `action` (по дефолту от 0 до 24 часов)
-- `missYesterday` - true/false флаг для вычисления случая когда предыдущее уведлмление было пропущена (см примеры [№6 "пьёт чай"](https://github.com/serhioms/SubtleNotify?tab=readme-ov-file#:~:text=%D1%82%D1%80%D0%B5%D1%82%D0%B8%D0%B9%20%D1%86%D0%B8%D0%BA%D0%BB%20%D1%83%D0%B2%D0%B5%D0%B4%D0%BE%D0%BC%D0%B8%D1%82%D1%8C-,%D0%BF%D1%8C%D1%91%D1%82%20%D1%87%D0%B0%D0%B9,-%2D%20%D0%BA%D0%B0%D0%B6%D0%B4%D1%8B%D0%B9%20%D0%B2%D0%B5%D1%87%D0%B5%D1%80%20%D0%B8%D0%BB%D0%B8))
+- `missPreviousTime` - true/false флаг для вычисления случая когда предыдущее уведомление было пропущена (см примеры [№6 "пьёт чай"](https://github.com/serhioms/SubtleNotify?tab=readme-ov-file#:~:text=%D1%82%D1%80%D0%B5%D1%82%D0%B8%D0%B9%20%D1%86%D0%B8%D0%BA%D0%BB%20%D1%83%D0%B2%D0%B5%D0%B4%D0%BE%D0%BC%D0%B8%D1%82%D1%8C-,%D0%BF%D1%8C%D1%91%D1%82%20%D1%87%D0%B0%D0%B9,-%2D%20%D0%BA%D0%B0%D0%B6%D0%B4%D1%8B%D0%B9%20%D0%B2%D0%B5%D1%87%D0%B5%D1%80%20%D0%B8%D0%BB%D0%B8))
 > **PS:** Обязательно задать одно из двух правил `expectWeekDays` или `expectEveryDays`, но не оба сразу!
 
 
@@ -105,22 +105,21 @@
 
 ## Архитектура микросервисов
 
-**  Стандартная слоистная - [SubtleNotifyController](src/main/java/ru/alumni/hub/subtlenotify/controller/SubtleNotifyController.java) ->  [Services](src/main/java/ru/alumni/hub/subtlenotify/service) ->  [Repositories](src/main/java/ru/alumni/hub/subtlenotify/repository) ->  [Model](src/main/java/ru/alumni/hub/subtlenotify/model) **
+Стандартная слоистная - [SubtleNotifyController](src/main/java/ru/alumni/hub/subtlenotify/controller/SubtleNotifyController.java) ->  [Services](src/main/java/ru/alumni/hub/subtlenotify/service) ->  [Repositories](src/main/java/ru/alumni/hub/subtlenotify/repository) ->  [Model](src/main/java/ru/alumni/hub/subtlenotify/model)
 
+[REST API](http://localhost:8080/swagger-ui/index.html)
 
-** [REST API](http://localhost:8080/swagger-ui/index.html) **
+[Postman Collection](src/test/postman/postman_collection.json)
 
-** [Postman Collection](src/test/postman/postman_collection.json) **
+[Actuators](http://localhost:8080/actuators.html)
 
-** [Actuators](http://localhost:8080/actuators.html) **
-
-** [DB Schema](http://localhost:8080/SubtleNotifyDB.png) **
+[DB Schema](http://localhost:8080/SubtleNotifyDB.png)
 
 
 Вместо того чтобы исполнять процедуру генерации уведомления синхронно с REST вызовом `/action` , будем запускать её асинхронно.
 
 ### Плюсы/минусы:
 
-- ✅ Уменьшаем время работы микросервиса в рамках контракта
+- ✅ Уменьшаем время работы `/action` микросервиса
 - ✅ Контролируем нагрузку на сервер ограниченным пулом рабочих потоков
 
