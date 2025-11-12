@@ -6,6 +6,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 import ru.alumni.hub.subtlenotify.model.Action;
 import jakarta.validation.constraints.NotNull;
+import ru.alumni.hub.subtlenotify.model.User;
 
 import java.util.List;
 import java.util.UUID;
@@ -17,22 +18,22 @@ public interface ActionRepository extends JpaRepository<Action, UUID> {
     @NotNull
     List<Action> findAll();
 
-    @Query("select a from Action a where a.userId = :userId order by a.timestamp asc")
-    List<Action> findByUserId(@Param("userId") String userId);
+    @Query("select a from Action a where a.user = :user order by a.timestamp asc")
+    List<Action> findByUserId(@Param("user") User user);
 
     // Find all actions by actionType
     @Query("select a from Action a where a.actionType = :actionType order by a.timestamp asc")
     List<Action> findByActionType(@Param("actionType") String actionType);
 
     // Find actions by userId and actionType
-    @Query("select a from Action a where a.actionType = :actionType and a.userId = :userId order by a.timestamp asc")
-    List<Action> findByUserIdAndActionTypeByDays(@Param("userId") String userId, @Param("actionType") String actionType);
+    @Query("select a from Action a where a.actionType = :actionType and a.user = :user order by a.timestamp asc")
+    List<Action> findByUserIdAndActionTypeByDays(@Param("user") User user, @Param("actionType") String actionType);
 
     // Find actions by userId and actionType
-    @Query("select a from Action a where a.actionType = :actionType and a.userId = :userId and a.dayOfYear in :dayList order by a.timestamp asc")
-    List<Action> findByUserIdAndActionTypeByDays(@Param("userId") String userId, @Param("actionType") String actionType, @Param("dayList") List<Integer> dayList);
+    @Query("select a from Action a where a.actionType = :actionType and a.user = :user and a.dayOfYear in :dayList order by a.timestamp asc")
+    List<Action> findByUserIdAndActionTypeByDays(@Param("user") User user, @Param("actionType") String actionType, @Param("dayList") List<Integer> dayList);
 
     // Find actions by userId and actionType
-    @Query("select a from Action a where a.actionType = :actionType and a.userId = :userId and a.weekOfYear in :weekList order by a.timestamp asc")
-    List<Action> findByUserIdAndActionTypeByWeeks(@Param("userId") String userId, @Param("actionType") String actionType, @Param("weekList") List<Integer> weekList);
+    @Query("select a from Action a where a.actionType = :actionType and a.user = :user and a.weekOfYear in :weekList order by a.timestamp asc")
+    List<Action> findByUserIdAndActionTypeByWeeks(@Param("user") User user, @Param("actionType") String actionType, @Param("weekList") List<Integer> weekList);
 }

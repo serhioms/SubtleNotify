@@ -100,7 +100,7 @@ public class NotifficationService {
         }
 
         // select actions from DB for the last N days or weeks according to the trigger scope ordered by timestamp
-        List<Action> actions = actionService.getUserActions(action.getUser().getUserId(), action.getActionType(), expectedDayList, expectedWeekList);
+        List<Action> actions = actionService.getUserActions(action.getUser(), action.getActionType(), expectedDayList, expectedWeekList);
 
         // filter actions by expected date and time and once for the day
         List<Integer> onceForDay = new ArrayList<>(64);
@@ -223,7 +223,7 @@ public class NotifficationService {
     }
 
 
-    public List<NotificationResponse> getNotifications() {
+    public List<NotificationResponse> retrieveNotifications() {
         return notifications;
     }
 

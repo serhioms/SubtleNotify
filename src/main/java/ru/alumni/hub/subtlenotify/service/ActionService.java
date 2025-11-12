@@ -9,6 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 import ru.alumni.hub.subtlenotify.exception.SubtleNotifyException;
 import ru.alumni.hub.subtlenotify.health.ActionsMetrics;
 import ru.alumni.hub.subtlenotify.model.Action;
+import ru.alumni.hub.subtlenotify.model.User;
 import ru.alumni.hub.subtlenotify.repository.ActionRepository;
 import ru.alumni.hub.subtlenotify.types.ActionRequest;
 
@@ -57,27 +58,34 @@ public class ActionService {
         return Optional.empty();
     }
 
-    public List<Action> getUserActions(String userId, String actionType, List<Integer> dayList, List<Integer> weekList) throws SubtleNotifyException {
+    public List<Action> getUserActions(User user, String actionType, List<Integer> dayList, List<Integer> weekList) throws SubtleNotifyException {
         if(! dayList.isEmpty() ) {
-            return actionsRepository.findByUserIdAndActionTypeByDays(userId, actionType, dayList);
+            return actionsRepository.findByUserIdAndActionTypeByDays(user, actionType, dayList);
         } else if(! weekList.isEmpty() ) {
-            return actionsRepository.findByUserIdAndActionTypeByWeeks(userId, actionType, weekList);
+            return actionsRepository.findByUserIdAndActionTypeByWeeks(user, actionType, weekList);
         } else {
             throw new SubtleNotifyException("Both filter of days and weeks should not be empty");
         }
     }
 
-    public List<Action> getUserActions(String userId, String actionType) {
-        return actionsRepository.findByUserIdAndActionTypeByDays(userId, actionType);
+    public List<Action> getUserActions(User user, String actionType) {
+        return actionsRepository.findByUserIdAndActionTypeByDays(user, actionType);
     }
 
     public List<Action> getActions(String userId, String actionType) {
-        if ( !StringUtils.isBlank(userId) && !StringUtils.isBlank(actionType) ) {
-            return getUserActions(userId, actionType);
-        } else if ( !StringUtils.isBlank(actionType) ) {
+        boolean hasUserId = !StringUtils.isBlank(userId);
+        boolean hasActionType = !StringUtils.isBlank(actionType);
+
+        if (hasUserId && hasActionType) {
+            return userService.getUser(userId)
+                    .map(user -> getUserActions(user, actionType))
+                    .orElseGet(List::of);
+        } else if (hasActionType) {
             return actionsRepository.findByActionType(actionType);
-        } else if ( !StringUtils.isBlank(userId) ) {
-            return actionsRepository.findByUserId(userId);
+        } else if (hasUserId) {
+            return userService.getUser(userId)
+                    .map(actionsRepository::findByUserId)
+                    .orElseGet(List::of);
         } else {
             return actionsRepository.findAll();
         }

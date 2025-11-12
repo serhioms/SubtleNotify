@@ -21,7 +21,12 @@ public class LoggingAdvice {
     public void businessLayerPointcut() {
     }
 
-    @Around("businessLayerPointcut()")
+    // Exclude getter methods (methods starting with "get" or "is" with no parameters)
+    @Pointcut("execution(* get*()) || execution(* is*()) || execution(* check*())")
+    public void getterMethodsPointcut() {
+    }
+
+    @Around("businessLayerPointcut() && !getterMethodsPointcut()")
 	public Object applicationLogger(ProceedingJoinPoint joinPoint) throws Throwable {
 		Object proceed = null;
 		try {

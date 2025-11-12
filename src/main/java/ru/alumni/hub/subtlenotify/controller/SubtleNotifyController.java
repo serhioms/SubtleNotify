@@ -54,7 +54,7 @@ public class SubtleNotifyController {
 
     @GetMapping("/notifications")
     public ResponseEntity<List<NotificationResponse>> getNotifications() {
-        return ResponseEntity.ok(notificationService.getNotifications());
+        return ResponseEntity.ok(notificationService.retrieveNotifications());
     }
 
     @PostMapping("/trigger")
