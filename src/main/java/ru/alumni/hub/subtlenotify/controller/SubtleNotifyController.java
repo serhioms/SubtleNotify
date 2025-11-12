@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import ru.alumni.hub.subtlenotify.model.Action;
 import ru.alumni.hub.subtlenotify.service.ActionService;
 import ru.alumni.hub.subtlenotify.service.NotifficationService;
-import ru.alumni.hub.subtlenotify.service.TriggerService;
+import ru.alumni.hub.subtlenotify.service.TriggerServiceOld;
 import ru.alumni.hub.subtlenotify.types.ActionRequest;
 import ru.alumni.hub.subtlenotify.types.NotificationResponse;
 import ru.alumni.hub.subtlenotify.types.TriggerRequest;
@@ -24,7 +24,7 @@ import java.util.Optional;
 public class SubtleNotifyController {
 
     private final ActionService actionService;
-    private final TriggerService triggerService;
+    private final TriggerServiceOld triggerServiceOld;
     private final NotifficationService notificationService;
 
 
@@ -59,15 +59,15 @@ public class SubtleNotifyController {
 
     @PostMapping("/trigger")
     public void trigger(@Valid @RequestBody TriggerRequest triggerRequest) {
-        triggerService.storeTrigger(triggerRequest);
+        triggerServiceOld.storeTrigger(triggerRequest);
     }
 
     @GetMapping("/triggers")
     public ResponseEntity<List<TriggerRequest>> triggers(@RequestParam(required = false)  String actionType) {
         if(StringUtils.isBlank(actionType)) {
-            return ResponseEntity.status(HttpStatus.CREATED).body(triggerService.getAllTriggers());
+            return ResponseEntity.status(HttpStatus.CREATED).body(triggerServiceOld.getAllTriggers());
         } else {
-            return ResponseEntity.status(HttpStatus.CREATED).body(triggerService.getTriggersByIdent(actionType));
+            return ResponseEntity.status(HttpStatus.CREATED).body(triggerServiceOld.getTriggersByIdent(actionType));
         }
     }
 

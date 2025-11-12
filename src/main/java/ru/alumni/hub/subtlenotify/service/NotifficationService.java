@@ -31,12 +31,12 @@ public class NotifficationService {
 
     private final ActionsMetrics actionsMetrics;
     private final ActionService actionService;
-    private final TriggerService triggerService;
+    private final TriggerServiceOld triggerServiceOld;
 
     public void generateNotification(Action action) {
         var timer = actionsMetrics.startTimer();
         try {
-            var triggers = triggerService.getTriggersByIdent(action.getActionType().getActionType());
+            var triggers = triggerServiceOld.getTriggersByIdent(action.getActionType().getActionType());
             if( !triggers.isEmpty() ) {
                 for (TriggerRequest trigger : triggers) {
                     if(UtilTriggerRequest.isMissPreviousTime(trigger) ) {

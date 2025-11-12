@@ -37,11 +37,11 @@ public class Action {
     private LocalDateTime timestamp;
 
     @NotNull(message = "dayOfYear is required")
-    @Column(nullable = false)
+    @Column(name = "day_of_year", nullable = false)
     private Integer dayOfYear;
 
     @NotNull(message = "weekOfYear is required")
-    @Column(nullable = false)
+    @Column(name = "week_of_year", nullable = false)
     private Integer weekOfYear;
 
     @Column(name = "created_at", nullable = false, updatable = false)

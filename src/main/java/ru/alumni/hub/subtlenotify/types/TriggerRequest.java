@@ -19,7 +19,7 @@ public class TriggerRequest {
     private String notifDescr;
 
     @NotNull(message = "notifMoment is required")
-    private NotificationMoment notifMoment;
+    private NotifyMoment notifMoment;
 
     private Integer expectEveryDays;
     private String expectWeekDays;
