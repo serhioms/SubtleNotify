@@ -3,6 +3,7 @@ package ru.alumni.hub.subtlenotify.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
@@ -25,18 +26,19 @@ public class Trigger {
 
     @Id
     @GeneratedValue
+    @JsonIgnore
     private UUID id;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "message_ident", referencedColumnName = "ident", nullable = false)
     @NotNull(message = "notifyMessage is required")
-    @JsonIgnore
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private NotifyMessage notifyMessage;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "action_type", referencedColumnName = "action_type", nullable = false)
     @NotNull(message = "actionType is required")
-    @JsonIgnore
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private ActionType actionType;
 
     @Column(name = "descr")
@@ -46,7 +48,7 @@ public class Trigger {
     private String expectWeekDays;
 
     @Column(name = "expect_every_days")
-    private String expectEveryDays;
+    private Integer expectEveryDays;
 
     @Column(name = "expect_how_often")
     private Integer expectHowOften;
@@ -57,6 +59,12 @@ public class Trigger {
     @Column(name = "expect_to_hr")
     private Integer expectToHr;
 
+    @Column(name = "actual_hours")
+    private String actualHours;
+
+    @Column(name = "actual_week_days")
+    private String actualWeekDays;
+
     @Column(name = "miss_previous_time", nullable = false)
     private Boolean missPreviousTime = false;
 
@@ -65,20 +73,22 @@ public class Trigger {
     @NotNull(message = "notifyMoment is required")
     private NotifyMoment notifyMoment;
 
-    @Column(name = "created_at", nullable = false, updatable = false)
-    private LocalDateTime createdAt;
-
     @PrePersist
     protected void onCreate() {
-        createdAt = LocalDateTime.now();
         if (missPreviousTime == null) {
             missPreviousTime = false;
         }
     }
 
-    @PreUpdate
-    protected void onUpdate() {
-        createdAt = LocalDateTime.now();
+    // Custom getters for JSON serialization
+
+    @JsonProperty("notifyMessage")
+    public String getMessage() {
+        return notifyMessage != null ? notifyMessage.getMessage() : null;
     }
 
+    @JsonProperty("actionType")
+    public String getActionTypeName() {
+        return actionType != null ? actionType.getActionType() : null;
+    }
 }

@@ -2,6 +2,7 @@ package ru.alumni.hub.subtlenotify.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
@@ -23,18 +24,19 @@ public class Notification {
 
     @Id
     @GeneratedValue
+    @JsonIgnore
     private UUID id;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "message_ident", referencedColumnName = "ident", nullable = false)
     @NotNull(message = "notifyMessage is required")
-    @JsonIgnore
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private NotifyMessage notifyMessage;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", referencedColumnName = "user_id", nullable = false)
     @NotNull(message = "user is required")
-    @JsonIgnore
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private User user;
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -47,12 +49,24 @@ public class Notification {
     @Column(nullable = false)
     private LocalDateTime timestamp;
 
-    @Column(name = "created_at", nullable = false, updatable = false)
-    private LocalDateTime createdAt;
+    @NotNull(message = "dayOfYear is required")
+    @Column(nullable = false)
+    @JsonIgnore
+    private Integer dayOfYear;
 
     @PrePersist
     protected void onCreate() {
-        createdAt = LocalDateTime.now();
+        dayOfYear = timestamp.getDayOfYear();
     }
 
+    // Custom getters for JSON serialization
+    @JsonProperty("user")
+    public String getUserId() {
+        return user != null ? user.getUserId() : null;
+    }
+
+    @JsonProperty("notifyMessage")
+    public String getMessage() {
+        return notifyMessage != null ? notifyMessage.getMessage() : null;
+    }
 }

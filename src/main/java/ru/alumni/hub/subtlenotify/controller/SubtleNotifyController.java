@@ -8,9 +8,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ru.alumni.hub.subtlenotify.model.Action;
 import ru.alumni.hub.subtlenotify.model.Notification;
+import ru.alumni.hub.subtlenotify.model.Trigger;
 import ru.alumni.hub.subtlenotify.service.*;
 import ru.alumni.hub.subtlenotify.types.ActionRequest;
-import ru.alumni.hub.subtlenotify.types.NotificationResponse;
 import ru.alumni.hub.subtlenotify.types.TriggerRequest;
 
 import java.util.List;
@@ -54,23 +54,21 @@ public class SubtleNotifyController {
     }
 
     @GetMapping("/notifications")
-    public ResponseEntity<List<NotificationResponse>> getNotifications() {
-        return ResponseEntity.ok(subtleNotifyService.retrieveNotifications());
-        //return ResponseEntity.ok(notificationService.getAllNotifications());
+    public ResponseEntity<List<Notification>> getNotifications() {
+        return ResponseEntity.ok(notificationService.getAllNotifications());
     }
 
     @PostMapping("/trigger")
     public void trigger(@Valid @RequestBody TriggerRequest triggerRequest) {
-        triggerServiceOld.storeTrigger(triggerRequest);
-        //triggerService.storeTrigger(triggerRequest);
+        triggerService.storeTrigger(triggerRequest);
     }
 
     @GetMapping("/triggers")
-    public ResponseEntity<List<TriggerRequest>> triggers(@RequestParam(required = false)  String actionType) {
+    public ResponseEntity<List<Trigger>> triggers(@RequestParam(required = false)  String actionType) {
         if(StringUtils.isBlank(actionType)) {
-            return ResponseEntity.status(HttpStatus.CREATED).body(triggerServiceOld.getAllTriggers());
+            return ResponseEntity.status(HttpStatus.CREATED).body(triggerService.getAllTriggers());
         } else {
-            return ResponseEntity.status(HttpStatus.CREATED).body(triggerServiceOld.getTriggersByIdent(actionType));
+            return ResponseEntity.status(HttpStatus.CREATED).body(triggerService.getTriggersByActionType(actionType));
         }
     }
 

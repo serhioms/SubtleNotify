@@ -30,6 +30,11 @@ public class ActionService {
     private final UserService userService;
     private final ActionTypeService actionTypeService;
 
+    /**
+     * Store a new action with string parameters
+     * @param triggerRequest the request
+     * @return Optional containing the saved Trigger
+     */
     @Transactional
     public Optional<Action> storeAction(ActionRequest request) {
         var timer = actionsMetrics.startTimer();
@@ -42,8 +47,6 @@ public class ActionService {
                 action.setUser(userOpt.get());
                 action.setActionType(actionTypeOpt.get());
                 action.setTimestamp(request.getTimestamp());
-                action.setDayOfYear(request.getTimestamp().getDayOfYear());
-                action.setWeekOfYear(request.getTimestamp().get(WeekFields.of(Locale.getDefault()).weekOfYear()));
 
                 return Optional.of(actionsRepository.save(action));
             } else {

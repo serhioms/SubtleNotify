@@ -16,6 +16,13 @@ import java.util.UUID;
 @Repository
 public interface NotificationRepository extends JpaRepository<Notification, UUID> {
 
+    @Query("select n from Notification n where n.user = :user and n.actionType = :actionType and n.dayOfYear = :dayOfYear order by n.timestamp desc")
+    List<Notification> findByUserAndActionTypeAndDayOfYear(@Param("user") User user, @Param("actionType") ActionType actionType, @Param("dayOfYear") Integer dayOfYear);
+
+
+
+
+
     @Query("select n from Notification n order by n.timestamp desc")
     @NotNull
     List<Notification> findAll();
@@ -26,8 +33,7 @@ public interface NotificationRepository extends JpaRepository<Notification, UUID
     @Query("select n from Notification n where n.actionType = :actionType order by n.timestamp desc")
     List<Notification> findByActionType(@Param("actionType") ActionType actionType);
 
-    @Query("select n from Notification n where n.user = :user and n.actionType = :actionType order by n.timestamp desc")
-    List<Notification> findByUserAndActionType(@Param("user") User user, @Param("actionType") ActionType actionType);
+
 
     @Query("select n from Notification n where n.timestamp >= :fromTimestamp order by n.timestamp desc")
     List<Notification> findByTimestampAfter(@Param("fromTimestamp") java.time.LocalDateTime fromTimestamp);

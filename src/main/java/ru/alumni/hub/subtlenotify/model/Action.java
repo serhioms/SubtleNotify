@@ -1,5 +1,6 @@
 package ru.alumni.hub.subtlenotify.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
@@ -10,6 +11,8 @@ import lombok.NoArgsConstructor;
 import lombok.ToString;
 
 import java.time.LocalDateTime;
+import java.time.temporal.WeekFields;
+import java.util.Locale;
 import java.util.UUID;
 
 
@@ -23,6 +26,7 @@ import java.util.UUID;
 public class Action {
     @Id
     @GeneratedValue
+    @JsonIgnore
     private UUID id;
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -43,21 +47,23 @@ public class Action {
 
     @NotNull(message = "dayOfYear is required")
     @Column(name = "day_of_year", nullable = false)
+    @JsonIgnore
     private Integer dayOfYear;
 
     @NotNull(message = "weekOfYear is required")
     @Column(name = "week_of_year", nullable = false)
+    @JsonIgnore
     private Integer weekOfYear;
 
-    @Column(name = "created_at", nullable = false, updatable = false)
-    private LocalDateTime createdAt;
 
     @PrePersist
     protected void onCreate() {
-        createdAt = LocalDateTime.now();
+        dayOfYear = timestamp.getDayOfYear();
+        weekOfYear = timestamp.get(WeekFields.of(Locale.getDefault()).weekOfYear());
     }
 
     // Custom getters for JSON serialization
+
     @JsonProperty("user")
     public String getUserId() {
         return user != null ? user.getUserId() : null;
