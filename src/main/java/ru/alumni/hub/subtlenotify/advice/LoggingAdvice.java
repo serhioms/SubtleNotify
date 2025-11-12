@@ -22,7 +22,9 @@ public class LoggingAdvice {
     }
 
     // Exclude getter methods (methods starting with "get" or "is" with no parameters)
-    @Pointcut("execution(* get*()) || execution(* is*()) || execution(* check*())")
+    @Pointcut("execution(* ru.alumni.hub.subtlenotify..get*()) " +
+            "|| execution(* ru.alumni.hub.subtlenotify..is*()) " +
+            "|| execution(* ru.alumni.hub.subtlenotify..check*())")
     public void getterMethodsPointcut() {
     }
 

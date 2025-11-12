@@ -50,7 +50,7 @@ public class SubtleNotifyController {
 
     @GetMapping("/actions")
     public ResponseEntity<List<Action>> getAllActions(@RequestParam(required = false) String userId, @RequestParam(required = false)  String actionType) {
-        return ResponseEntity.ok(actionService.getActions(userId, actionType));
+        return ResponseEntity.ok(actionService.getAllActions(userId, actionType));
     }
 
     @GetMapping("/notifications")

@@ -14,9 +14,7 @@ import ru.alumni.hub.subtlenotify.model.User;
 import ru.alumni.hub.subtlenotify.repository.ActionRepository;
 import ru.alumni.hub.subtlenotify.types.ActionRequest;
 
-import java.time.temporal.WeekFields;
 import java.util.List;
-import java.util.Locale;
 import java.util.Optional;
 
 @Service
@@ -30,40 +28,28 @@ public class ActionService {
     private final UserService userService;
     private final ActionTypeService actionTypeService;
 
-    /**
-     * Store a new action with string parameters
-     * @param triggerRequest the request
-     * @return Optional containing the saved Trigger
-     */
     @Transactional
     public Optional<Action> storeAction(ActionRequest request) {
         var timer = actionsMetrics.startTimer();
         try {
-            Optional<User> userOpt = userService.storeUser(request.getUserId());
-            Optional<ActionType> actionTypeOpt = actionTypeService.storeActionType(request.getActionType());
+            Optional<User> user = userService.storeUser(request.getUserId());
+            Optional<ActionType> actionType = actionTypeService.storeActionType(request.getActionType());
 
-            if (userOpt.isPresent() && actionTypeOpt.isPresent()) {
-                Action action = new Action();
-                action.setUser(userOpt.get());
-                action.setActionType(actionTypeOpt.get());
-                action.setTimestamp(request.getTimestamp());
+            Action action = new Action();
+            user.ifPresentOrElse(action::setUser, ()->{});
+            actionType.ifPresentOrElse(action::setActionType, ()->{});
+            action.setTimestamp(request.getTimestamp());
 
-                return Optional.of(actionsRepository.save(action));
-            } else {
-                actionsMetrics.incrementActionsFailed();
-                return Optional.empty();
-            }
-        } catch (Exception e) {
-            actionsMetrics.incrementActionsFailed();
-            LOGGER.error("Error while storing action: "+request, e);
+            Optional<Action> save = Optional.of(actionsRepository.save(action));
+            save.ifPresentOrElse(a->{}, actionsMetrics::incrementActionsFailed);
+            return save;
         } finally {
             actionsMetrics.incrementActionsCreated();
             actionsMetrics.recordCreationTime(timer);
         }
-        return Optional.empty();
     }
 
-    public List<Action> getUserActions(User user, ActionType actionType, List<Integer> dayList, List<Integer> weekList) throws SubtleNotifyException {
+    public List<Action> getActionsForTimeRange(User user, ActionType actionType, List<Integer> dayList, List<Integer> weekList) throws SubtleNotifyException {
         if(! dayList.isEmpty() ) {
             return actionsRepository.findByUserIdAndActionTypeByDays(user, actionType, dayList);
         } else if(! weekList.isEmpty() ) {
@@ -73,30 +59,16 @@ public class ActionService {
         }
     }
 
-    public List<Action> getUserActions(User user, ActionType actionType) {
-        return actionsRepository.findByUserIdAndActionTypeByDays(user, actionType);
-    }
-
-    public List<Action> getActions(String userId, String actionType) {
+    public List<Action> getAllActions(String userId, String actionType) {
         boolean hasUserId = !StringUtils.isBlank(userId);
         boolean hasActionType = !StringUtils.isBlank(actionType);
 
         if (hasUserId && hasActionType) {
-            Optional<User> userOpt = userService.getUser(userId);
-            Optional<ActionType> actionTypeOpt = actionTypeService.getActionType(actionType);
-
-            if (userOpt.isPresent() && actionTypeOpt.isPresent()) {
-                return getUserActions(userOpt.get(), actionTypeOpt.get());
-            }
-            return List.of();
+            return actionsRepository.findByUserIdAndActionType(userId, actionType);
         } else if (hasActionType) {
-            return actionTypeService.getActionType(actionType)
-                    .map(actionsRepository::findByActionType)
-                    .orElseGet(List::of);
+            return actionsRepository.findByActionType(actionType);
         } else if (hasUserId) {
-            return userService.getUser(userId)
-                    .map(actionsRepository::findByUserId)
-                    .orElseGet(List::of);
+            return actionsRepository.findByUserId(userId);
         } else {
             return actionsRepository.findAll();
         }

@@ -64,7 +64,7 @@ public class Action {
 
     // Custom getters for JSON serialization
 
-    @JsonProperty("user")
+    @JsonProperty("userId")
     public String getUserId() {
         return user != null ? user.getUserId() : null;
     }
