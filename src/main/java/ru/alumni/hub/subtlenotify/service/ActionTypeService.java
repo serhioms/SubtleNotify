@@ -1,8 +1,6 @@
 package ru.alumni.hub.subtlenotify.service;
 
 import lombok.RequiredArgsConstructor;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.alumni.hub.subtlenotify.health.ActionsMetrics;
@@ -14,8 +12,6 @@ import java.util.Optional;
 @Service
 @RequiredArgsConstructor
 public class ActionTypeService {
-
-    Logger LOGGER = LoggerFactory.getLogger(ActionTypeService.class);
 
     private final ActionTypeRepository actionTypeRepository;
     private final ActionsMetrics actionsMetrics;
@@ -34,7 +30,6 @@ public class ActionTypeService {
                         ActionType newActionType = new ActionType();
                         newActionType.setActionType(actionTypeStr);
                         ActionType savedActionType = actionTypeRepository.save(newActionType);
-                        LOGGER.info("Created new action type: {}", actionTypeStr);
                         return savedActionType;
                     }));
             actionType.ifPresentOrElse(a->{}, actionsMetrics::incrementActionsFailed);

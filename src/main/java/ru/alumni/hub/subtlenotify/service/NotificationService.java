@@ -15,7 +15,6 @@ public class NotificationService {
 
     private final NotificationRepository notificationRepository;
 
-
     /**
      * Store a new notification without duplications
      * @param notification the notification

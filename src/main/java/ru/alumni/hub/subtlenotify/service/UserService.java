@@ -21,20 +21,6 @@ public class UserService {
     private final ActionsMetrics actionsMetrics;
 
     /**
-     * Get user by userId
-     * @param userId the user ID
-     * @return Optional containing the User if found
-     */
-    public Optional<User> getUser(String userId) {
-        try {
-            return userRepository.findByUserId(userId);
-        } catch (Exception e) {
-            LOGGER.error("Error while retrieving user with userId: " + userId, e);
-        }
-        return Optional.empty();
-    }
-
-    /**
      * Store user if not exists, or return existing user
      * @param userId the user ID to store
      * @return Optional containing the User object (existing or newly created)
@@ -43,24 +29,20 @@ public class UserService {
     public Optional<User> storeUser(String userId) {
         var timer = actionsMetrics.startTimer();
         try {
-            User user = userRepository.findByUserId(userId)
+            Optional<User> user = Optional.of(userRepository.findByUserId(userId)
                     .orElseGet(() -> {
                         User newUser = new User();
                         newUser.setUserId(userId);
                         User savedUser = userRepository.save(newUser);
                         LOGGER.info("Created new user with userId: {}", userId);
                         return savedUser;
-                    });
+                    }));
 
-            return Optional.of(user);
-        } catch (Exception e) {
-            actionsMetrics.incrementActionsFailed();
-            LOGGER.error("Error while storing user with userId: " + userId, e);
-        } finally {
+            user.ifPresentOrElse(a->{}, actionsMetrics::incrementActionsFailed);
+            return user;
+       } finally {
             actionsMetrics.incrementActionsCreated();
             actionsMetrics.recordCreationTime(timer);
         }
-        return Optional.empty();
     }
-
 }

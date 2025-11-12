@@ -23,13 +23,10 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class TriggerService {
 
-    Logger LOGGER = LoggerFactory.getLogger(TriggerService.class);
-
-    private final ActionsMetrics actionsMetrics;
     private final ActionTypeService actionTypeService;
     private final NotifyMessageService notifyMessageService;
     private final TriggerRepository triggerRepository;
-
+    private final ActionsMetrics actionsMetrics;
 
     /**
      * Store a new trigger with string parameters

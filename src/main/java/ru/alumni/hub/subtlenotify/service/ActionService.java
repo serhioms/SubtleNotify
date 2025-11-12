@@ -2,8 +2,6 @@ package ru.alumni.hub.subtlenotify.service;
 
 import io.micrometer.common.util.StringUtils;
 import lombok.RequiredArgsConstructor;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.alumni.hub.subtlenotify.exception.SubtleNotifyException;
@@ -20,8 +18,6 @@ import java.util.Optional;
 @Service
 @RequiredArgsConstructor
 public class ActionService {
-
-    Logger LOGGER = LoggerFactory.getLogger(ActionService.class);
 
     private final ActionRepository actionsRepository;
     private final ActionsMetrics actionsMetrics;

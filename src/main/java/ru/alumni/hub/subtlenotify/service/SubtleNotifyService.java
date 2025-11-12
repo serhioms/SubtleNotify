@@ -23,8 +23,6 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class SubtleNotifyService {
 
-    Logger LOGGER = LoggerFactory.getLogger(SubtleNotifyService.class);
-
     public static final int NOTIFICATION_MINUTES_OFFSET = 10;
 
     private final ActionsMetrics actionsMetrics;
@@ -45,6 +43,7 @@ public class SubtleNotifyService {
                     }
                 }
             } else {
+                actionsMetrics.incrementActionsFailed();
                 throw new RuntimeException("No triggers found for action: " + action);
             }
         } finally {
