@@ -2,7 +2,6 @@ plugins {
     java
     id("org.springframework.boot") version "3.5.7"
     id("io.spring.dependency-management") version "1.1.7"
-    id("io.freefair.aspectj.post-compile-weaving") version "8.4"
 }
 
 group = "ru.alumni.hub"
@@ -40,7 +39,6 @@ dependencies {
 
     // AspectJ for compile-time weaving
     implementation("org.aspectj:aspectjrt:1.9.20")
-    aspect("org.springframework:spring-aspects")
 
     compileOnly("org.projectlombok:lombok")
     runtimeOnly("org.hsqldb:hsqldb")

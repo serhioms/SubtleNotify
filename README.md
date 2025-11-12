@@ -94,14 +94,14 @@
  ```json
 {
     ***
-    "notifMoment" : "immediately | next_time",
+    "notifyMoment" : "immediately | next_time",
     "actualWeekDays" : "sat,tue",
     "actualHours" : "5,6,7,8", 
     ***
 }
 ```
 
-- `notifMoment` - предусмотренны 2 варианта: `immediately` т.е. через 10 минут после `actualHours` и  `next_time` т.е. на следующий день/неделю в `actualHours`
+- `notifyMoment` - предусмотренны 2 варианта: `immediately` т.е. через 10 минут после `actualHours` и  `next_time` т.е. на следующий день/неделю в `actualHours`
 - `actualWeekDays` - берётся подходящий день из списка. Если не указан то берётся подходящий день из списка `expectEveryDays`
 - `actualHours` - берётся подходящий час из списка. Если не указан то берётся из `expectFromHr` плюс/минус 10 минут
 
