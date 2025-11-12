@@ -1,5 +1,6 @@
 package ru.alumni.hub.subtlenotify.types;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -19,5 +20,13 @@ public class NotificationResponse {
     private String notification;
 
     @NotNull(message = "actionType is required")
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private ActionType actionType;
+
+    // Custom getters for JSON serialization
+
+    @JsonProperty("actionType")
+    public String getActionTypeName() {
+        return actionType != null ? actionType.getActionType() : null;
+    }
 }

@@ -1,5 +1,7 @@
 package ru.alumni.hub.subtlenotify.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
@@ -17,6 +19,7 @@ import java.util.UUID;
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString(exclude = {"user", "actionType"})
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Action {
     @Id
     @GeneratedValue
@@ -25,11 +28,13 @@ public class Action {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", referencedColumnName = "user_id", nullable = false)
     @NotNull(message = "user is required")
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private User user;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "action_type", referencedColumnName = "action_type", nullable = false)
     @NotNull(message = "actionType is required")
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private ActionType actionType;
 
     @NotNull(message = "timestamp is required")
@@ -51,4 +56,16 @@ public class Action {
     protected void onCreate() {
         createdAt = LocalDateTime.now();
     }
+
+    // Custom getters for JSON serialization
+    @JsonProperty("user")
+    public String getUserId() {
+        return user != null ? user.getUserId() : null;
+    }
+
+    @JsonProperty("actionType")
+    public String getActionTypeName() {
+        return actionType != null ? actionType.getActionType() : null;
+    }
+
 }

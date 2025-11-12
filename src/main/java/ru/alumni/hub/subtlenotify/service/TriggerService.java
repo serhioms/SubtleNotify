@@ -7,11 +7,13 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import ru.alumni.hub.subtlenotify.health.ActionsMetrics;
 import ru.alumni.hub.subtlenotify.model.ActionType;
 import ru.alumni.hub.subtlenotify.model.NotifyMessage;
 import ru.alumni.hub.subtlenotify.model.Trigger;
 import ru.alumni.hub.subtlenotify.repository.TriggerRepository;
 import ru.alumni.hub.subtlenotify.types.NotifyMoment;
+import ru.alumni.hub.subtlenotify.types.TriggerRequest;
 
 import java.util.List;
 import java.util.Optional;
@@ -23,9 +25,10 @@ public class TriggerService {
 
     Logger LOGGER = LoggerFactory.getLogger(TriggerService.class);
 
-    private final TriggerRepository triggerRepository;
+    private final ActionsMetrics actionsMetrics;
     private final ActionTypeService actionTypeService;
     private final NotifyMessageService notifyMessageService;
+    private final TriggerRepository triggerRepository;
 
     /**
      * Get trigger by ID
@@ -153,6 +156,22 @@ public class TriggerService {
             LOGGER.error("Error while retrieving triggers for missPreviousTime: " + missPreviousTime, e);
         }
         return List.of();
+    }
+
+    /**
+     * Store a new trigger
+     * @param triggerRequest the TriggerRequest to store
+     * @return Optional containing the saved Trigger
+     */
+    @Transactional
+    public Optional<Trigger> storeTrigger(TriggerRequest triggerRequest) {
+        try {
+
+            return Optional.empty();
+        } catch (Exception e) {
+            LOGGER.error("Error while storing trigger", e);
+        }
+        return Optional.empty();
     }
 
     /**

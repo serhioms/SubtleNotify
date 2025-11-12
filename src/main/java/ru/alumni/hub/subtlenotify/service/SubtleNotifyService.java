@@ -21,9 +21,9 @@ import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
-public class NotifficationService {
+public class SubtleNotifyService {
 
-    Logger LOGGER = LoggerFactory.getLogger(NotifficationService.class);
+    Logger LOGGER = LoggerFactory.getLogger(SubtleNotifyService.class);
 
     private static final List<NotificationResponse> notifications = new ArrayList<NotificationResponse>(64);
 
@@ -32,6 +32,7 @@ public class NotifficationService {
     private final ActionsMetrics actionsMetrics;
     private final ActionService actionService;
     private final TriggerServiceOld triggerServiceOld;
+    private final NotificationService notificationService;
 
     public void generateNotification(Action action) {
         var timer = actionsMetrics.startTimer();
@@ -234,11 +235,13 @@ public class NotifficationService {
     private void storeNotification(@NotNull NotificationResponse notificationResponse) {
         notifications.stream()
                 .filter(n -> n.getTimestamp().getDayOfYear() == notificationResponse.getTimestamp().getDayOfYear())
-                .filter(n -> n.getActionType().equals(notificationResponse.getActionType()))
+                .filter(n -> n.getActionType().getActionType().equals(notificationResponse.getActionType().getActionType()))
                 .findFirst()
                 .ifPresentOrElse(n -> {},
                         () -> notifications.add(notificationResponse) // do not duplicate notifications!
         );
     }
+
+
 
 }

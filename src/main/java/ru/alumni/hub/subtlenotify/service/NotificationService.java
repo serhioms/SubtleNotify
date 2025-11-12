@@ -7,11 +7,13 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import ru.alumni.hub.subtlenotify.health.ActionsMetrics;
 import ru.alumni.hub.subtlenotify.model.ActionType;
 import ru.alumni.hub.subtlenotify.model.Notification;
 import ru.alumni.hub.subtlenotify.model.NotifyMessage;
 import ru.alumni.hub.subtlenotify.model.User;
 import ru.alumni.hub.subtlenotify.repository.NotificationRepository;
+import ru.alumni.hub.subtlenotify.types.NotificationResponse;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -25,6 +27,7 @@ public class NotificationService {
     Logger LOGGER = LoggerFactory.getLogger(NotificationService.class);
 
     private final NotificationRepository notificationRepository;
+    private final ActionsMetrics actionsMetrics;
     private final UserService userService;
     private final ActionTypeService actionTypeService;
     private final NotifyMessageService notifyMessageService;
@@ -129,6 +132,9 @@ public class NotificationService {
         }
     }
 
+    public void storeNotification(NotificationResponse notificationResponse) {
+    }
+    
     /**
      * Store a new notification
      * @param messageIdent the notify message identifier

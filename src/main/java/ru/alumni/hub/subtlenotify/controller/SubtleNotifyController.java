@@ -7,9 +7,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ru.alumni.hub.subtlenotify.model.Action;
-import ru.alumni.hub.subtlenotify.service.ActionService;
-import ru.alumni.hub.subtlenotify.service.NotifficationService;
-import ru.alumni.hub.subtlenotify.service.TriggerServiceOld;
+import ru.alumni.hub.subtlenotify.model.Notification;
+import ru.alumni.hub.subtlenotify.service.*;
 import ru.alumni.hub.subtlenotify.types.ActionRequest;
 import ru.alumni.hub.subtlenotify.types.NotificationResponse;
 import ru.alumni.hub.subtlenotify.types.TriggerRequest;
@@ -24,8 +23,10 @@ import java.util.Optional;
 public class SubtleNotifyController {
 
     private final ActionService actionService;
+    private final TriggerService triggerService;
+    private final SubtleNotifyService subtleNotifyService;
+    private final NotificationService notificationService;
     private final TriggerServiceOld triggerServiceOld;
-    private final NotifficationService notificationService;
 
 
     @PostMapping("/action")
@@ -33,7 +34,7 @@ public class SubtleNotifyController {
 
         Optional<Action> action = actionService.storeAction(actionRequest);
 
-        action.ifPresent(notificationService::generateNotification);
+        action.ifPresent(subtleNotifyService::generateNotification);
 
         Map<String, Object> response = Map.of(
                 "status", "success",
@@ -54,12 +55,14 @@ public class SubtleNotifyController {
 
     @GetMapping("/notifications")
     public ResponseEntity<List<NotificationResponse>> getNotifications() {
-        return ResponseEntity.ok(notificationService.retrieveNotifications());
+        return ResponseEntity.ok(subtleNotifyService.retrieveNotifications());
+        //return ResponseEntity.ok(notificationService.getAllNotifications());
     }
 
     @PostMapping("/trigger")
     public void trigger(@Valid @RequestBody TriggerRequest triggerRequest) {
         triggerServiceOld.storeTrigger(triggerRequest);
+        //triggerService.storeTrigger(triggerRequest);
     }
 
     @GetMapping("/triggers")
@@ -75,7 +78,6 @@ public class SubtleNotifyController {
     @DeleteMapping("/clean")
     public ResponseEntity<Map<String, Object>> cleanDatabase() {
         actionService.deleteAllActions();
-        //triggerService.deleteAllTriggers();
         notificationService.deleteAllNotifications();
 
         Map<String, Object> response = Map.of(
@@ -83,7 +85,6 @@ public class SubtleNotifyController {
                 "message", "Database cleaned successfully",
                 "data", Map.of(
                         "actionsDeleted", true,
-                        "triggersDeleted", true,
                         "notificationsDeleted", true
                 )
         );

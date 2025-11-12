@@ -2,6 +2,7 @@ package ru.alumni.hub.subtlenotify.model;
 
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
@@ -18,6 +19,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString(exclude = "actions")
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class ActionType {
 
     @Id

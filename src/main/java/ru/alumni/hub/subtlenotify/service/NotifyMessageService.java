@@ -5,6 +5,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import ru.alumni.hub.subtlenotify.health.ActionsMetrics;
 import ru.alumni.hub.subtlenotify.model.NotifyMessage;
 import ru.alumni.hub.subtlenotify.repository.NotifyMessageRepository;
 
@@ -18,6 +19,7 @@ public class NotifyMessageService {
     Logger LOGGER = LoggerFactory.getLogger(NotifyMessageService.class);
 
     private final NotifyMessageRepository notifyMessageRepository;
+    private final ActionsMetrics actionsMetrics;
 
     /**
      * Get notify message by ident
