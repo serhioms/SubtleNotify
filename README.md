@@ -112,6 +112,14 @@
 
 Главный класс в котором генерятся непредсказуемые уведомления - [SubtleNotifyService.java](src/main/java/ru/alumni/hub/subtlenotify/service/SubtleNotifyService.java)
 
+Процедура генерации уведомлений вызывается асинхронно REST `/action` по принципу вызывал и забыл.
+
+### Плюсы/минусы:
+
+- ✅ Уменьшаем время работы `/action` микросервиса
+- ✅ Контролируется нагрузка на сервер ограниченным пулом рабочих потоков [AsyncConfig.java](src/main/java/ru/alumni/hub/subtlenotify/config/AsyncConfig.java)
+
+
 [REST API](http://localhost:8080/swagger-ui/index.html)
 
 [Postman Collection](http://localhost:8080/AlumniHub.postman_collection.json) / [LOCAL environment](http://localhost:8080/LOCAL.postman_environment.json)
@@ -120,11 +128,4 @@
 
 [DB Schema](http://localhost:8080/SubtleNotifyDB.png)
 
-
-Вместо того чтобы исполнять процедуру генерации уведомления синхронно с REST вызовом `/action` , будем запускать её асинхронно.
-
-### Плюсы/минусы:
-
-- ✅ Уменьшаем время работы `/action` микросервиса
-- ✅ Контролируем нагрузку на сервер ограниченным пулом рабочих потоков
 
