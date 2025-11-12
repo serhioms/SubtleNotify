@@ -25,35 +25,36 @@ public class ActionService {
 
     private final ActionRepository actionsRepository;
     private final ActionsMetrics actionsMetrics;
+    private final UserService userService;
 
+    @Transactional
     public Optional<Action> storeAction(ActionRequest request) {
         var timer = actionsMetrics.startTimer();
         try {
-            Action action = new Action();
-            action.setUserId(request.getUserId());
-            action.setActionType(request.getActionType());
-            action.setTimestamp(request.getTimestamp());
-            action.setDayOfYear(request.getTimestamp().getDayOfYear());
-            action.setWeekOfYear(request.getTimestamp().get(WeekFields.of(Locale.getDefault()).weekOfYear()));
+            return userService.storeUser(request.getUserId())
+                    .map(user -> {
+                        Action action = new Action();
+                        action.setUser(user);
+                        action.setActionType(request.getActionType());
+                        action.setTimestamp(request.getTimestamp());
+                        action.setDayOfYear(request.getTimestamp().getDayOfYear());
+                        action.setWeekOfYear(request.getTimestamp().get(WeekFields.of(Locale.getDefault()).weekOfYear()));
 
-            return Optional.of(actionsRepository.save(action));
+                        return actionsRepository.save(action);
+                    })
+                    .or(() -> {
+                        LOGGER.error("Failed to create or retrieve user with userId: {}", request.getUserId());
+                        actionsMetrics.incrementActionsFailed();
+                        return Optional.empty();
+                    });
         } catch (Exception e) {
             actionsMetrics.incrementActionsFailed();
-            LOGGER.error("Error while storing action", e);
+            LOGGER.error("Error while storing action: "+request, e);
         } finally {
             actionsMetrics.incrementActionsCreated();
             actionsMetrics.recordCreationTime(timer);
         }
         return Optional.empty();
-    }
-
-    @Transactional
-    public List<Action> storeActions(List<ActionRequest> requests) {
-        List<Action> actions = requests.stream()
-                .map(this::convertToEntity)
-                .toList();
-
-        return actionsRepository.saveAll(actions);
     }
 
     public List<Action> getUserActions(String userId, String actionType, List<Integer> dayList, List<Integer> weekList) throws SubtleNotifyException {
@@ -80,14 +81,6 @@ public class ActionService {
         } else {
             return actionsRepository.findAll();
         }
-    }
-
-    private Action convertToEntity(ActionRequest request) {
-        Action action = new Action();
-        action.setUserId(request.getUserId());
-        action.setActionType(request.getActionType());
-        action.setTimestamp(request.getTimestamp());
-        return action;
     }
 
     @Transactional

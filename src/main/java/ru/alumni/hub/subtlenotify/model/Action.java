@@ -20,9 +20,10 @@ public class Action {
     @GeneratedValue
     private UUID id;
 
-    @NotNull(message = "userId is required")
-    @Column(name = "user_id", nullable = false)
-    private String userId;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id", referencedColumnName = "user_id", nullable = false)
+    @NotNull(message = "user is required")
+    private User user;
 
     @NotNull(message = "actionType is required")
     @Column(name = "action_type", nullable = false)
