@@ -36,7 +36,7 @@ public class NotifficationService {
     public void generateNotification(Action action) {
         var timer = actionsMetrics.startTimer();
         try {
-            var triggers = triggerService.getTriggersByIdent(action.getActionType());
+            var triggers = triggerService.getTriggersByIdent(action.getActionType().getActionType());
             if( !triggers.isEmpty() ) {
                 for (TriggerRequest trigger : triggers) {
                     if(UtilTriggerRequest.isMissPreviousTime(trigger) ) {

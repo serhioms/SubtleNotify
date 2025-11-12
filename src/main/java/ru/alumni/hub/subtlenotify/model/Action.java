@@ -16,7 +16,7 @@ import java.util.UUID;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@ToString(exclude = "user")
+@ToString(exclude = {"user", "actionType"})
 public class Action {
     @Id
     @GeneratedValue
@@ -27,9 +27,10 @@ public class Action {
     @NotNull(message = "user is required")
     private User user;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "action_type", referencedColumnName = "action_type", nullable = false)
     @NotNull(message = "actionType is required")
-    @Column(name = "action_type", nullable = false)
-    private String actionType;
+    private ActionType actionType;
 
     @NotNull(message = "timestamp is required")
     @Column(nullable = false)

@@ -1,5 +1,6 @@
 package ru.alumni.hub.subtlenotify.model;
 
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
@@ -12,19 +13,20 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Table(name = "users")
+@Table(name = "action_types")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString(exclude = "actions")
-public class User {
+public class ActionType {
 
     @Id
-    @NotNull(message = "userId is required")
-    @Column(name = "user_id", nullable = false, unique = true)
-    private String userId;
+    @NotNull(message = "actionType is required")
+    @Column(name = "action_type", nullable = false, unique = true)
+    private String actionType;
 
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "actionType", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonIgnore
     private List<Action> actions = new ArrayList<>();
+
 }

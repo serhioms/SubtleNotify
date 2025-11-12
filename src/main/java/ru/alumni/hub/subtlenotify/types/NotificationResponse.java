@@ -1,10 +1,10 @@
 package ru.alumni.hub.subtlenotify.types;
 
-import jakarta.persistence.Column;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import ru.alumni.hub.subtlenotify.model.ActionType;
 
 import java.time.LocalDateTime;
 
@@ -19,5 +19,5 @@ public class NotificationResponse {
     private String notification;
 
     @NotNull(message = "actionType is required")
-    private String actionType;
+    private ActionType actionType;
 }
