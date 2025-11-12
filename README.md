@@ -5,7 +5,8 @@
 ## Tech stack:
 • Java 17
 • Spring Boot 3.5.7
-• HSQL
+• JPA (HSQL)
+• LogBack, Actuators, Swagger
 • Gradle
 
 ## To compile
@@ -107,7 +108,7 @@
 
 Стандартная слоистная - [SubtleNotifyController](src/main/java/ru/alumni/hub/subtlenotify/controller/SubtleNotifyController.java) ->  [Services](src/main/java/ru/alumni/hub/subtlenotify/service) ->  [Repositories](src/main/java/ru/alumni/hub/subtlenotify/repository) ->  [Model](src/main/java/ru/alumni/hub/subtlenotify/model)
 
-Главный класс в котором генерятся непредсказуемых уведомлений - [SubtleNotifyApplication](src/main/java/ru/alumni/hub/subtlenotify/SubtleNotifyApplication.java)
+Главный класс в котором генерятся непредсказуемые уведомления - [SubtleNotifyService.java](src/main/java/ru/alumni/hub/subtlenotify/service/SubtleNotifyService.java)
 
 [REST API](http://localhost:8080/swagger-ui/index.html)
 
