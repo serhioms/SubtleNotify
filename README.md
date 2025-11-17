@@ -119,6 +119,7 @@ The notification generation procedure is called asynchronously via REST `/action
 - ✅ Reduce `/action` microservice execution time
 - ✅ Server load is controlled by a limited pool of worker threads [AsyncConfig.java](src/main/java/ru/alumni/hub/subtlenotify/config/AsyncConfig.java)
 
+### Run app on your local machine then try following links:
 
 [REST API](http://localhost:8080/swagger-ui/index.html)
 
