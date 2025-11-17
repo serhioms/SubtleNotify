@@ -1,6 +1,6 @@
 # SubtleNotify
 
-«Сервис непредсказуемых уведомлений». Cервис отправляет пользователям уведомления не по расписанию, а на основе закономерностей их активности. По скольку уведомления не случайны но предсказуемы хотя и не ожиданным образом проект назван **SubtleNotify** - тонкое уведомление.
+"Service of unpredictable notifications". A service that sends users notifications not on a schedule, but based on patterns in their activity. Since the notifications are not random but predictable, albeit in an unexpected way, the project is named **SubtleNotify** - subtle notification.
 
 ## Tech stack:
 • Java 17
@@ -20,36 +20,36 @@
 • gradle bootRun
 
 
-### Логика поведения
+### Behavior Logic
 
-При и в каждом [REST/action](http://localhost:8080/swagger-ui/index.html#/:~:text=/api/subtlenotify/action) вызове `actionType` задаёт подходящие триггеры и связанные с ними уведомления. Порядок операций следующий:
+With each [REST/action](http://localhost:8080/swagger-ui/index.html#/:~:text=/api/subtlenotify/action) call, `actionType` sets appropriate triggers and associated notifications. The order of operations is as follows:
 
-- Записать `action` в БД
-- Сформировать статистику в виде серии `timestamp` по конкретному `userId` и `actionType` за известный промежуток времени
-- Найти триггера соответствующие`actionType` и применить правила к серии `timestamp`
-- Если какое-либо правило срабатывает, то сохраняем "непредсказуемое" уведомление в БД
+- Record `action` in the database
+- Generate statistics as a series of `timestamp` for a specific `userId` and `actionType` over a known time period
+- Find triggers matching the `actionType` and apply rules to the timestamp series
+- If any rule triggers, save an "unpredictable" notification to the database
 
-> **PS:** Ограничимся понедельными уведомлениями. Помесячные и годовые уведомления ожидаются в следующих версиях :)<br/>
-> **PS:** Не предусматривается никаких ограничений для "надоедливых сообщений" кроме устранения дублей
+> **PS:** We'll limit ourselves to weekly notifications. Monthly and yearly notifications are expected in future versions :)<br/>
+> **PS:** No restrictions are provided for "annoying messages" except for deduplication
 
-## Примеры триггеров и уведомлений
+## Examples of Triggers and Notifications
 
-1. **пишет комментарии** - ночью три дня подряд → утром уведомление
-2. **покупает кофе** - по пн, ср, пт → во вторник уведомление о скидке
-3. **открывает приложение** - каждый день в 9м часу → если открыл в 8м, немедленно уведомить
-4. **читает статьи** - по воскресениям → на следующей неделе в субботу вечером уведомить
-5. **заказывает доставку** - через день → на третий цикл уведомить
-6. **пьёт чай** - каждый вечер или по воскресениям → если пропустил, уведомить следующим разом
-7. **делает шаги** - в 10м часу каждый день → утром следуюшего дня уведомить
-8. **проверяет задачи** - в рабочие дни после обеда → на следующей неделе утром уведомить
-9. **ставит лайки** - по средам → уведомить с утра в следующую среду
+1. **writes comments** - at night three days in a row → morning notification
+2. **buys coffee** - on Mon, Wed, Fri → Tuesday notification about a discount
+3. **opens app** - every day at 9 AM → if opened at 8 AM, notify immediately
+4. **reads articles** - on Sundays → next week Saturday evening send notification
+5. **orders delivery** - every other day → on the third cycle send notification
+6. **drinks tea** - every evening or on Sundays → if missed, notify next time
+7. **takes steps** - at 10 AM every day → next morning send notification
+8. **checks tasks** - on weekdays after noon → next week morning send notification
+9. **likes posts** - on Wednesdays → notify next Wednesday morning
 
 
-## Эвристика непредсказуемости
+## Heuristic of Unpredictability
 
-"Непредсказуемость" заложена в данных триггера в основном в полях начинающихся с expect***. Уведомления генерятся либо сразу-же с небольшой 10 мин задержкой или с опережением в конкретный день и час на следующей неделе (`NotifyMoment`). Допускается генерация нескольких уведомлений за раз.
+"Unpredictability" is embedded in the trigger data mainly in fields starting with expect***. Notifications are generated either immediately with a small 10-minute delay or in advance on a specific day and hour of the next week (`NotifyMoment`). Multiple notifications can be generated at once.
 
-###  Пример "утреннего" триггера заданного днями недели в понедельник, среду и пятницу 2 недели подряд:
+### Example of a "morning" trigger set on weekdays Monday, Wednesday and Friday for 2 weeks in a row:
   ```json
 {
       ***
@@ -62,7 +62,7 @@
 ```
 
 
-###  Пример "полуденного" триггера заданного последовательностью дней точнее каждый 2й день (через день) 3 раза подряд:
+### Example of an "afternoon" trigger set as a sequence of days, more precisely every 2nd day (every other day) 3 times in a row:
   ```json
 {
       ***
@@ -74,22 +74,22 @@
 }
 ```
 
-- `expectWeekDays` - в какие дни ожидаются `action` на неделе из ряда "sun, mon, tue, wed, thu, fri, sat" и сколько недель подряд в `expectHowOften`
-- `expectEveryDays` - сколько  дней подряд (1) или через день (2) или каждый третий день (3) и т.д. ожидаются `action` и сколько дней подряд в `expectHowOften`
-- `expectFromHr` и `expectToHr` - ожидаемые часы `action` (по дефолту от 0 до 24 часов)
-- `missPreviousTime` - true/false флаг для вычисления случая когда предыдущее уведомление было пропущена (см примеры [№6 "пьёт чай"](https://github.com/serhioms/SubtleNotify?tab=readme-ov-file#:~:text=%D1%82%D1%80%D0%B5%D1%82%D0%B8%D0%B9%20%D1%86%D0%B8%D0%BA%D0%BB%20%D1%83%D0%B2%D0%B5%D0%B4%D0%BE%D0%BC%D0%B8%D1%82%D1%8C-,%D0%BF%D1%8C%D1%91%D1%82%20%D1%87%D0%B0%D0%B9,-%2D%20%D0%BA%D0%B0%D0%B6%D0%B4%D1%8B%D0%B9%20%D0%B2%D0%B5%D1%87%D0%B5%D1%80%20%D0%B8%D0%BB%D0%B8))
-> **PS:** Обязательно задать одно из двух правил `expectWeekDays` или `expectEveryDays`, но не оба сразу!
+- `expectWeekDays` - which days of the week are expected for `action` from the range "sun, mon, tue, wed, thu, fri, sat" and for how many consecutive weeks specified in `expectHowOften`
+- `expectEveryDays` - how many consecutive days (1) or every other day (2) or every third day (3) etc. are `action` expected and for how many consecutive days specified in `expectHowOften`
+- `expectFromHr` and `expectToHr` - expected hours of `action` (default from 0 to 24 hours)
+- `missPreviousTime` - true/false flag to calculate the case when the previous notification was missed (see examples [#6 "drinks tea"](https://github.com/serhioms/SubtleNotify?tab=readme-ov-file#:~:text=%D1%82%D1%80%D0%B5%D1%82%D0%B8%D0%B9%20%D1%86%D0%B8%D0%BA%D0%BB%20%D1%83%D0%B2%D0%B5%D0%B4%D0%BE%D0%BC%D0%B8%D1%82%D1%8C-,%D0%BF%D1%8C%D1%91%D1%82%20%D1%87%D0%B0%D0%B9,-%D0%BA%D0%B0%D0%B6%D0%B4%D1%8B%D0%B9%20%D0%B2%D0%B5%D1%87%D0%B5%D1%80%20%D0%B8%D0%BB%D0%B8))
+> **PS:** Be sure to set one of two rules `expectWeekDays` or `expectEveryDays`, but not both at the same time!
 
 
-### Структура уведомления:
+### Notification Structure:
   ```json
 {
   "timestamp": "2025-11-06T21:40:00",
-  "notification": "Кажется, вы сова 🦉",
+  "notification": "Looks like you're a night owl 🦉",
 }
 ```
 
-###  Дата и время уведомления задаётся в триггере:
+### Date and time of notification is set in the trigger:
 
  ```json
 {
@@ -101,23 +101,23 @@
 }
 ```
 
-- `notifyMoment` - предусмотренны 2 варианта: `immediately` т.е. через 10 минут после `actualHours` и  `next_time` т.е. на следующий день/неделю в `actualHours`
-- `actualWeekDays` - берётся подходящий день из списка. Если не указан то берётся подходящий день из списка `expectEveryDays`
-- `actualHours` - берётся подходящий час из списка. Если не указан то берётся из `expectFromHr` плюс/минус 10 минут
+- `notifyMoment` - two options are provided: `immediately` i.e. 10 minutes after `actualHours` and `next_time` i.e. on the next day/week in `actualHours`
+- `actualWeekDays` - an appropriate day is selected from the list. If not specified, an appropriate day is selected from the `expectEveryDays` list
+- `actualHours` - an appropriate hour is selected from the list. If not specified, it is taken from `expectFromHr` plus/minus 10 minutes
 
 
-## Архитектура микросервисов
+## Microservice Architecture
 
-Стандартная слоистная - [SubtleNotifyController](src/main/java/ru/alumni/hub/subtlenotify/controller/SubtleNotifyController.java) ->  [Services](src/main/java/ru/alumni/hub/subtlenotify/service) ->  [Repositories](src/main/java/ru/alumni/hub/subtlenotify/repository) ->  [Model](src/main/java/ru/alumni/hub/subtlenotify/model)
+Standard layered architecture - [SubtleNotifyController](src/main/java/ru/alumni/hub/subtlenotify/controller/SubtleNotifyController.java) → [Services](src/main/java/ru/alumni/hub/subtlenotify/service) → [Repositories](src/main/java/ru/alumni/hub/subtlenotify/repository) → [Model](src/main/java/ru/alumni/hub/subtlenotify/model)
 
-Главный класс в котором генерятся непредсказуемые уведомления - [SubtleNotifyService.java](src/main/java/ru/alumni/hub/subtlenotify/service/SubtleNotifyService.java)
+The main class where unpredictable notifications are generated is [SubtleNotifyService.java](src/main/java/ru/alumni/hub/subtlenotify/service/SubtleNotifyService.java)
 
-Процедура генерации уведомлений вызывается асинхронно REST `/action` по принципу вызывал и забыл.
+The notification generation procedure is called asynchronously via REST `/action` on a "fire and forget" principle.
 
-### Плюсы/минусы:
+### Pros/Cons:
 
-- ✅ Уменьшаем время работы `/action` микросервиса
-- ✅ Контролируется нагрузка на сервер ограниченным пулом рабочих потоков [AsyncConfig.java](src/main/java/ru/alumni/hub/subtlenotify/config/AsyncConfig.java)
+- ✅ Reduce `/action` microservice execution time
+- ✅ Server load is controlled by a limited pool of worker threads [AsyncConfig.java](src/main/java/ru/alumni/hub/subtlenotify/config/AsyncConfig.java)
 
 
 [REST API](http://localhost:8080/swagger-ui/index.html)
