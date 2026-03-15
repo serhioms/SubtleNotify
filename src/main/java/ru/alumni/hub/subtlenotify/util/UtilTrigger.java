@@ -16,7 +16,7 @@ public class UtilTrigger {
     }
 
     public static Integer getExpectToHr(Trigger trigger) {
-        return trigger.getExpectFromHr() == null? 24: trigger.getExpectFromHr();
+        return trigger.getExpectToHr() == null? 24: trigger.getExpectToHr();
     }
 
     public static Boolean isMissPreviousTime(Trigger trigger) {
@@ -36,7 +36,7 @@ public class UtilTrigger {
     }
 
     public static List<String> getActualWeekDaysList(Trigger trigger) {
-        return StringUtils.isBlank(trigger.getActualHours())? List.of(): List.of(trigger.getActualHours().split(","));
+        return StringUtils.isBlank(trigger.getActualWeekDays())? List.of(): List.of(trigger.getActualWeekDays().split(","));
     }
 
     public static boolean isActualWeekDays(Trigger trigger) {
@@ -44,7 +44,7 @@ public class UtilTrigger {
     }
 
     public static String getActualWeekDay(Trigger trigger) {
-        return StringUtils.isBlank(trigger.getActualHours())? null: trigger.getActualHours().split(",")[0];
+        return StringUtils.isBlank(trigger.getActualWeekDays())? null: trigger.getActualWeekDays().split(",")[0];
     }
 
     public static List<String> getActualHoursList(Trigger trigger) {

@@ -102,7 +102,21 @@ class SubtleNotifyServiceTest {
         List<Trigger> triggers = List.of(testTrigger);
         when(triggerService.getTriggersByActionType("coffee_purchase")).thenReturn(triggers);
 
-        List<Action> historicalActions = createHistoricalActions(3);
+        // Create historical actions that match the pattern "MON,WED,FRI" over 2 weeks
+        // Today is Sunday, March 15, 2026.
+        // We need actions from two different weeks.
+        List<Action> historicalActions = new ArrayList<>();
+        
+        // Week 1 (March 2 - March 8)
+        historicalActions.add(createAction(LocalDateTime.of(2026, 3, 2, 10, 0))); // MON
+        historicalActions.add(createAction(LocalDateTime.of(2026, 3, 4, 10, 0))); // WED
+        historicalActions.add(createAction(LocalDateTime.of(2026, 3, 6, 10, 0))); // FRI
+        
+        // Week 2 (March 9 - March 15)
+        historicalActions.add(createAction(LocalDateTime.of(2026, 3, 9, 10, 0))); // MON
+        historicalActions.add(createAction(LocalDateTime.of(2026, 3, 11, 10, 0))); // WED
+        historicalActions.add(createAction(LocalDateTime.of(2026, 3, 13, 10, 0))); // FRI
+
         when(actionService.getActionsForTimeRange(any(), any(), anyList(), anyList()))
                 .thenReturn(historicalActions);
 
@@ -115,6 +129,17 @@ class SubtleNotifyServiceTest {
         verify(actionsMetrics).incrementActionsCreated();
         verify(actionsMetrics).recordCreationTime(timerSample);
         verify(notificationService, atLeastOnce()).storeNotificationWithoutDuplication(any(Notification.class));
+    }
+
+    private Action createAction(LocalDateTime timestamp) {
+        Action action = new Action();
+        action.setId(UUID.randomUUID());
+        action.setUser(testUser);
+        action.setActionType(testActionType);
+        action.setTimestamp(timestamp);
+        action.setDayOfYear(timestamp.getDayOfYear());
+        action.setWeekOfYear(timestamp.get(WeekFields.of(Locale.getDefault()).weekOfYear()));
+        return action;
     }
 
     @Test

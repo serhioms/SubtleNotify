@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Spring Boot Actuator Endpoints</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: #f5f5f5;
+        }
+        h1 {
+            color: #6db33f;
+            border-bottom: 3px solid #6db33f;
+            padding-bottom: 10px;
+        }
+        h2 {
+            color: #34302d;
+            margin-top: 30px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background-color: white;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            margin-bottom: 30px;
+        }
+        th {
+            background-color: #6db33f;
+            color: white;
+            padding: 12px;
+            text-align: left;
+            font-weight: bold;
+        }
+        td {
+            padding: 10px 12px;
+            border-bottom: 1px solid #ddd;
+        }
+        tr:hover {
+            background-color: #f9f9f9;
+        }
+        code {
+            background-color: #f4f4f4;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-family: 'Courier New', monospace;
+            color: #d63384;
+        }
+        .config-section {
+            background-color: white;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+        }
+        .config-section pre {
+            background-color: #f8f9fa;
+            padding: 15px;
+            border-left: 4px solid #6db33f;
+            overflow-x: auto;
+            font-family: 'Courier New', monospace;
+        }
+        .note {
+            background-color: #fff3cd;
+            border-left: 4px solid #ffc107;
+            padding: 12px;
+            margin: 20px 0;
+        }
+        .access-urls {
+            background-color: #d1ecf1;
+            border-left: 4px solid #0dcaf0;
+            padding: 15px;
+            margin: 20px 0;
+        }
+        .access-urls ul {
+            list-style: none;
+            padding-left: 0;
+        }
+        .access-urls li {
+            margin: 8px 0;
+        }
+        a {
+            color: #0d6efd;
+            text-decoration: none;
+            font-weight: 500;
+        }
+        a:hover {
+            text-decoration: underline;
+            color: #0a58ca;
+        }
+        .link-icon {
+            margin-left: 5px;
+            font-size: 0.9em;
+        }
+    </style>
+</head>
+<body>
+<h1>🍃 Spring Boot Actuator Endpoints</h1>
+
+<h2>Available Endpoints</h2>
+<table>
+    <thead>
+    <tr>
+        <th>Endpoint</th>
+        <th>URL</th>
+        <th>Description</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td><strong>actuator</strong></td>
+        <td><a href="/actuator" target="_blank">/actuator</a> <span class="link-icon">🔗</span></td>
+        <td>Root endpoint that lists all available actuator endpoints</td>
+    </tr>
+    <tr>
+        <td><strong>health</strong></td>
+        <td><a href="/actuator/health" target="_blank">/actuator/health</a> <span class="link-icon">🔗</span></td>
+        <td>Shows application health information</td>
+    </tr>
+    <tr>
+        <td><strong>info</strong></td>
+        <td><a href="/actuator/info" target="_blank">/actuator/info</a> <span class="link-icon">🔗</span></td>
+        <td>Displays arbitrary application info</td>
+    </tr>
+    <tr>
+        <td><strong>metrics</strong></td>
+        <td><a href="/actuator/metrics" target="_blank">/actuator/metrics</a> <span class="link-icon">🔗</span></td>
+        <td>Shows metrics information (JVM, CPU, memory, etc.)</td>
+    </tr>
+    <tr>
+        <td><strong>env</strong></td>
+        <td><a href="/actuator/env" target="_blank">/actuator/env</a> <span class="link-icon">🔗</span></td>
+        <td>Exposes properties from Spring's ConfigurableEnvironment</td>
+    </tr>
+    <tr>
+        <td><strong>beans</strong></td>
+        <td><a href="/actuator/beans" target="_blank">/actuator/beans</a> <span class="link-icon">🔗</span></td>
+        <td>Displays all Spring beans in the application</td>
+    </tr>
+    <tr>
+        <td><strong>configprops</strong></td>
+        <td><a href="/actuator/configprops" target="_blank">/actuator/configprops</a> <span class="link-icon">🔗</span></td>
+        <td>Shows all @ConfigurationProperties</td>
+    </tr>
+    <tr>
+        <td><strong>loggers</strong></td>
+        <td><a href="/actuator/loggers" target="_blank">/actuator/loggers</a> <span class="link-icon">🔗</span></td>
+        <td>Shows and modifies logger configurations</td>
+    </tr>
+    <tr>
+        <td><strong>httptrace</strong></td>
+        <td><a href="/actuator/httptrace" target="_blank">/actuator/httptrace</a> <span class="link-icon">🔗</span></td>
+        <td>Displays HTTP trace information (last 100 requests)</td>
+    </tr>
+    <tr>
+        <td><strong>mappings</strong></td>
+        <td><a href="/actuator/mappings" target="_blank">/actuator/mappings</a> <span class="link-icon">🔗</span></td>
+        <td>Shows all @RequestMapping paths</td>
+    </tr>
+    <tr>
+        <td><strong>scheduledtasks</strong></td>
+        <td><a href="/actuator/scheduledtasks" target="_blank">/actuator/scheduledtasks</a> <span class="link-icon">🔗</span></td>
+        <td>Displays scheduled tasks</td>
+    </tr>
+    <tr>
+        <td><strong>threaddump</strong></td>
+        <td><a href="/actuator/threaddump" target="_blank">/actuator/threaddump</a> <span class="link-icon">🔗</span></td>
+        <td>Performs a thread dump</td>
+    </tr>
+    <tr>
+        <td><strong>heapdump</strong></td>
+        <td><a href="/actuator/heapdump" target="_blank">/actuator/heapdump</a> <span class="link-icon">🔗</span></td>
+        <td>Returns a heap dump file (binary download)</td>
+    </tr>
+    <tr>
+        <td><strong>prometheus</strong></td>
+        <td><a href="/actuator/prometheus" target="_blank">/actuator/prometheus</a> <span class="link-icon">🔗</span></td>
+        <td>Exposes metrics in Prometheus format</td>
+    </tr>
+    <tr>
+        <td><strong>caches</strong></td>
+        <td><a href="/actuator/caches" target="_blank">/actuator/caches</a> <span class="link-icon">🔗</span></td>
+        <td>Shows available caches</td>
+    </tr>
+    <tr>
+        <td><strong>conditions</strong></td>
+        <td><a href="/actuator/conditions" target="_blank">/actuator/conditions</a> <span class="link-icon">🔗</span></td>
+        <td>Shows auto-configuration conditions</td>
+    </tr>
+    <tr>
+        <td><strong>flyway</strong></td>
+        <td><a href="/actuator/flyway" target="_blank">/actuator/flyway</a> <span class="link-icon">🔗</span></td>
+        <td>Shows Flyway database migrations (if applicable)</td>
+    </tr>
+    <tr>
+        <td><strong>liquibase</strong></td>
+        <td><a href="/actuator/liquibase" target="_blank">/actuator/liquibase</a> <span class="link-icon">🔗</span></td>
+        <td>Shows Liquibase database migrations (if applicable)</td>
+    </tr>
+    <tr>
+        <td><strong>sessions</strong></td>
+        <td><a href="/actuator/sessions" target="_blank">/actuator/sessions</a> <span class="link-icon">🔗</span></td>
+        <td>Shows Spring Session information (if applicable)</td>
+    </tr>
+    <tr>
+        <td><strong>shutdown</strong></td>
+        <td><code>/actuator/shutdown</code></td>
+        <td>⚠️ Gracefully shuts down the application (disabled by default, requires POST)</td>
+    </tr>
+    </tbody>
+</table>
+
+<div class="note">
+    <strong>⚠️ Note:</strong> By default, only <code>/actuator/health</code> and <code>/actuator/info</code> are exposed over HTTP for security reasons. To enable all endpoints, configure your <code>application.properties</code> as shown below.
+</div>
+
+<h2>Configuration</h2>
+<div class="config-section">
+    <h3>Enable All Actuator Endpoints</h3>
+    <p>Add this to your <code>application.properties</code>:</p>
+    <pre># Expose all actuator endpoints
+management.endpoints.web.exposure.include=*
+
+# Or expose specific endpoints
+# management.endpoints.web.exposure.include=health,info,metrics,env,beans
+
+# Exclude specific endpoints
+# management.endpoints.web.exposure.exclude=shutdown
+
+# Show detailed health information
+management.endpoint.health.show-details=always
+
+# Enable specific endpoints
+management.endpoint.health.enabled=true
+management.endpoint.info.enabled=true
+management.endpoint.metrics.enabled=true</pre>
+</div>
+
+</body>
+</html>
